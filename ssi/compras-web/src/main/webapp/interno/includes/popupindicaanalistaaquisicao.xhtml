@@ -1,0 +1,56 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formnovoanalaq">
+		<rich:popupPanel id="popupindicaanalistaaquisicao" domElementAttachment="form" modal="true" width="500" height="340" zindex="2" show="#{analistasAqMB.exibemodal}" showWhenRendered="#{analistasAqMB.exibemodal}">
+			<f:facet name="header">
+				<h:outputText value="Indicação de Novo Analista de Aquisição" />
+			</f:facet>
+			<f:facet name="controls">
+		        <h:outputLink value="#" onclick="#{rich:component('formnovoanalaq:popupindicaanalistaaquisicao')}.hide(); return false;">
+		        	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+		    	</h:outputLink>
+	        </f:facet>
+	        
+	        <ui:include src="autoredatacorrente.xhtml"/>
+			<h:panelGroup layout="block" class="clear"/>
+	        
+	        
+				<h:panelGroup layout="block" id="pggrupomodulo" class="area-input-50">
+					<h:panelGroup class="label-campo">Grupo Módulo:</h:panelGroup>
+						
+					<h:selectOneMenu id="grupomodulo"
+							value="#{analistasAqMB.participante.analistaaquisicao.grupoModulo}"
+							styleClass="select-form">
+						<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+						<f:selectItems value="#{analistasAqMB.recuperarGruposModulos()}" var="gm" itemLabel="#{gm.cnmgrupomodulo}"/>
+						<f:converter converterId="grupomoduloConv" />
+					</h:selectOneMenu>
+				</h:panelGroup>
+				<h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-10">
+						<h:panelGroup layout="block" class="label-campo"></h:panelGroup>
+							<h:commandButton value="Definir" action="#{analistasAqMB.definir()}"/>
+						</h:panelGroup>
+					</h:panelGroup>
+				<h:panelGroup layout="block" class="clear"/>
+				<h:panelGroup layout="block" class="area-input-10">
+				<rich:dataTable id="ufs" value="#{analistasAqMB.ufs}" var="uf">
+					<rich:column style="text-align:left;">
+						<h:selectBooleanCheckbox id="checkboxuf" value="#{uf.checked}"/>
+					</rich:column>
+					<rich:column style="text-align:left;">
+						<h:outputText value="#{uf.cnmuf}"/>
+					</rich:column>
+				</rich:dataTable>
+				</h:panelGroup>
+		</rich:popupPanel>
+	</h:form>
+</html>

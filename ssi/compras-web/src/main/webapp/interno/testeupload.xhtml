@@ -1,0 +1,31 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich"
+ 	xmlns:hh="http://balusc.net/jsf/html">
+
+	<ui:define name="conteudosistema">
+        <h:form id="formupload" method="post" enctype="multipart/form-data">
+            <h:outputLabel for="text">Text:</h:outputLabel>
+            <h:inputText id="text" value="#{uploadBean.text}" />
+            <br />
+            <h:outputLabel for="file">File:</h:outputLabel>
+            <hh:inputFile id="file" name="file" value="#{uploadBean.file}" validator="fileValidator"/>
+            <h:outputText value="File #{uploadBean.file.name} successfully uploaded!" 
+                rendered="#{not empty uploadBean.file}" />
+            <br />
+            <h:selectManyCheckbox id="check" layout="pageDirection" value="#{uploadBean.check}">
+                <f:selectItem itemLabel="Check 1:" itemValue="check1" />
+                <f:selectItem itemLabel="Check 2:" itemValue="check2" />
+            </h:selectManyCheckbox>
+            <h:inputHidden id="caminhoanexo" name="caminhoanexo" value="minutas"/>
+            <h:commandButton value="submit" action="#{uploadBean.submit('minutas')}" />
+            <h:messages />
+        </h:form>
+  	</ui:define>
+</ui:composition>

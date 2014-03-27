@@ -1,0 +1,63 @@
+<ui:composition template="../template/padrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+		<h:form id="formcadarea">
+			<h:panelGroup>
+				<h:panelGroup layout="block" id="pgprepaiedit"
+							  styleClass="area-input-25">
+					<h:panelGroup layout="block" styleClass="label-campo">Área Pai:</h:panelGroup>
+					<a4j:outputPanel id="editpanelareapai">
+						<h:selectOneMenu id="editareapai"
+							value="#{areasMB.obj.areapai}"
+							styleClass="select-form">
+							<f:selectItem itemLabel="Nenhum" noSelectionOption="true" />
+							<f:selectItems value="#{buscarAreasMB.recuperar()}"
+								var="obj" itemValue="#{obj}"
+								itemLabel="#{obj.cnmsiglaarea}" />
+								<f:converter converterId="areaConv" />
+						</h:selectOneMenu>
+					</a4j:outputPanel>
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="pgsiglaarea" class="area-input-25">
+					<h:panelGroup class="label-campo">Sigla:</h:panelGroup>
+						<h:inputText id="cnmsigla"
+									 value="#{areasMB.obj.cnmsiglaarea}" styleClass="input-form" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" id="pgdescarea" class="area-input-25">
+					<h:panelGroup class="label-campo">Descrição:</h:panelGroup>
+						<h:inputText id="cnmdesc"
+									 value="#{areasMB.obj.cnmdescarea}" styleClass="input-form" />
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" id="pgpapelarea" class="area-input-25">
+					<h:panelGroup class="label-campo">Papel:</h:panelGroup>
+						<h:selectOneMenu id="editpapelarea"
+							value="#{areasMB.obj.papelarea}"
+							styleClass="select-form">
+							<f:selectItem itemLabel="Nenhum" noSelectionOption="true" />
+							<f:selectItems value="#{papeisAreasMB.buscar()}"
+								var="obj" itemValue="#{obj}"
+								itemLabel="#{obj.cnmpapelarea}" />
+								<f:converter converterId="papelareaConv" />
+						</h:selectOneMenu>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="area-input-10">
+					<h:panelGroup layout="block" class="label-campo"></h:panelGroup>
+					<h:commandButton value="Cadastrar">
+						<a4j:ajax event="click" execute="@form" render="editpanelareapai :panelexibesucesso :panelexibealerta :panelexibeerro"
+								  listener="#{areasMB.cadastrar()}" />
+					</h:commandButton>
+				</h:panelGroup>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+		</h:form>
+	</ui:define>
+</ui:composition>

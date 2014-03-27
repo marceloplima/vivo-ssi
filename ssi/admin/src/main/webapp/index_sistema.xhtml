@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+
+		<h:form id="formcadmodfunpessoa">
+			<rich:tabPanel id="tabpanelcadpes" switchType="client">
+			
+				<rich:tab id="tab1" header="Pessoas">
+					<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">Nome:</h:panelGroup>	
+					<h:inputText id="cnmnome" styleClass="input-form" value="#{buscarPessoasMB.cnmnome}"/>
+				</h:panelGroup>					
+			    
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">CPF:</h:panelGroup>	
+					<h:inputText id="cdscpf" value="#{buscarPessoasMB.cdscpf}" styleClass="input-form" onkeypress="javascript: mascara(this, cpf_mask);" size="14"  maxlength="14">
+						<f:converter converterId="cpfConv"/>
+					</h:inputText>
+				</h:panelGroup>	
+			    
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">Login:</h:panelGroup>	
+					<h:inputText size="10" id="cnmlogin" value="#{buscarPessoasMB.cnmlogin}" styleClass="input-form"/>
+				</h:panelGroup>	
+				
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">Tipo:</h:panelGroup>
+					<h:selectOneMenu id="ativosinativos" defaultLabel="Tipo" value="#{buscarPessoasMB.flagativo}" styleClass="select-form">
+						<f:selectItem id="itemativo" itemValue="true" itemLabel="Ativos"/>
+						<f:selectItem id="iteminativo" itemValue="false" itemLabel="Inativos"/>
+					</h:selectOneMenu>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" class="area-input-10">
+					<h:panelGroup  class="label-campo"></h:panelGroup>	
+					<h:commandButton value="Buscar">
+            			<a4j:ajax event="click" execute="@form" listener="#{buscarPessoasMB.buscar()}" render="panelresbuscapessoas"/>
+            		</h:commandButton>
+				</h:panelGroup>
+									
+			    <h:panelGroup layout="block" class="clear"/>				    
+			    <h:panelGroup layout="block" class="linha"/>
+			    
+			     <a4j:outputPanel id="panelresbuscapessoas">
+			        <rich:dataTable keepSaved="true" rows="4" rendered="#{buscarPessoasMB.exibelistagem}" id="dtresbuscapessoas" value="#{buscarPessoasMB.dataModel}" var="pessoa">
+			        	<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column style="text-align:left;">
+									<h:outputText value="" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Nome" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="CPF" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Login" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Data Cadastro" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Ativo" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:column style="text-align:left;">
+							<h:selectBooleanCheckbox id="checkboxpessoa" value="#{pessoa.checked}">
+								<a4j:ajax render="acoes" listener="#{buscarPessoasMB.selecionarCheckboxPessoa(pessoa)}"/>
+							</h:selectBooleanCheckbox>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{pessoa.cnmnome}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{pessoa.cdscpf}">
+								<f:converter converterId="cpfConv"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{pessoa.usuario.cnmlogin}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{pessoa.datacadastro.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{pessoa.flagativo}">
+								<f:converter converterId="ativosConv"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+						
+						</rich:column>
+						<f:facet name="footer">
+			            	<rich:dataScroller id="scrollermodfuncbottom"/>
+			            </f:facet>
+			        </rich:dataTable>
+			        
+			        <h:panelGroup layout="block" styleClass="alinhaBotaoEsq" rendered="#{buscarPessoasMB.exibelistagem}">
+	                    <h:commandButton value="Ativar/Desativar selecionados">
+	                    	<a4j:ajax listener="#{buscarPessoasMB.setModalconfirmaacaopessoas(true)}" render="modalconfirmaacaopessoas"/>
+	                    </h:commandButton>
+	                    <h:panelGroup styleClass="acoes">
+		                    <h:selectOneMenu id="acoes" defaultLabel="Ações" value="#{buscarPessoasMB.acao}" disabled="#{buscarPessoasMB.ocultaacoes}" styleClass="select-form">
+		                    	<f:selectItem id="itemnulo" itemValue="0" itemLabel="Ações"/>
+				                <f:selectItem id="itemeditar" itemValue="1" itemLabel="Editar"/>
+				                <f:selectItem id="itememails" itemValue="2" itemLabel="e-Mails"/>
+				                <f:selectItem id="itemtels" itemValue="3" itemLabel="Telefones"/>
+				                <f:selectItem id="itemareas" itemValue="4" itemLabel="Áreas"/>
+				                <f:selectItem id="itemgrupos" itemValue="5" itemLabel="Grupos Módulos"/>
+				                <f:selectItem id="itemacesso" itemValue="6" itemLabel="Acesso Diferenciado"/>
+				                <a4j:ajax 
+				                		listener="#{buscarPessoasMB.efetuaracao()}" 
+				                		render="popupeditar popupemails popuptels popupareas popupgruposmodulos popuppessoasfunc acoes" 
+				                		execute="acoes"/>
+				            </h:selectOneMenu>
+						</h:panelGroup>
+					</h:panelGroup>
+			        <h:panelGroup layout="block" class="clear"/>				
+				</a4j:outputPanel>
+				<rich:popupPanel id="modalconfirmaacaopessoas" domElementAttachment="form" modal="true" width="450" height="150" zindex="2" show="#{buscarPessoasMB.modalconfirmaacaopessoas}" showWhenRendered="#{buscarPessoasMB.modalconfirmaacaopessoas}">
+					<f:facet name="header">
+						<h:outputText value="Confirmação Necessária" />
+					</f:facet>
+					<f:facet name="controls">
+						<h:outputLink value="#" onclick="#{rich:component('modalconfirmaacaopessoas')}.hide(); return false;">
+					    	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+					   	</h:outputLink>
+				    </f:facet>
+				    <h:outputText value="Confirma ação nos selecionados?"/>
+				    <h:outputText value=" "/>
+				    <h:commandButton value="Sim">
+						<a4j:ajax render="@form" listener="#{buscarPessoasMB.ativarDesativarSelecionados()}"/>
+					</h:commandButton>
+					<h:commandButton value="Não" onclick="#{rich:component('modalconfirmaacaopessoas')}.hide(); return false;"/>
+				</rich:popupPanel>
+				
+			        				    
+				</rich:tab>
+				
+				<rich:tab id="tab2" header="Grupos">
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Módulo:</h:panelGroup>	
+						<h:selectOneMenu id="buscamodulogm" value="#{buscarGruposModulosMB.modulo}" styleClass="select-form">
+							<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+							<f:selectItems value="#{modulosMB.recuperar()}" var="modulo" itemLabel="#{modulo.cnmmodulo}"/>
+							<f:converter converterId="moduloConv"/>
+						</h:selectOneMenu>
+					</h:panelGroup>					
+				    
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Grupo:</h:panelGroup>	
+						<h:inputText id="buscagrupomodulo" value="#{buscarGruposModulosMB.cnmgrupomodulo}" styleClass="input-form"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="area-input-10">
+						<h:panelGroup  class="label-campo"></h:panelGroup>	
+						<h:commandButton value="Buscar">
+	            			<a4j:ajax event="click" execute="@form" listener="#{buscarGruposModulosMB.buscar()}" render="panelresbuscagruposmodulos"/>
+	            		</h:commandButton>
+					</h:panelGroup>
+										
+				    <h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				     <a4j:outputPanel id="panelresbuscagruposmodulos">
+				        <rich:dataTable keepSaved="true" rows="5" rendered="#{buscarGruposModulosMB.exibelistagem}" id="dtresbuscagruposmodulos" value="#{buscarGruposModulosMB.gruposmodulos}" var="grupomodulo">
+				        	<f:facet name="header">
+								<rich:columnGroup>
+									<rich:column style="text-align:left;">
+										<h:outputText value="" />
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<h:outputText value="Módulo" />
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<h:outputText value="Grupo" />
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<h:outputText value="Data Cadastro" />
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<h:outputText value="Ativo" />
+									</rich:column>
+								</rich:columnGroup>
+							</f:facet>
+							<rich:column style="text-align:left;">
+								<h:selectBooleanCheckbox id="checkboxgm" value="#{grupomodulo.checked}">
+									<a4j:ajax render="acoes_b" listener="#{buscarGruposModulosMB.selecionarCheckboxGrupoModulo(grupomodulo)}"/>
+								</h:selectBooleanCheckbox>
+							</rich:column>
+							<rich:column style="text-align:left;">
+								<h:outputText value="#{grupomodulo.modulo.cnmmodulo}"/>
+							</rich:column>
+							<rich:column style="text-align:left;">
+								<h:outputText value="#{grupomodulo.cnmgrupomodulo}"/>
+							</rich:column>
+							<rich:column style="text-align:left;">
+								<h:outputText value="#{grupomodulo.datacadastro.time}">
+									<f:convertDateTime pattern="dd/MM/yyyy"/>
+								</h:outputText>
+							</rich:column>
+							<rich:column style="text-align:left;">
+								<h:outputText value="#{grupomodulo.flagativo}">
+									<f:converter converterId="ativosConv"/>
+								</h:outputText>
+							</rich:column>
+							<rich:column style="text-align:left;">
+							
+							</rich:column>
+							<f:facet name="footer">
+				            	<rich:dataScroller id="scrollermodfuncbottom"/>
+				            </f:facet>
+				        </rich:dataTable>
+				        
+				        <h:panelGroup layout="block" styleClass="alinhaBotaoEsq" rendered="#{buscarGruposModulosMB.exibelistagem}">
+		                    <h:commandButton value="Ativar/Desativar selecionados">
+		                    	<a4j:ajax listener="#{buscarGruposModulosMB.setModalconfirmaacaogrupomodulo(true)}" render="modalconfirmaacaogrupomodulo dtresbuscagruposmodulos"/>
+		                    </h:commandButton>
+		                    <h:panelGroup styleClass="acoes">
+			                    <h:selectOneMenu id="acoes_b" defaultLabel="Ações" value="#{buscarGruposModulosMB.acao}" disabled="#{buscarGruposModulosMB.ocultaacoes}">
+			                    	<f:selectItem id="itemnulo2" itemValue="0" itemLabel="Ações"/>
+					                <f:selectItem id="itemeditar2" itemValue="1" itemLabel="Editar"/>
+					                <a4j:ajax 
+					                		listener="#{buscarGruposModulosMB.efetuaracao()}" 
+					                		render="popupeditargrupomodulo acoes_b" 
+					                		execute="acoes_b"/>
+					            </h:selectOneMenu>
+							</h:panelGroup>
+						</h:panelGroup>
+				        <h:panelGroup layout="block" class="clear"/>				
+					</a4j:outputPanel>
+					<rich:popupPanel id="modalconfirmaacaogrupomodulo" domElementAttachment="form" modal="true" width="450" height="150" zindex="2" show="#{buscarGruposModulosMB.modalconfirmaacaogrupomodulo}" showWhenRendered="#{buscarGruposModulosMB.modalconfirmaacaogrupomodulo}">
+						<f:facet name="header">
+							<h:outputText value="Confirmação Necessária" />
+						</f:facet>
+						<f:facet name="controls">
+							<h:outputLink value="#" onclick="#{rich:component('modalconfirmaacaogrupomodulo')}.hide(); return false;">
+						    	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+						   	</h:outputLink>
+					    </f:facet>
+					    <h:outputText value="Confirma ação nos selecionados?"/>
+					    <h:outputText value=" "/>
+					    <h:commandButton value="Sim">
+							<a4j:ajax render="@form" listener="#{buscarGruposModulosMB.ativarDesativarSelecionados()}"/>
+						</h:commandButton>
+						<h:commandButton value="Não" onclick="#{rich:component('modalconfirmaacaogrupomodulo')}.hide(); return false;"/>
+					</rich:popupPanel>
+				</rich:tab>
+				
+			</rich:tabPanel>
+			
+			<ui:include src="interno/buscarpessoaseditar.xhtml"/>
+			<ui:include src="interno/buscarpessoasemails.xhtml"/>
+			<ui:include src="interno/buscarpessoastels.xhtml"/>
+			<ui:include src="interno/buscarpessoasgruposmodulos.xhtml"/>
+			<ui:include src="interno/buscarpessoasareas.xhtml"/>
+			<ui:include src="interno/buscargruposmoduloseditar.xhtml"/>
+			<ui:include src="interno/buscarpessoasfuncionalidades.xhtml"/>
+		</h:form>
+
+  	</ui:define>
+</ui:composition>

@@ -1,0 +1,65 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+	<rich:popupPanel id="popupgruposmodulos" domElementAttachment="form" modal="true" width="700" height="350" zindex="2" show="#{buscarPessoasMB.exibepopupgruposmodulos}" showWhenRendered="#{buscarPessoasMB.exibepopupgruposmodulos}">
+		<f:facet name="header">
+			<h:outputText value="Grupos Módulos" />
+		</f:facet>
+		<f:facet name="controls">
+	        <h:outputLink value="#" onclick="#{rich:component('popupgruposmodulos')}.hide(); return false;">
+	        	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+	    	</h:outputLink>
+        </f:facet>
+		<h:outputText value="#{buscarPessoasMB.pessoa.cnmnome}"/>
+		<br/>
+		<br/>
+		   <rich:dataTable rows="5" keepSaved="true" id="dtgruposmodulos" value="#{buscarPessoasMB.gruposmodulos}" var="grupomodulo">
+			<f:facet name="header">
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Módulo" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Grupo" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Ativo" />
+					</rich:column>
+				</rich:columnGroup>
+			</f:facet>
+			<rich:column>
+				<h:selectBooleanCheckbox id="checkboxtel" value="#{grupomodulo.checked}">
+					<a4j:ajax listener="#{gruposModulosMB.selecionarCheckbox(grupomodulo)}"/>
+				</h:selectBooleanCheckbox>
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{grupomodulo.modulo.cnmmodulo}"/>
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{grupomodulo.cnmgrupomodulo}"/>
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{grupomodulo.flagativo}">
+					<f:converter converterId="ativosConv"/>
+				</h:outputText>
+			</rich:column>
+			<f:facet name="footer">
+				<rich:dataScroller/>
+        	</f:facet>
+		</rich:dataTable>
+		<h:panelGroup layout="block" class="clear"/>
+		<h:commandButton value="Configurar Grupos Módulos da Pessoa">
+			<f:ajax execute="@form" listener="#{buscarPessoasMB.configurarGruposModulos()}"/>
+		</h:commandButton>
+	</rich:popupPanel>
+</html>

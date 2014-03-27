@@ -1,0 +1,58 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+		<div align="center">
+
+			<h:form id="formbuscamod">
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup layout="block" class="label-campo">Pessoa:</h:panelGroup>
+						<h:selectOneMenu id="grupo" 
+											 value="#{cadPessoasMB.pessoa}"
+											 styleClass="select-form">
+							<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+							<f:selectItems value="#{cadPessoasMB.montarCombo()}" var="pessoa" itemLabel="#{pessoa.cnmnome}"/>
+							<a4j:ajax 
+								listener="#{cadPessoasMB.filtrarareaspessoa()}" 
+								render="@form" 
+								execute="@form"/>
+							<f:converter converterId="pessoasConv"/>
+					    </h:selectOneMenu>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block"  class="area-input-10">
+					<h:panelGroup layout="block"  class="label-campo"></h:panelGroup>
+		            <h:commandButton value="OK">
+		            	<a4j:ajax event="click" execute="cnmmodulo" listener="#{buscarModulosMB.buscar()}" render="panelresbuscamod"/>
+		            </h:commandButton>
+				</h:panelGroup>
+
+		        <h:panelGroup layout="block"  class="clear"/>
+				<h:panelGroup layout="block"  class="linha"/>
+		        
+				<h:panelGroup layout="block"  class="area-input-100" style="text-align:left;">
+					<rich:tree id="treeareas" value="#{cadPessoasMB.areanos}" var="no" toggleType="client" rendered="#{cadPessoasMB.exibetreeareas}">  
+						<rich:treeNode id="areatreenode" iconLeaf="none">  
+							<h:selectBooleanCheckbox value="#{no.area.checked}" onclick="checaRecursivo(this.checked,'#{no.area.idarea}|#{no.area.areapai.idarea}');"/>
+							<h:outputText value="#{no.area.cnmsiglaarea}"/>  
+						</rich:treeNode>
+					</rich:tree>
+				</h:panelGroup>
+		        <h:panelGroup layout="block" class="clear"/>
+				<h:panelGroup layout="block" class="linha"/>
+		        <h:commandButton value="Definir Áreas">
+					<f:ajax render="@form" execute="@form" listener="#{cadPessoasMB.definirAreasPessoa()}"/>
+				</h:commandButton>	
+		        <h:panelGroup layout="block" class="clear"/>
+				
+			</h:form>
+		</div>
+  	</ui:define>
+</ui:composition>

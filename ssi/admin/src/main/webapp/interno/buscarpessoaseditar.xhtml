@@ -1,0 +1,127 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+	<rich:popupPanel id="popupeditar" domElementAttachment="form" modal="true" width="600" height="520" zindex="2" show="#{buscarPessoasMB.exibepopupeditar}" showWhenRendered="#{buscarPessoasMB.exibepopupeditar}">
+		<f:facet name="header">
+			<h:outputText value="Edição de Pessoa" />
+		</f:facet>
+		<f:facet name="controls">
+	        <h:outputLink value="#" onclick="#{rich:component('popupeditar')}.hide(); return false;">
+	        	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+	    	</h:outputLink>
+        </f:facet>
+        			    
+		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Nome completo:</h:panelGroup>	
+			<h:inputText id="cnmnomeedit" styleClass="input-form" value="#{buscarPessoasMB.pessoa.cnmnome}"/>
+		</h:panelGroup>					
+		
+		<h:panelGroup layout="block" class="clear"/>
+					    
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">CPF:</h:panelGroup>	
+			<h:inputText styleClass="input-form" id="cdscpfedit" value="#{buscarPessoasMB.pessoa.cdscpf}" onkeypress="javascript: mascara(this, cpf_mask);"  maxlength="14">
+				<f:converter converterId="cpfConv"/>
+			</h:inputText>
+		</h:panelGroup>
+		
+		<h:panelGroup layout="block" class="clear"></h:panelGroup>
+					    
+					    <h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Área Principal:</h:panelGroup>
+							
+							<h:selectOneMenu id="areaprincipal"
+								value="#{buscarPessoasMB.pessoa.area}"
+								styleClass="select-form">
+								<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+	   							<f:selectItems 
+	   								value="#{areasMB.areas}" 
+	   								var="a"
+	   								itemLabel="#{a.cnmsiglaarea} / #{a.cnmdescarea}" 
+	   								itemValue="#{a}" />
+	   								
+	   								<f:converter converterId="areaConv"/>
+	   								
+	   						</h:selectOneMenu>
+						         		                    		                						
+						</h:panelGroup>
+						
+						<h:panelGroup layout="block" class="clear"></h:panelGroup>
+						
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Cargo:</h:panelGroup>
+							
+							<h:selectOneMenu id="cargo"
+								value="#{buscarPessoasMB.pessoa.cargo}"
+								styleClass="select-form">
+								<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+	   							<f:selectItems 
+	   								value="#{cargosMB.recuperar()}" 
+	   								var="c"
+	   								itemLabel="#{c.cnmcargo}" 
+	   								itemValue="#{c}" />
+	   								
+	   								<f:converter converterId="cargoConv"/>
+	   								
+	   						</h:selectOneMenu>
+						         		                    		                						
+						</h:panelGroup>
+					    
+					    <h:panelGroup layout="block" class="clear"></h:panelGroup>						
+						
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Tipo de Usuário:</h:panelGroup>
+			<h:selectOneMenu id="tipousuarioedit" 
+						 value="#{buscarPessoasMB.pessoa.usuario.tipousuario}"
+						 styleClass="select-form">
+				<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+				<f:selectItems value="#{tiposUsuarioMB.recuperar()}" var="tipousuario" itemLabel="#{tipousuario.cnmtipousuario}"/>
+				<f:converter converterId="tipousuarioConv"/>
+			</h:selectOneMenu>
+		</h:panelGroup>
+		
+		<h:panelGroup layout="block" class="clear"/>						
+					    
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Login:</h:panelGroup>	
+			<h:inputText styleClass="input-form" id="cnmloginredeedit" value="#{buscarPessoasMB.pessoa.usuario.cnmlogin}"/>
+			<h:selectBooleanCheckbox id="chkboxloginredeedit" title="Login de Rede" value="#{buscarPessoasMB.pessoa.usuario.flagloginrede}">
+				<a4j:ajax execute="chkboxloginrede" render="a4jpanelsenha"/>
+			</h:selectBooleanCheckbox>
+			Login de Rede
+		</h:panelGroup>
+		
+		<h:panelGroup layout="block" class="clear"/>						
+					    
+		<a4j:outputPanel id="a4jpanelsenha">
+			<h:panelGroup id="pgsenha" rendered="#{!buscarPessoasMB.pessoa.usuario.flagloginrede}" layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Senha:</h:panelGroup>	
+				<h:inputSecret styleClass="input-form" id="cnmsenhaedit" value="#{buscarPessoasMB.pessoa.usuario.cnmsenha}"/>
+			</h:panelGroup>
+		</a4j:outputPanel>
+		
+		<h:panelGroup layout="block" class="clear"/>	
+					    					
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Grupo:</h:panelGroup>
+				<h:selectOneMenu id="grupoedit" 
+								 value="#{buscarPessoasMB.pessoa.usuario.grupo}"
+								 styleClass="select-form">
+					<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+					<f:selectItems value="#{gruposMB.recuperar()}" var="grupo" itemLabel="#{grupo.cnmgrupo}"/>
+				    <f:converter converterId="grupoConv"/>
+				</h:selectOneMenu>
+			</h:panelGroup>
+		<h:panelGroup layout="block" class="clear"/>
+		<h:commandButton value="Alterar">
+			<f:ajax render="@form :panelexibesucesso :panelexibealerta :panelexibeerro" execute="@form" listener="#{buscarPessoasMB.alterarpessoa()}"/>
+		</h:commandButton>	
+	</rich:popupPanel>
+</html>

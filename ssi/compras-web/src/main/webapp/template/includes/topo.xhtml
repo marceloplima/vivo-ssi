@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+	<h:form id="formtopo">
+		<div class="topo-itens">
+			<div class="logomarca">
+				<img src="#{request.contextPath}/imagens/barrinha_logo.png"
+					alt="Logomarca SSI" />
+			</div>
+	
+			<div class="flag-topo">
+				<div class="bandeira-topo"></div>
+				<div class="balao"><h:outputText value="#{pessoasMB.demandasMinhas.size()}"/></div>
+				<div class="exclamacao-topo"></div>
+				<div class="balao"><h:outputText value="#{pessoasMB.demandasComigo.size()}"/></div>
+			</div>
+	
+			<div class="menu-usuario">
+				<h:outputText value="#{loginMB.recuperarUsuarioLogado()}"/>
+			</div>
+		</div>
+		<rich:popupPanel id="modaldashboard" domElementAttachment="form" modal="true" width="450" height="150" zindex="2" show="#{indexMB.modaldashboard}" showWhenRendered="#{indexMB.modaldashboard}">
+			<f:facet name="header">
+				<h:outputText value="Módulos" />
+			</f:facet>
+			<f:facet name="controls">
+				<h:outputLink value="#" onclick="#{rich:component('modaldashboard')}.hide(); return false;">
+					<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+				</h:outputLink>
+			</f:facet>
+					<h:commandButton value="Fechar" onclick="#{rich:component('modaldashboard')}.hide(); return false;"/>
+		</rich:popupPanel>
+	</h:form>
+</ui:composition>

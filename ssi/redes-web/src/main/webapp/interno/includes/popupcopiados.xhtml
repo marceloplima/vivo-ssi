@@ -1,0 +1,62 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formcopiados" method="post" enctype="multipart/form-data">
+ 	
+		<rich:popupPanel id="idcopiados" domElementAttachment="form" modal="true" width="500" height="460" zindex="2" show="#{demandasCopiadosMB.mostrarTelaCopiados}" showWhenRendered="#{demandasCopiadosMB.mostrarTelaCopiados}">
+			<f:facet name="header">
+	            <h:outputText value="Copiados" />
+	        </f:facet>
+	        
+	        	<rich:dataTable id="copiados" value="#{demandasCopiadosMB.pessoasGruposCopiados}" var="copiados" rendered="#{permissoesMB.verificarCopiados()}">		       	
+		       		<rich:column style="text-align:left;">		       					
+						<h:selectBooleanCheckbox 
+							id="copiadoscheck" 
+							value="#{copiados.checked}">														
+		 				</h:selectBooleanCheckbox>	 					 						 				
+	 				</rich:column>
+	 												
+					<rich:column style="text-align:left;">
+						<h:outputText value="#{copiados.cnmnome}"/>				
+					</rich:column>	 				
+	 								
+				</rich:dataTable>
+				
+				<!-- COPIADOS não editáveis-->
+				
+		        <rich:dataTable id="copiadosjaenviados" value="#{demandasMB.pessoasJaCopiadas}" var="copiadosenviados" rendered="#{not permissoesMB.verificarCopiados()}">
+		            <f:facet name="header">
+						<rich:columnGroup>
+							<rich:column style="text-align:left;">
+								<h:outputText value="Copiados" />
+							</rich:column>
+						</rich:columnGroup>
+					</f:facet>
+					<rich:column style="text-align:left;">
+						<h:outputText value="#{copiadosenviados.cnmnome}"/>
+					</rich:column>
+		        </rich:dataTable>				
+								
+				<h:panelGroup layout="block" class="clear"/>
+				     
+				<h:panelGroup layout="block" styleClass="alinhaBotao">
+					<h:commandButton value="Ok" rendered="#{permissoesMB.verificarCopiados()}">
+						<f:ajax render="@form" 
+									event="click"
+									listener="#{demandasCopiadosMB.gravarCopiados()}"
+									execute="copiados"
+									immediate="true"/>
+					</h:commandButton>	        
+					<h:commandButton value="Fechar" onclick="#{rich:component('idcopiados')}.hide(); return false;"/>       
+				</h:panelGroup>
+		</rich:popupPanel>
+				
+	</h:form>
+</html>

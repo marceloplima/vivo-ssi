@@ -1,0 +1,123 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formanalisegerentecompra" method="post" enctype="multipart/form-data">
+ 	
+		<rich:popupPanel id="analgercompras" domElementAttachment="form" modal="true" width="500" height="460" zindex="2" show="#{analisePeloGerenteDeCompraMB.exibeanalisepelogerentedecompras}" showWhenRendered="#{analisePeloGerenteDeCompraMB.exibeanalisepelogerentedecompras}">
+			<f:facet name="header">
+	            <h:outputText value="Análise Gerente de Compras" />
+	        </f:facet>
+		       	
+				<ui:include src="autoredatacorrente.xhtml"></ui:include>
+				
+				<h:panelGroup layout="block" class="area-input-100">
+					<h:panelGroup  class="label-campo">Parecer:</h:panelGroup>	
+					<h:selectOneMenu id="pareceranaliseaquisicao" 
+						value="#{analisePeloGerenteDeCompraMB.evento.agc.parecer}"
+						styleClass="select-form"
+						valueChangeListener="#{analisePeloGerenteDeCompraMB.setaParecer}"
+						required="true" 
+						requiredMessage="Parecer é obrigatório.">
+						<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+						<f:selectItems value="#{analisePeloGerenteDeCompraMB.pareceresAnalisePeloGerenteDeCompra}" var="parecer" itemLabel="#{parecer.cnmparecer}"/>
+						<a4j:ajax event="change" execute="@this" render="panelexibelp panelexibecomprador"/>
+						<f:converter converterId="parecerConv"/>
+						<h:message for="pareceranaliseaquisicao" />
+					</h:selectOneMenu>			
+				</h:panelGroup>	
+				
+				<a4j:outputPanel id="panelexibelp">
+					<h:panelGroup layout="block" class="area-input-50" rendered="#{analisePeloGerenteDeCompraMB.exibelp}">
+						<h:panelGroup  class="label-campo">LP:</h:panelGroup>	
+							<h:selectOneMenu id="lpgerentedecompra" 
+								value="#{analisePeloGerenteDeCompraMB.evento.agc.lp}"
+								valueChangeListener="#{analisePeloGerenteDeCompraMB.setaCompradores}"
+								immediate="true"
+								styleClass="select-form">							
+								<f:selectItems value="#{lpsMB.lps}" var="lp" itemLabel="#{lp.cnmlp}"/>
+								<a4j:ajax event="valueChange" execute="@this" render="compradoranalisepelogerentedecompra email celular localizacao" immediate="true"/>								
+								<f:converter converterId="lpConverter"/>													 
+							</h:selectOneMenu>
+					</h:panelGroup>
+				</a4j:outputPanel>
+				<a4j:outputPanel id="panelexibecomprador">
+					<h:panelGroup layout="block" class="area-input-50" rendered="#{analisePeloGerenteDeCompraMB.exibecomprador}">
+						<h:panelGroup  class="label-campo">Comprador:</h:panelGroup>	
+						<h:selectOneMenu id="compradoranalisepelogerentedecompra" 
+							value="#{analisePeloGerenteDeCompraMB.evento.agc.comprador}"
+							valueChangeListener="#{analisePeloGerenteDeCompraMB.recuperaInformacoesDoComprador}"
+							styleClass="select-form">
+							<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+							<f:selectItems value="#{analisePeloGerenteDeCompraMB.participantesCompradores}" var="comprador" itemLabel="#{comprador.cnmnome}"/>
+							<a4j:ajax event="valueChange" execute="@this" render="email celular localizacao" immediate="true"/>
+							<f:converter converterId="pessoaConv"/>
+							<h:message for="compradoranalisepelogerentedecompra" />
+						</h:selectOneMenu>												
+					</h:panelGroup>
+				</a4j:outputPanel>	
+				<h:panelGroup layout="block" class="clear"/>
+				
+				<h:panelGroup layout="block" class="area-input-50" id="email">
+					<h:panelGroup  class="label-campo">e-Mail:</h:panelGroup>	
+					<h:outputText value="#{analisePeloGerenteDeCompraMB.email}" styleClass="input-form"/>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="area-input-50" id="celular">
+					<h:panelGroup  class="label-campo">Celular:</h:panelGroup>	
+					<h:outputText value="#{analisePeloGerenteDeCompraMB.celular}" styleClass="input-form"/>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="area-input-100" id="localizacao">
+					<h:panelGroup  class="label-campo">Localização:</h:panelGroup>	
+					<h:outputText value="#{analisePeloGerenteDeCompraMB.localizacao}" styleClass="input-form"/>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="area-input-100">
+					<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+					<h:inputTextarea styleClass="textarea-form-2-linhas" id="comentario" value="#{analisePeloGerenteDeCompraMB.evento.cnmcomentario}">
+					
+						<h:message for="comentario" />
+					
+					</h:inputTextarea>
+				</h:panelGroup> 
+				<h:panelGroup layout="block" class="clear"/>
+				     
+				<h:panelGroup layout="block" styleClass="alinhaBotao">
+					<h:commandButton value="Encaminhar">
+						<f:ajax render="@form" 
+									event="click"
+									listener="#{analisePeloGerenteDeCompraMB.preAnaliseGerenteDeCompras()}"
+									execute="@form"/>
+					</h:commandButton>	        
+					<h:commandButton value="Fechar" onclick="#{rich:component('analgercompras')}.hide(); return false;"/>       
+				</h:panelGroup>
+		</rich:popupPanel>
+		
+	<!-- ############## POPUP DE EXCLUSÃO DE ORÇAMENTO ################ -->
+		
+	<rich:popupPanel id="popupconfirmaanalise" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{analisePeloGerenteDeCompraMB.exibeconfirmaanalisepelogerentedecompras}" showWhenRendered="#{analisePeloGerenteDeCompraMB.exibeconfirmaanalisepelogerentedecompras}">
+
+		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Confirma a análise ?</h:panelGroup>	
+			<h:commandButton value="Sim">
+				<f:ajax 
+					render="@form :demandaform :menuform:panelbandeirasverdes :menuform:panelbandeirasvermelhas" 
+					execute="@form" 
+					listener="#{analisePeloGerenteDeCompraMB.efetuarAnaliseGerenteDeCompras()}"/>
+			</h:commandButton>
+			<h:commandButton value="Não">
+				<f:ajax 
+					render="@form" 
+					listener="#{analisePeloGerenteDeCompraMB.fechaTelaConfirmacaoPeloGerenteDeCompra()}"/>
+			</h:commandButton>
+			 	
+		</h:panelGroup>	
+
+	</rich:popupPanel>		
+		
+	</h:form>
+</html>

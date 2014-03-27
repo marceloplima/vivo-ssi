@@ -1,0 +1,35 @@
+<ui:composition template="../template/padrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+		<h:form id="formcadrt">
+			<h:panelGroup>
+				<h:panelGroup layout="block" id="pggrupomodulo" class="area-input-25">
+					<h:panelGroup class="label-campo">Grupo Módulo:</h:panelGroup>
+						<h:selectOneMenu id="grupomodulo"
+							value="#{responsaveisTecnicosMB.participante.responsaveltecnico.grupoModulo}"
+							styleClass="select-form">
+							<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+							<f:selectItems value="#{responsaveisTecnicosMB.recuperarGruposModulos()}" var="gm" itemLabel="#{gm.cnmgrupomodulo}" />
+							<f:converter converterId="grupomoduloConv" />
+						</h:selectOneMenu>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="area-input-10">
+					<h:panelGroup layout="block" class="label-campo"></h:panelGroup>
+					<h:commandButton value="Definir Grupo Responsável Técnico">
+						<a4j:ajax event="click" execute="grupomodulo" render=":panelexibesucesso :panelexibealerta :panelexibeerro"
+								  listener="#{responsaveisTecnicosMB.definir()}" />
+					</h:commandButton>
+				</h:panelGroup>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+		</h:form>
+	</ui:define>
+</ui:composition>

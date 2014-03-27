@@ -1,0 +1,53 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+			
+     <h:form>
+		
+		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+			<h:inputText styleClass="input-form"/>
+		</h:panelGroup>
+			    		
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+			<h:inputText styleClass="input-form"/>
+		</h:panelGroup>	 		
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Fornecedor:</h:panelGroup>	
+			<h:selectOneMenu styleClass="select-form">
+				<f:selectItem itemLabel="Opção 1"/>
+				<f:selectItem itemLabel="Opção 2"/>
+				<f:selectItem itemLabel="Opção 3"/>
+				<f:selectItem itemLabel="Opção 4"/>
+	        </h:selectOneMenu>					
+		</h:panelGroup>			
+		<h:panelGroup layout="block" class="clear"/>
+
+ 		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Anexo:</h:panelGroup>	
+			<rich:fileUpload maxFilesQuantity="1" listHeight="54px"/>	
+		</h:panelGroup>
+		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+			<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+		</h:panelGroup>       
+		<h:panelGroup layout="block" class="clear"/>
+ 
+         <h:panelGroup layout="block" styleClass="alinhaBotao">
+			<h:commandButton value="Salvar"/>	        
+			<h:commandButton value="Registrar Proposta"/>	        
+			<h:commandButton value="Cancelar"/>	        
+		</h:panelGroup>
+     	
+	</h:form>
+  	</ui:define>
+</ui:composition>

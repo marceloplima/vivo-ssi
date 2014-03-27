@@ -1,0 +1,109 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+	<h:form id="formacionarc">
+		<rich:popupPanel id="popupacionarc" domElementAttachment="form" modal="true" width="500" height="350" zindex="2" show="#{acionaRcMB.exibepopup}" showWhenRendered="#{acionaRcMB.exibepopup}">
+			<f:facet name="header">
+				<h:outputText value="Aciona Criação de RC" />
+			</f:facet>
+			<f:facet name="controls">
+		        <h:outputLink value="#" onclick="#{rich:component('popupacionarc')}.hide(); return false;">
+		        	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+		    	</h:outputLink>
+	        </f:facet>
+	        
+	        <ui:include src="autoredatacorrente.xhtml"/>
+			<h:panelGroup layout="block" class="clear"/>
+	        
+	        <h:selectOneRadio id="tipocompra" 
+				value="#{acionaRcMB.evento.acionareqcomp.tipocompra}" 
+				styleClass="select-form"
+				required="true">
+							
+   				<f:selectItems 
+   					value="#{tiposComprasMB.objs}" 
+   					var="tc"
+   					itemLabel="#{tc.cnmtipocompra}" 
+   					itemValue="#{tc}" />
+   								
+   					<f:converter converterId="tipocompraConv"/>
+   				<h:message for="tipocompra"/>			
+   			</h:selectOneRadio>
+	        <h:panelGroup layout="block" class="clear"/>
+	        <h:panelGroup layout="block" class="area-input-50" id="grupoprodutopg">
+				<h:panelGroup  class="label-campo">Grupo de Produto:</h:panelGroup>	
+				<h:inputText value="#{acionaRcMB.evento.acionareqcomp.cnmgrupodeproduto}" size="4" maxlength="4" id="grupoproduto" styleClass="input-form" required="true">
+					<h:message for="grupoproduto"/>
+				</h:inputText>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+	        <h:panelGroup layout="block" class="area-input-50" id="grupocompradorespg">
+				<h:panelGroup  class="label-campo">Grupo de Compradores:</h:panelGroup>	
+				<h:outputText value="#{acionaRcMB.demanda.lp.cnmlp}" id="grupocompradores" styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+	        <h:panelGroup layout="block" class="area-input-50" id="valorpg">
+				<h:panelGroup  class="label-campo">Valor:</h:panelGroup>	
+				<h:inputText maxlength="18" size="18" onkeypress="javascript: mascara(this, moeda_mask);" value="#{acionaRcMB.evento.acionareqcomp.nnrvalor}" id="valor" styleClass="input-form">
+					<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+				</h:inputText>
+			</h:panelGroup>
+	        <h:panelGroup layout="block" class="clear"/>
+	        <h:panelGroup layout="block" class="area-input-50" id="dataenviorfpaomercadopg">
+				<h:panelGroup  class="label-campo">Data:</h:panelGroup>
+				<rich:calendar 
+					value="#{acionaRcMB.evento.acionareqcomp.dataenviorfpaomercado}" 
+					id="dataenviorfpaomercado"
+					datePattern="dd/MM/yyyy"
+					locale="pt_BR"
+                    popup="true" 
+                    cellWidth="24px" 
+                    cellHeight="22px" 
+                    style="width:200px"
+                    required="true"
+                    enableManualInput="true"
+					oninputkeypress="javascript: mascara(this, data_mask);"
+					maxlength="10">
+                    <f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+                    <f:validator validatorId="dataMaiorValidator" />
+                    <h:message for="dataenviorfpaomercado"/>
+                </rich:calendar>
+			</h:panelGroup>     
+			<h:panelGroup layout="block" class="clear"/>
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Incluir">
+					<f:ajax render="@form" 
+							event="click"
+							listener="#{acionaRcMB.preGravar()}"
+							execute="tipocompra grupoproduto grupocompradores valor dataenviorfpaomercado"/>
+				</h:commandButton>	        
+				<h:commandButton value="Fechar">
+					<f:ajax render="@form" 
+							event="click"
+							listener="#{acionaRcMB.desabilitaModal()}"/>
+				</h:commandButton>	        
+			</h:panelGroup>
+		</rich:popupPanel>
+		
+		<rich:popupPanel id="popupconfirmaarc" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{acionaRcMB.exibeconfirmacao}" showWhenRendered="#{acionaRcMB.exibeconfirmacao}">
+	
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma o Acionamento de RC?</h:panelGroup>	
+				<h:commandButton value="Sim" action="#{acionaRcMB.gravar()}"/>
+				<h:commandButton value="Não">
+					<f:ajax render="@form" 
+					event="click"
+					listener="#{acionaRcMB.desabilitaConfirmacao()}"/>
+				</h:commandButton>	
+			</h:panelGroup>	
+	
+		</rich:popupPanel>
+	</h:form>
+</html>

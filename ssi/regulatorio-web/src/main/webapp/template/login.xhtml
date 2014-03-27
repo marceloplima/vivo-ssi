@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+  
+  <!-- Enables CTRL+SHIFT+D for activating Facelets debug window -->
+  <ui:debug />
+  
+  <h:head>
+  	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+    <meta http-equiv="Pragma" content="No-cache"/>
+	<meta http-equiv="Cache-Control" content="no-store,No-cache,must-revalidate,post-check=0,pre-check=0,max-age=0"/>
+	<meta http-equiv="Expires" content="-1"/>
+	<title><h:outputText value="#{parametrosSistema.recuperaCabecalho()}"/></title>
+	
+	<h:outputStylesheet name="css/geral.css" />
+	
+
+	
+	<style>
+		body {
+			margin:0;
+			padding:0;
+		}
+		
+		form {
+			margin:0
+		}
+		
+		@font-face {
+		 font-family: officina;
+		 src: url("font/officinaserifitcttbook.eot") /* EOT file for IE */
+		}
+		@font-face {
+		 font-family: officina;
+		 src: url("font/officinaserifitcttbook.ttf") /* TTF file for CSS3 browsers */
+		}		
+		@font-face {
+		 font-family: officina;
+		 src: url("font/officinaserifitcttbook.woff") /*  */
+		}		
+		@font-face {
+		 font-family: officina;
+		 src: url("font/officinaserifitcttbook.otf") /*  */
+		}
+	
+		.topo-login {
+			width:100%;
+			height:160px;
+			border-bottom: 1px solid #c8c8c8;
+			
+			background: #ffffff; /* Old browsers */
+			background: -moz-linear-gradient(top,  #ffffff 0%, #eeeeee 34%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(34%,#eeeeee)); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top,  #ffffff 0%,#eeeeee 34%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top,  #ffffff 0%,#eeeeee 34%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top,  #ffffff 0%,#eeeeee 34%); /* IE10+ */
+			background: linear-gradient(to bottom,  #ffffff 0%,#eeeeee 34%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
+		
+		}
+			.logomarca-login{
+				margin: 0 auto;
+				width:240px;
+				height:110px;
+			}
+			.logomarca-login img{
+				margin-top:20px;
+			}
+		
+		.conteudo-login {
+			border-top: 1px solid #ffffff;
+			background: #eeeeee;
+		
+		}
+			.area-campos-login {
+			    height: 220px;
+			    width: 240px;
+			    margin: 20px auto 0;
+			}	
+		
+			.barra-entrar {
+				width:100%;
+				height:40px;
+
+				background: #0085f4; /* Old browsers */
+				background: -moz-linear-gradient(top,  #0085f4 0%, #0066cc 99%); /* FF3.6+ */
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0085f4), color-stop(99%,#0066cc)); /* Chrome,Safari4+ */
+				background: -webkit-linear-gradient(top,  #0085f4 0%,#0066cc 99%); /* Chrome10+,Safari5.1+ */
+				background: -o-linear-gradient(top,  #0085f4 0%,#0066cc 99%); /* Opera 11.10+ */
+				background: -ms-linear-gradient(top,  #0085f4 0%,#0066cc 99%); /* IE10+ */
+				background: linear-gradient(to bottom,  #0085f4 0%,#0066cc 99%); /* W3C */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0085f4', endColorstr='#0066cc',GradientType=0 ); /* IE6-9 */
+			}
+			
+			.botoes-entrar {
+				width:240px;
+				margin:0 auto;
+				font-family: officina;
+				color:#fff;
+			}
+			.ico-cadeado {
+				width:120px;
+				float:left;
+			}
+			.ico-cadeado img{
+				margin-top:-2px;
+			}			
+			.entrar-login {
+				width:100px;
+				text-align:right;
+				float:left;
+				margin-top: 6px;
+			}
+			.entrar-login a {
+			    color: #FFFFFF !important;
+			    font-family: officina;
+			    font-size: 1.7em;
+			}			
+
+			
+		.rodape-login {
+		    bottom: 0;
+		    height: 70px;
+		    position: fixed;
+		    width: 100%;		
+				
+			background: #eeeeee; /* Old browsers */
+			background: -moz-linear-gradient(top,  #eeeeee 0%, #ffffff 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top,  #eeeeee 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top,  #eeeeee 0%,#ffffff 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top,  #eeeeee 0%,#ffffff 100%); /* IE10+ */
+			background: linear-gradient(to bottom,  #eeeeee 0%,#ffffff 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+			
+		}
+			.logomarca-vivo-login {
+				float:right;
+				margin-right:20%;
+			}
+			.logomarca-telefonica-login {
+				float:left;
+				margin-left:20%;
+			}
+			
+		.seta-dir {
+			width:20px;
+			height:20px;
+			background: url('imagens/setas.png') no-repeat 0 5px;
+			float:left;
+			margin-top: 6px;
+		}
+		
+		.label {
+			font-size:0.9em;
+			color:#797979;
+			margin-right:26px;
+			font-family: Arial;
+		}
+			
+	</style>
+
+  </h:head>
+  <h:body>
+  	
+	<div id="divContent">
+	
+		<div class="topo-login">
+			<div class="logomarca-login">
+				<img src="imagens/login_logo.png"/>
+			</div>
+		</div>
+		<div class="conteudo-login">
+			<ui:insert name="loginsistema"/>
+		</div>
+		<div class="clear"></div>
+		<div class="rodape-login">
+			<div class="logomarca-telefonica-login">
+				<img src="imagens/rodape_telefonica.png"/>
+			</div>
+			<div class="logomarca-vivo-login">
+				<img src="imagens/rodape_vivo.png"/>
+			</div>
+		</div>
+	
+	</div>    
+
+	<a4j:outputPanel id="panelerrologin">
+		<h:panelGroup id="pgexibeerrologin" rendered="#{loginMB.flagerroautenticacao}" showWhenRendered="#{loginMB.flagerroautenticacao}" layout="block" styleClass="erro">
+			<div class="erro-simbolo" style="float: left;"/>
+			<div style="float: left; margin-top:25px;"><h:outputText value="Autenticação falhou !"/></div>
+		</h:panelGroup>
+	</a4j:outputPanel>
+
+	<script type="text/javascript">
+	
+	$(document).ready(function(){
+		var janela = $(window).height();
+		$('.conteudo-login').css('height',janela-235+'px');
+		
+		});
+
+	</script>
+
+  </h:body>
+</html>

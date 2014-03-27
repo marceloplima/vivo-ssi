@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="template/login.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<ui:define name="loginsistema">
+ 		<h:form id="formLogin" onkeypress="if (event.keyCode == 13){document.getElementById('formLogin:botaoLogin').click(); return false; }">
+				<div class="area-campos-login">
+					
+					<div class="area-input-100">
+				      	<h:selectOneMenu id="dominio" value="#{loginMB.dominio}" required="true" styleClass="select-form-login">
+				      		<f:selectItems value="#{dominiosMB.recuperar()}" var="dominio" itemLabel="#{dominio.cnmdominio}"/>
+				      		<f:converter converterId="dominioConv"/>
+				      	</h:selectOneMenu>				
+					</div>
+					
+					<div class="area-input-100">
+						<h:outputText value="Login:"/>
+						<h:inputText size="18" id="identificacao" styleClass="input-form-login" value="#{loginMB.usuario.cnmlogin}" required="true" onkeypress="return validaTecla(event,'mpCaracterInvalido');"></h:inputText>
+					</div>
+					
+					<div class="area-input-100">
+						<h:outputText value="Senha:"/>
+						<h:inputSecret size="18" id="senha" styleClass="input-form-login" value="#{loginMB.usuario.cnmsenha}" required="true"  />
+					</div>
+										
+				</div>
+				
+				<div class="barra-entrar">
+					<div class="botoes-entrar">
+						<div class="ico-cadeado"><img src="imagens/login_cadeado.png"/></div>
+						<div class="entrar-login">
+							<h:commandLink action="#{loginMB.logar()}" id="botaoLogin">Entrar</h:commandLink>
+						</div>
+						<div class="seta-dir"></div>				
+					</div>
+				</div>	
+			</h:form>
+ 	</ui:define>
+ 	
+</ui:composition>

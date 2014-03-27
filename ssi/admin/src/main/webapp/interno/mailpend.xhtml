@@ -1,0 +1,127 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+			
+       		<h:form id="formbuscarmailpends">
+				
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">Módulo:</h:panelGroup>	
+					<h:inputText id="buscamodulomail" value="#{buscarMailPendMB.cnmmodulo}" styleClass="input-form"/>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" class="area-input-10">
+					<h:panelGroup  class="label-campo"></h:panelGroup>	
+					<h:commandButton value="Buscar">
+            			<a4j:ajax event="click" execute="@form" listener="#{buscarMailPendMB.buscar()}" render="panelresbuscamailpends"/>
+            		</h:commandButton>
+				</h:panelGroup>
+									
+			    <h:panelGroup layout="block" class="clear"/>				    
+			    <h:panelGroup layout="block" class="linha"/>
+			    
+			     <a4j:outputPanel id="panelresbuscamailpends">
+			        <rich:dataTable keepSaved="true" rows="5" rendered="#{buscarMailPendMB.exibelistagem}" id="dtresbuscamailpends" value="#{buscarMailPendMB.objs}" var="obj">
+			        	<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column style="text-align:left;">
+									<h:outputText value="" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="SMTP" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Módulo" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Destinatário" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Assunto" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Mensagem" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="SSI" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Enviado" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Data" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:column style="text-align:left;">
+							<h:selectBooleanCheckbox id="checkboxgm" value="#{obj.checked}">
+								<a4j:ajax render="acoes" listener="#{buscarMailPendMB.selecionarCheckbox(obj)}"/>
+							</h:selectBooleanCheckbox>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{obj.cnmipsmtp}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{obj.cnmmodulo}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{obj.cnmemaildestinatario}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{obj.cnmassunto}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText escape="false" value="#{obj.cnmmensagem}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{obj.cnmssi}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{obj.flagenviado}">
+								<f:converter converterId="ativosConv"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{obj.datacadastro.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</rich:column>
+						<f:facet name="footer">
+			            	<rich:dataScroller id="scrollermodfuncbottom"/>
+			            </f:facet>
+			        </rich:dataTable>
+			        
+			        <h:panelGroup layout="block" styleClass="alinhaBotaoEsq" rendered="#{buscarMailPendMB.exibelistagem}">
+	                    <h:commandButton value="Reenviar selecionados">
+	                    	<a4j:ajax listener="#{buscarMailPendMB.setModalconfirmaacao(true)}" render="modalconfirmaacaomailpend dtresbuscamailpends"/>
+	                    </h:commandButton>
+	                    
+					</h:panelGroup>
+			        <h:panelGroup layout="block" class="clear"/>				
+				</a4j:outputPanel>
+				<rich:popupPanel id="modalconfirmaacaomailpend" domElementAttachment="form" modal="true" width="450" height="150" zindex="2" show="#{buscarMailPendMB.modalconfirmaacao}" showWhenRendered="#{buscarMailPendMB.modalconfirmaacao}">
+					<f:facet name="header">
+						<h:outputText value="Confirmação Necessária" />
+					</f:facet>
+					<f:facet name="controls">
+						<h:outputLink value="#" onclick="#{rich:component('modalconfirmaacaotipofornecedor')}.hide(); return false;">
+					    	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+					   	</h:outputLink>
+				    </f:facet>
+				    <h:outputText value="Confirma ação nos selecionados?"/>
+				    <h:outputText value=" "/>
+				    <h:commandButton value="Sim">
+						<a4j:ajax render="@form" listener="#{buscarMailPendMB.reenviarSelecionados()}"/>
+					</h:commandButton>
+					<h:commandButton value="Não" onclick="#{rich:component('modalconfirmaacaotipofornecedor')}.hide(); return false;"/>
+				</rich:popupPanel>
+			</h:form>
+  	</ui:define>
+</ui:composition>

@@ -1,0 +1,1056 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">      
+      
+<!-- ################################# DIALOG - RESPONDER QUESTIONAMENTO #################################-->
+<h:form>
+	<rich:popupPanel id="respQuestionamento" modal="true" width="500" height="380" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Responder Questionamento" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('respQuestionamento')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup>       
+			<h:panelGroup layout="block" class="clear"/>
+	
+	 		<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Anexo:</h:panelGroup>	
+				<rich:fileUpload maxFilesQuantity="1" listHeight="54px"/>	
+			</h:panelGroup>
+	 
+	         <h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Salvar"/>	        
+				<h:commandButton value="Enviar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - RESPONDER QUESTIONAMENTO #################################-->
+      
+<!-- ################################# DIALOG - VALIDAÇÃO DE 2 NÍVEL #################################-->
+<h:form>
+	<rich:popupPanel id="valnivel" modal="true" width="500" height="320" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Validação de 2º Nível" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('valnivel')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Parecer:</h:panelGroup>	
+                <h:selectOneRadio styleClass="label-radio">
+                    <f:selectItem itemLabel="Aprovado" itemValue="aprovado"/>
+                    <f:selectItem itemLabel="Reprovado" itemValue="reprovado"/>
+                </h:selectOneRadio>						
+			</h:panelGroup>			
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup>       
+			<h:panelGroup layout="block" class="clear"/>
+	 
+	         <h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Encaminhar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - VALIDAÇÃO DE 2 NÍVEL #################################-->
+      
+<!-- ################################# DIALOG - ANÁLISE DE NÍVEL #################################-->
+<h:form>
+	<rich:popupPanel id="analnivel" modal="true" width="500" height="320" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Análise de Nível Técnico Nível 1" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('analnivel')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Parecer:</h:panelGroup>	
+                <h:selectOneRadio styleClass="label-radio">
+                    <f:selectItem itemLabel="Aprovado" itemValue="aprovado"/>
+                    <f:selectItem itemLabel="Acionar Diretor" itemValue="acionar_diretor"/>
+                    <f:selectItem itemLabel="Revisar" itemValue="revisar"/>
+                </h:selectOneRadio>						
+			</h:panelGroup>			
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup>       
+			<h:panelGroup layout="block" class="clear"/>
+	 
+	         <h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Salvar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - ANÁLISE DE NÍVEL #################################-->
+      
+<!-- ################################# DIALOG - ANÁLISE DA MINUTA #################################-->
+<h:form>
+	<rich:popupPanel id="analminuta" modal="true" width="500" height="330" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Análise da Minuta" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('analminuta')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Versão:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Parecer:</h:panelGroup>	
+                <h:selectOneRadio styleClass="label-radio">
+                    <f:selectItem itemLabel="Aprovado" itemValue="aprovado"/>
+                    <f:selectItem itemLabel="Reprovado" itemValue="reprovado"/>
+                </h:selectOneRadio>						
+			</h:panelGroup>			
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup>       
+			<h:panelGroup layout="block" class="clear"/>
+	 
+	         <h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Salvar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - ANÁLISE DA MINUTA #################################-->
+      
+<!-- ################################# DIALOG - ALTERAR REQUISIÇÃO DE COMPRA #################################-->
+<h:form>
+	<rich:popupPanel id="altrequiscompra" modal="true" width="500" height="260" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Alterar Requisição de Compra" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('altrequiscompra')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">RC:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup>       
+			<h:panelGroup layout="block" class="clear"/>
+	 
+	         <h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Salvar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+			
+			
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - ALTERAR REQUISIÇÃO DE COMPRA #################################-->
+      
+<!-- ################################# DIALOG - ABERTURA DE REQUISIÇÃO DE COMPRA #################################-->
+<h:form>
+	<rich:popupPanel id="aberturarequiscompra" modal="true" width="500" height="260" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Abertura de Requisição de Compra" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('aberturarequiscompra')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">RC:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup>       
+			<h:panelGroup layout="block" class="clear"/>
+	 
+	         <h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Salvar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+			
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - ABERTURA REQUISIÇÃO DE COMPRA #################################-->
+      
+<!-- ################################# DIALOG - ACIONAR CRIAÇÃO DE RC #################################-->
+<h:form>
+	<rich:popupPanel id="acionarcriacaorc" modal="true" width="500" height="310" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Acionar Criação de RC" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('acionarcriacaorc')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Grupo de produto:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Tipo de Compra:</h:panelGroup>	
+                <h:selectOneRadio styleClass="label-radio">
+                    <f:selectItem itemLabel="Geral" itemValue="geral"/>
+                    <f:selectItem itemLabel="Ordinária" itemValue="ordinaria"/>
+                </h:selectOneRadio>						
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Grupo de compradores:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Valor (R$):</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Envio RFP ao Mercado:</h:panelGroup>	
+				<rich:calendar
+				datePattern="dd/MM/yyyy"
+				locale="pt_BR"
+				styleClass="input-form calendar-form"
+				/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>       
+	 
+	         <h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Salvar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+			
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - ACIONAR CRIAÇÃO DE RC #################################-->
+      
+<!-- ################################# DIALOG - REGISTRAR ENVIO AO MERCADO #################################-->
+<h:form>
+	<rich:popupPanel id="regenviomercado" modal="true" width="500" height="330" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Registrar Envio ao Mercado" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('regenviomercado')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data de envio:</h:panelGroup>	
+				<rich:calendar styleClass="input-form calendar-form"/>
+			</h:panelGroup>			
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup>       
+			<h:panelGroup layout="block" class="clear"/>
+	 
+	         <h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Encaminhar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - REGISTRAR ENVIO AO MERCADO #################################-->
+      
+<!-- ################################# DIALOG - REVISAO PELO ANALISTA DE AQUISIÇÃO #################################-->
+<h:form>
+	<rich:popupPanel id="revisanalaquis" modal="true" width="500" height="330" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Revisão pelo Analista de Aquisição" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('revisanalaquis')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Parecer:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>		
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup>       
+			<h:panelGroup layout="block" class="clear"/>
+	 
+	         <h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Encaminhar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - REVISAO PELO ANALISTA DE AQUISIÇÃO #################################-->
+      
+<!-- ################################# DIALOG - SOLICITAR REVISÃO A AQUISIÇÃO #################################-->
+<h:form>
+	<rich:popupPanel id="solicrevaquis" modal="true" width="500" height="260" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Solicitar Revisão a Aquisição" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('solicrevaquis')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>		
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup>       
+			<h:panelGroup layout="block" class="clear"/>
+	 
+	         <h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Encaminhar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - SOLICITAR REVISÃO A AQUISIÇÃO #################################-->
+      
+<!-- ################################# DIALOG - INDICAR NOVO COMPRADOR #################################-->
+<h:form>
+	<rich:popupPanel id="indicnovocomprador" modal="true" width="500" height="410" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Indicar Novo Comprador" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('indicnovocomprador')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comprador:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>		
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">e-Mail:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Celular:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Localização:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup> 
+			<h:panelGroup layout="block" class="clear"/>
+			     
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Encaminhar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - INDICAR NOVO COMPRADOR #################################-->
+      
+<!-- ################################# DIALOG - ANÁLISE GERENTE DE COMPRAS #################################-->
+<h:form>
+	<rich:popupPanel id="analgercompras" modal="true" width="500" height="460" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Análise Gerente de Compras" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('analgercompras')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Parecer:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">LP:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Comprador:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>		
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">e-Mail:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Celular:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Localização:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup> 
+			<h:panelGroup layout="block" class="clear"/>
+			     
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Encaminhar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - ANÁLISE GERENTE DE COMPRAS #################################-->
+      
+<!-- ################################# DIALOG - VALIDAÇÃO TÉCNICA #################################-->
+<h:form>
+	<rich:popupPanel id="valtec" modal="true" width="500" height="410" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Validação Técnica" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('valtec')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Título da compra:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup> 			
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Parecer:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">LP:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>		
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup> 
+			<h:panelGroup layout="block" class="clear"/>
+			     
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Encaminhar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - VALIDAÇÃO TÉCNICA #################################-->
+      
+<!-- ################################# DIALOG - APROVAÇÃO DE ANÁLISE DE AQUISIÇÃO #################################-->
+<h:form>
+	<rich:popupPanel id="aprovanalaquis" modal="true" width="500" height="330" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Aprovação de Análise de Aquisição" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('aprovanalaquis')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Parecer:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Analista de aquisição de rede:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>		
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup> 
+			<h:panelGroup layout="block" class="clear"/>
+			     
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Encaminhar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - APROVAÇÃO DE ANÁLISE DE AQUISIÇÃO #################################-->
+      
+<!-- ################################# DIALOG - INCLUIR ANEXO #################################-->
+<h:form>
+	<rich:popupPanel id="incanexo" modal="true" width="500" height="420" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Incluir Anexo" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('incanexo')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Tipo de anexo:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Versão:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+			
+	 		<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Anexo:</h:panelGroup>	
+				<rich:fileUpload maxFilesQuantity="1" listHeight="54px"/>	
+			</h:panelGroup>			
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup> 
+			<h:panelGroup layout="block" class="clear"/>
+			     
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Incluir"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - INCLUIR ANEXO #################################-->
+      
+<!-- ################################# DIALOG - ALTERAR ANALISTA #################################-->
+<h:form>
+	<rich:popupPanel id="alteraanalista" modal="true" width="500" height="320" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Alterar Analista" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('alteraanalista')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Analista de aquisição de rede:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup> 
+			<h:panelGroup layout="block" class="clear"/>
+			     
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Salvar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - ALTERAR ANALISTA #################################-->
+      
+<!-- ################################# DIALOG - INDICAR ANALISTA RESPONSÁVEL #################################-->
+<h:form>
+	<rich:popupPanel id="indicanalresp" modal="true" width="500" height="320" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Indicar Analista Responsável" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('indicanalresp')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Analista responsável:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup> 
+			<h:panelGroup layout="block" class="clear"/>
+			     
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Indicar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - INDICAR ANALISTA RESPONSÁVEL #################################-->
+      
+<!-- ################################# DIALOG - CANCELAR SSI #################################-->
+<h:form>
+	<rich:popupPanel id="cancelssi" modal="true" width="500" height="280" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Cancelar SSI" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('cancelssi')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Data e hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-100">
+				<h:panelGroup  class="label-campo">Justificativa de cancelamento:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup> 
+			<h:panelGroup layout="block" class="clear"/>
+			     
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Cancelar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - CANCELAR SSI #################################-->
+      
+<!-- ################################# DIALOG - LEILÃO #################################-->
+<h:form>
+	<rich:popupPanel id="leilao" modal="true" width="900" height="500" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Leilão" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('leilao')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>
+       	
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+				    		
+			<h:panelGroup layout="block" class="area-input-25">
+				<h:panelGroup  class="label-campo">Data e hora:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+			
+			<h:panelGroup layout="block" class="area-input-25">
+				<h:panelGroup  class="label-campo">Modalidade:</h:panelGroup>	
+                <h:selectOneRadio styleClass="label-radio">
+                    <f:selectItem itemLabel="Inglês" itemValue="eng"/>
+                    <f:selectItem itemLabel="Holandês" itemValue="hol"/>
+                </h:selectOneRadio>						
+			</h:panelGroup>
+		    <h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Fornecedores participantes:</h:panelGroup>	
+	            <rich:pickList id="fornecedores" listWidth="165px" listHeight="100px" orderable="true" addAllText="⇒" addText="→" downBottomText="⇓" downText="↓" removeAllText="⇐" removeText="←" upText="↑" upTopText="⇑">
+	                <f:selectItems value="item1" var="capital" itemValue="item1"
+	                    itemLabel="item1" />
+	            </rich:pickList>
+	        </h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Vencedor:</h:panelGroup>	
+	            <rich:pickList id="vencedor" listWidth="165px" listHeight="100px" orderable="true" addAllText="⇒" addText="→" downBottomText="⇓" downText="↓" removeAllText="⇐" removeText="←" upText="↑" upTopText="⇑">
+	                <f:selectItems value="item1" var="capital" itemValue="item1"
+	                    itemLabel="item1" />
+	            </rich:pickList>
+	        </h:panelGroup>	        
+
+			<h:panelGroup layout="block" class="area-input-25">
+				<h:panelGroup  class="label-campo">Valor do fator inicial:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>			
+			<h:panelGroup layout="block" class="area-input-25">
+				<h:panelGroup  class="label-campo">Valor inicial:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>			
+			<h:panelGroup layout="block" class="area-input-25">
+				<h:panelGroup  class="label-campo">Salvaguarda:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>			
+			<h:panelGroup layout="block" class="area-input-25">
+				<h:panelGroup  class="label-campo">Descréscimo/Acréscimo:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>			
+		    <h:panelGroup layout="block" class="clear"/>
+		    
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Justificativa de cancelamento:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup>
+			
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+			</h:panelGroup> 			
+			<h:panelGroup layout="block" class="clear"/>
+			
+
+			<h:panelGroup layout="block" class="area-input-25">
+				<h:panelGroup  class="label-campo">Lance vencedor:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>
+		    <h:panelGroup layout="block" class="clear"/>
+		    
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Salvar"/>	        
+				<h:commandButton value="Finalizar"/>	        
+				<h:commandButton value="Fechar"/>	        
+			</h:panelGroup>
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - LEILÃO #################################-->
+
+<!-- ################################# DIALOG - INCLUIR UF #################################-->
+<h:form>
+	<rich:popupPanel id="incluirUF" modal="true" width="600" height="500" zindex="2">
+		<f:facet name="header">
+            <h:outputText value="Incluir UF" />
+        </f:facet>
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('incluirUF')}.hide(); return false;">
+               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+            </h:outputLink>
+       	</f:facet>
+       	
+		<h:panelGroup layout="block" class="clear"/>
+		    
+     	<rich:tabPanel id="incluirUFDialog">
+     	
+			<rich:tab id="tab0" header="Dados Básicos">
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>			
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">Alterado por:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>			
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">Alterado em:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="clear"/>
+							
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">UF:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>	
+				<h:panelGroup layout="block" class="clear"/>
+						
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">2013:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>			
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">2014:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>			
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">2015:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>			
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">2016:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>			
+				<h:panelGroup layout="block" class="clear"/>
+				
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">C. Contábil:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>			
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">C. Custo:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>			
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">RC:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>
+				<br/>
+				<h:panelGroup layout="block" class="clear"/><br/>
+				
+				<h:panelGroup layout="block" styleClass="alinhaBotao">
+					<h:commandButton value="Salvar"/>	        	        
+					<h:commandButton value="Fechar"/>	        
+				</h:panelGroup>
+			</rich:tab>
+			<rich:tab id="tab1" header="Log">
+			
+				<!-- #################### INSERÇÃO DE GRID ####################### -->
+			
+			</rich:tab>
+			
+		</rich:tabPanel>
+
+	</rich:popupPanel>
+
+</h:form>
+<!-- ################################# DIALOG - INCLUIR UF #################################-->
+</ui:composition>

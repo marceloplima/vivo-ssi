@@ -1,0 +1,119 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+			
+       		<h:form id="formbuscarfornecedores">
+							
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">Tipo:</h:panelGroup>	
+		    		<h:selectOneMenu id="buscaseltipoforn" value="#{buscarFornecedoresMB.tipofornecedor}" styleClass="select-form">
+		    			<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+		    			<f:selectItems value="#{buscarFornecedoresMB.tiposfornecedor}" var="tipoforn" itemLabel="#{tipoforn.cnmtipofornecedor}"/>
+		    			<f:converter converterId="tipofornecedorConv"/>
+		    		</h:selectOneMenu>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">Fornecedor:</h:panelGroup>	
+					<h:inputText id="buscacnmforn" value="#{buscarFornecedoresMB.cnmfornecedor}" styleClass="input-form"/>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" class="area-input-10">
+					<h:panelGroup  class="label-campo"></h:panelGroup>	
+					<h:commandButton value="Buscar">
+            			<a4j:ajax event="click" execute="@form" listener="#{buscarFornecedoresMB.buscar()}" render="panelresbuscafornecedores"/>
+            		</h:commandButton>
+				</h:panelGroup>
+									
+			    <h:panelGroup layout="block" class="clear"/>				    
+			    <h:panelGroup layout="block" class="linha"/>
+			    
+			     <a4j:outputPanel id="panelresbuscafornecedores">
+			        <rich:dataTable keepSaved="true" rows="5" rendered="#{buscarFornecedoresMB.exibelistagem}" id="dtresbuscafornecedores" value="#{buscarFornecedoresMB.fornecedores}" var="fornecedor">
+			        	<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column style="text-align:left;">
+									<h:outputText value="" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Fornecedor" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Data Cadastro" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Ativo" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:column style="text-align:left;">
+							<h:selectBooleanCheckbox id="checkboxforn" value="#{fornecedor.checked}">
+								<a4j:ajax render="acoes" listener="#{buscarFornecedoresMB.selecionarCheckbox(fornecedor)}"/>
+							</h:selectBooleanCheckbox>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{fornecedor.cnmfornecedor}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{fornecedor.datacadastro.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{fornecedor.flagativo}">
+								<f:converter converterId="ativosConv"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+						
+						</rich:column>
+						<f:facet name="footer">
+			            	<rich:dataScroller id="scrollermodfuncbottom"/>
+			            </f:facet>
+			        </rich:dataTable>
+			        
+			        <h:panelGroup layout="block" styleClass="alinhaBotaoEsq" rendered="#{buscarFornecedoresMB.exibelistagem}">
+	                    <h:commandButton value="Ativar/Desativar selecionados">
+	                    	<a4j:ajax listener="#{buscarFornecedoresMB.setModalconfirmaacao(true)}" render="modalconfirmaacaofornecedor dtresbuscafornecedores"/>
+	                    </h:commandButton>
+	                    <h:panelGroup styleClass="acoes">
+		                    <h:selectOneMenu id="acoes" defaultLabel="Ações" value="#{buscarFornecedoresMB.acao}" disabled="#{buscarFornecedoresMB.ocultaacoes}" styleClass="select-form">
+		                    	<f:selectItem id="itemnulo" itemValue="0" itemLabel="Ações"/>
+				                <f:selectItem id="itemeditar" itemValue="1" itemLabel="Editar"/>
+				                <a4j:ajax 
+				                		listener="#{buscarFornecedoresMB.efetuaracao()}" 
+				                		render="popupeditarfornecedor acoes" 
+				                		execute="acoes"/>
+				            </h:selectOneMenu>
+						</h:panelGroup>
+					</h:panelGroup>
+			        <h:panelGroup layout="block" class="clear"/>				
+				</a4j:outputPanel>
+				<rich:popupPanel id="modalconfirmaacaofornecedor" domElementAttachment="form" modal="true" width="450" height="150" zindex="2" show="#{buscarFornecedoresMB.modalconfirmaacao}" showWhenRendered="#{buscarFornecedoresMB.modalconfirmaacao}">
+					<f:facet name="header">
+						<h:outputText value="Confirmação Necessária" />
+					</f:facet>
+					<f:facet name="controls">
+						<h:outputLink value="#" onclick="#{rich:component('modalconfirmaacaofornecedor')}.hide(); return false;">
+					    	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+					   	</h:outputLink>
+				    </f:facet>
+				    <h:outputText value="Confirma ação nos selecionados?"/>
+				    <h:outputText value=" "/>
+				    <h:commandButton value="Sim">
+						<a4j:ajax render="@form" listener="#{buscarFornecedoresMB.ativarDesativarSelecionados()}"/>
+					</h:commandButton>
+					<h:commandButton value="Não" onclick="#{rich:component('modalconfirmaacaofornecedor')}.hide(); return false;"/>
+				</rich:popupPanel>
+				<ui:include src="buscarfornecedoreseditar.xhtml"/>
+			</h:form>
+  	</ui:define>
+</ui:composition>

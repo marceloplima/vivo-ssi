@@ -1,0 +1,99 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+			
+       		<h:form id="formbuscartipostelefone">
+				
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">Tipo do Telefone:</h:panelGroup>	
+					<h:inputText id="buscatipotelefone" value="#{buscarTiposTelefoneMB.cnmtipotelefone}" styleClass="input-form"/>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" class="area-input-10">
+					<h:panelGroup  class="label-campo"></h:panelGroup>	
+					<h:commandButton value="Buscar">
+            			<a4j:ajax event="click" execute="@form" listener="#{buscarTiposTelefoneMB.buscar()}" render="panelresbuscatipostelefone"/>
+            		</h:commandButton>
+				</h:panelGroup>
+									
+			    <h:panelGroup layout="block" class="clear"/>				    
+			    <h:panelGroup layout="block" class="linha"/>
+			    
+			     <a4j:outputPanel id="panelresbuscatipostelefone">
+			        <rich:dataTable keepSaved="true" rows="5" rendered="#{buscarTiposTelefoneMB.exibelistagem}" id="dtresbuscatipostelefone" value="#{buscarTiposTelefoneMB.tipostelefone}" var="obj">
+			        	<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column style="text-align:left;">
+									<h:outputText value="" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Tipo Telefone" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Ativo" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:column style="text-align:left;">
+							<h:selectBooleanCheckbox id="checkboxgm" value="#{obj.checked}">
+								<a4j:ajax render="acoes" listener="#{buscarTiposTelefoneMB.selecionarCheckbox(obj)}"/>
+							</h:selectBooleanCheckbox>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{obj.cnmtipotelefone}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{obj.flagativo}">
+								<f:converter converterId="ativosConv"/>
+							</h:outputText>
+						</rich:column>
+						<f:facet name="footer">
+			            	<rich:dataScroller id="scrollermodfuncbottom"/>
+			            </f:facet>
+			        </rich:dataTable>
+			        
+			        <h:panelGroup layout="block" styleClass="alinhaBotaoEsq" rendered="#{buscarTiposTelefoneMB.exibelistagem}">
+	                    <h:commandButton value="Ativar/Desativar selecionados">
+	                    	<a4j:ajax listener="#{buscarTiposTelefoneMB.setModalconfirmaacao(true)}" render="modalconfirmaacaotipotelefone dtresbuscatipotelefone"/>
+	                    </h:commandButton>
+	                    <h:panelGroup styleClass="acoes">
+		                    <h:selectOneMenu id="acoes" defaultLabel="Ações" value="#{buscarTiposTelefoneMB.acao}" disabled="#{buscarTiposTelefoneMB.ocultaacoes}" styleClass="select-form">
+		                    	<f:selectItem id="itemnulo" itemValue="0" itemLabel="Ações"/>
+				                <f:selectItem id="itemeditar" itemValue="1" itemLabel="Editar"/>
+				                <a4j:ajax 
+				                		listener="#{buscarTiposTelefoneMB.efetuaracao()}" 
+				                		render="popupeditartipotelefone acoes" 
+				                		execute="acoes"/>
+				            </h:selectOneMenu>
+						</h:panelGroup>
+					</h:panelGroup>
+			        <h:panelGroup layout="block" class="clear"/>				
+				</a4j:outputPanel>
+				<rich:popupPanel id="modalconfirmaacaotipotelefone" domElementAttachment="form" modal="true" width="450" height="150" zindex="2" show="#{buscarTiposTelefoneMB.modalconfirmaacao}" showWhenRendered="#{buscarTiposTelefoneMB.modalconfirmaacao}">
+					<f:facet name="header">
+						<h:outputText value="Confirmação Necessária" />
+					</f:facet>
+					<f:facet name="controls">
+						<h:outputLink value="#" onclick="#{rich:component('modalconfirmaacaotipotelefone')}.hide(); return false;">
+					    	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+					   	</h:outputLink>
+				    </f:facet>
+				    <h:outputText value="Confirma ação nos selecionados?"/>
+				    <h:outputText value=" "/>
+				    <h:commandButton value="Sim">
+						<a4j:ajax render="@form" listener="#{buscarTiposTelefoneMB.ativarDesativarSelecionados()}"/>
+					</h:commandButton>
+					<h:commandButton value="Não" onclick="#{rich:component('modalconfirmaacaotipotelefone')}.hide(); return false;"/>
+				</rich:popupPanel>
+				<ui:include src="buscartipostelefoneeditar.xhtml"/>
+			</h:form>
+  	</ui:define>
+</ui:composition>

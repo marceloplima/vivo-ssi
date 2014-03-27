@@ -1,0 +1,62 @@
+<ui:composition template="../template/padrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+
+		<h:form id="formcadmodfunpessoa">
+		
+			<h:panelGroup layout="block" class="area-input-100">
+				Resultado da consulta de mailbox:
+			</h:panelGroup>					
+		    <h:panelGroup layout="block" class="clear"/>				    
+		    <h:panelGroup layout="block" class="linha"/>
+		    
+	        <rich:dataTable id="dtresbuscamod" value="#{testeDatatableMB.testar()}" var="pessoa">
+	        	<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column style="text-align:left;">
+							<h:selectBooleanCheckbox/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="Nome" />
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="CPF" />
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="Login" />
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="Data Cadastro" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:column style="text-align:left;">
+					<h:selectBooleanCheckbox/>
+				</rich:column>
+				<rich:column style="text-align:left;">
+					<h:outputText value="#{pessoa.cnmnome}"/>
+				</rich:column>
+				<rich:column style="text-align:left;">
+					<h:outputText value="#{pessoa.cdscpf}"/>
+				</rich:column>
+				<rich:column style="text-align:left;">
+					<h:outputText value="#{pessoa.cnmnome}"/>
+				</rich:column>
+				<rich:column style="text-align:left;">
+					<h:outputText value="#{pessoa.cdscpf}"/>
+				</rich:column>
+				
+	        </rich:dataTable>
+
+		</h:form>
+
+  	</ui:define>
+</ui:composition>

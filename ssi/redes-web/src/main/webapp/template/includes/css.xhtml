@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+
+ <!-- SKINS -->
+		<h:outputStylesheet name="css/geral.css" />
+		     
+		<link rel="shortcut icon" type="image/x-icon" href="imagens/favicon.ico"/> 
+		<link rel="icon" type="image/x-icon" href="imagens/favicon.ico"/>      
+		 		
+		<c:set var="cssIE7" value="ie7.css"/>  
+		<c:set var="cssIE8" value="ie8.css"/>  
+		<c:set var="cssIE9" value="ie9.css"/>  
+		<c:set var="cssChrome" value="chrome.css"/>
+		
+		<c:set var="testIE7" value="MSIE 7.0"/>  
+		<c:set var="testIE8" value="MSIE 8.0"/>  
+		<c:set var="testIE9" value="MSIE 9.0"/>  
+		<c:set var="testChrome" value="Chrome"/>  
+		<c:set var="testMozilla" value="Firefox"/>  
+		<c:set var="testSafari" value="Safari"/>  
+		<c:set var="testIpad" value="iPad"/>  
+		<c:set var="testAndroid" value="Android"/>  
+		 
+		<c:set var="browser" value="${header['User-Agent']}"/>
+		
+		<c:if test="${fn:contains(header['User-Agent'], testIE7)}">
+		  <h:outputStylesheet name="css/ie7.css" />
+		</c:if>
+		
+		<c:if test="${fn:contains(header['User-Agent'], testIE8)}">
+		 <h:outputStylesheet name="css/ie8.css" />
+		</c:if>
+		
+		<c:if test="${fn:contains(header['User-Agent'], testIE9)}">
+		 <h:outputStylesheet name="css/ie9.css" />
+		</c:if>
+		
+		<c:if test="${fn:contains(header['User-Agent'], testChrome)}">
+		 <h:outputStylesheet name="css/chrome.css" />
+		</c:if>
+
+		
+
+</ui:composition>

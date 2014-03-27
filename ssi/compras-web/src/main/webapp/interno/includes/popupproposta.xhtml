@@ -1,0 +1,225 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formproposta" method="post">
+		<rich:popupPanel id="popupproposta" domElementAttachment="form" modal="true" width="500" height="400" zindex="2" show="#{propostasMB.exibepopup}" showWhenRendered="#{propostasMB.exibepopup}">
+			<f:facet name="header">
+				<h:outputText value="Registro de Proposta" />
+			</f:facet>
+			<f:facet name="controls">
+		        <h:outputLink value="#" onclick="#{rich:component('popupproposta')}.hide(); return false;">
+		        	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+		    	</h:outputLink>
+	        </f:facet>
+	        
+	        <ui:include src="autoredatacorrente.xhtml"/>
+	        
+	        <h:panelGroup layout="block" class="clear"/>
+	        
+	        <h:panelGroup layout="block" class="area-input-50" id="statusprop">
+				<h:panelGroup  class="label-campo">Status:</h:panelGroup>	
+				<h:outputText value="#{propostasMB.proposta.status.cnmstatus}" styleClass="input-form"/>
+			</h:panelGroup>
+	        
+	        <h:panelGroup layout="block" class="clear"/>
+	        
+	        <h:panelGroup layout="block" id="pgfornecedorprop" class="area-input-25">
+				<h:panelGroup class="label-campo">Fornecedor:</h:panelGroup>
+				<h:selectOneMenu id="fornecedorprop"
+					value="#{propostasMB.proposta.fornecedorprop}"
+					styleClass="select-form">
+						<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+						<f:selectItems 
+   									value="#{fornecedoresMB.fornecedores}" 
+   									var="fornecedores"
+   									itemLabel="#{fornecedores.cnmfornecedor}" 
+   									itemValue="#{fornecedores}" />
+						<f:converter converterId="fornecedorConverter" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+	        
+			<h:panelGroup layout="block" class="clear"/>
+			
+	        <h:panelGroup layout="block" class="area-input-100" id="comentarioproppg">
+				<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+					<h:inputTextarea styleClass="textarea-form-2-linhas" id="comentarioprop" value="#{propostasMB.proposta.cnmcomentario}" maxlength="255"
+						required="true" requiredMessage="Comentário é obrigatório.">
+						<h:message for="comentarioprop" />
+					</h:inputTextarea>
+			</h:panelGroup> 
+																
+			<h:panelGroup layout="block" class="clear"/>
+					     
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Salvar">
+					<f:ajax render="@form" 
+							event="click"
+							listener="#{propostasMB.preGravar()}"
+							execute="fornecedorprop comentarioprop"/>
+				</h:commandButton>	        
+				<h:commandButton value="Fechar">
+					<f:ajax render="@form" 
+							event="click"
+							listener="#{propostasMB.desabilitaModal()}"/>
+				</h:commandButton>	        
+			</h:panelGroup>
+		</rich:popupPanel>
+		
+		<rich:popupPanel id="popupconfirmaproposta" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{propostasMB.exibeconfirmacao}" showWhenRendered="#{propostasMB.exibeconfirmacao}">
+	
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma Ação?</h:panelGroup>	
+				<h:commandButton value="Sim">
+			    	<f:ajax
+			    		render=":demandaform :formproposta"
+			    		event="click"
+						listener="#{propostasMB.gravar()}"
+					/>					
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render=":demandaform :formproposta" 
+						event="click"
+						listener="#{propostasMB.desabilitaConfirmacao()}"/>
+				</h:commandButton>	
+			</h:panelGroup>	
+	
+		</rich:popupPanel>
+		
+		<rich:popupPanel id="popupencaminharproposta" domElementAttachment="form" modal="true" width="500" height="400" zindex="2" show="#{propostasMB.exibeencaminhamento}" showWhenRendered="#{propostasMB.exibeencaminhamento}">
+	
+			<h:outputText value="As seguintes propostas serão encaminhadas: "/>
+			
+			<h:panelGroup layout="block" class="clear"/>
+	
+			<rich:dataTable keepSaved="true" rows="3" id="dtresprop" value="#{propostasMB.propostaschecked}" var="proposta">
+			 	<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column style="text-align:left">
+							<h:outputText value="Registro"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="Fornecedor" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:column style="text-align:left;">
+					<h:outputText value="#{proposta.idproposta}"/>
+				</rich:column>
+				<rich:column style="text-align:left;">
+					<h:outputText value="#{proposta.fornecedorprop.cnmfornecedor}"/>
+				</rich:column>
+				<f:facet name="footer">
+					<rich:dataScroller id="scrollermodfuncbottom"/>
+				</f:facet>
+			</rich:dataTable>
+			
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-100" id="pgdeclinaram">
+				<h:panelGroup  class="label-campo">Declinaram:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas" id="cnmdeclinaram" value="#{propostasMB.demanda.cnmdeclinaram}" maxlength="255"/>
+			</h:panelGroup>
+			
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-100" id="pgnaocotaram">
+				<h:panelGroup  class="label-campo">Não cotatam:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas" id="cnmnaocotaram" value="#{propostasMB.demanda.cnmnaocotaram}" maxlength="255"/>
+			</h:panelGroup>
+				
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma o encaminhamento?</h:panelGroup>	
+				<h:commandButton value="Sim">
+			    	<f:ajax
+			    		render=":demandaform :formproposta"
+			    		event="click"
+						listener="#{propostasMB.encaminhar()}"
+						execute="cnmdeclinaram cnmnaocotaram"
+					/>					
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render=":demandaform :formproposta" 
+						event="click"
+						listener="#{propostasMB.desabilitaEncaminhamento()}"/>
+				</h:commandButton>	
+			</h:panelGroup>	
+	
+		</rich:popupPanel>
+		
+		<rich:popupPanel id="popupalertaproposta" domElementAttachment="form" modal="true" width="300" height="150" zindex="2" show="#{propostasMB.exibealerta}" showWhenRendered="#{propostasMB.exibealerta}">
+	
+			<h:outputText value="ATENÇÃO: Nenhuma proposta selecionada"/>
+			
+			<h:panelGroup layout="block" class="clear"/>
+	
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:commandButton value="OK">
+					<f:ajax 
+						render=":demandaform :formproposta" 
+						event="click"
+						listener="#{propostasMB.desabilitaAlerta()}"/>
+				</h:commandButton>	
+			</h:panelGroup>	
+	
+		</rich:popupPanel>
+		
+		<rich:popupPanel id="popupanalisetecnica" domElementAttachment="form" modal="true" width="500" height="400" zindex="2" show="#{propostasMB.exibeanalisetecnica}" showWhenRendered="#{propostasMB.exibeanalisetecnica}">
+	
+			<h:outputText value="Análise técnica - #{propostasMB.acaoanalise}"/>
+			
+			<h:panelGroup layout="block" class="clear"/>
+	
+			<rich:dataTable keepSaved="true" rows="3" id="dtrespropanalise" value="#{propostasMB.propostaschecked}" var="proposta">
+			 	<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column style="text-align:left">
+							<h:outputText value="Registro"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="Fornecedor" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:column style="text-align:left;">
+					<h:outputText value="#{proposta.idproposta}"/>
+				</rich:column>
+				<rich:column style="text-align:left;">
+					<h:outputText value="#{proposta.fornecedorprop.cnmfornecedor}"/>
+				</rich:column>
+				<f:facet name="footer">
+					<rich:dataScroller id="scrollermodfuncbottom"/>
+				</f:facet>
+			</rich:dataTable>
+			
+			<h:panelGroup layout="block" class="clear"/>
+				
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma a análise técnica?</h:panelGroup>	
+				<h:commandButton value="Sim - #{propostasMB.acaoanalise}">
+			    	<f:ajax
+			    		render=":demandaform :formproposta"
+			    		event="click"
+						listener="#{propostasMB.efetuaranalisetecnica(propostasMB.tipoanalise)}"
+					/>					
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render=":demandaform :formproposta" 
+						event="click"
+						listener="#{propostasMB.desabilitaAnaliseTecnica()}"/>
+				</h:commandButton>	
+			</h:panelGroup>	
+	
+		</rich:popupPanel>
+		
+	</h:form>
+</html>

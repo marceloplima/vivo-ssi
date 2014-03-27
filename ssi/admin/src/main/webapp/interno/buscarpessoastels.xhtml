@@ -1,0 +1,120 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+	<rich:popupPanel id="popuptels" domElementAttachment="form" modal="true" width="700" height="400" zindex="2" show="#{buscarPessoasMB.exibepopuptels}" showWhenRendered="#{buscarPessoasMB.exibepopuptels}">
+		<f:facet name="header">
+			<h:outputText value="Telefones" />
+		</f:facet>
+		<f:facet name="controls">
+	        <h:outputLink value="#" onclick="#{rich:component('popuptels')}.hide(); return false;">
+	        	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+	    	</h:outputLink>
+        </f:facet>
+		<h:outputText value="#{buscarPessoasMB.pessoa.cnmnome}"/>
+		<br/>
+		<h:panelGroup layout="block" class="clear"/>
+		<br/>
+		<h:panelGroup layout="block" id="pgtipotelefone" styleClass="area-input-25">
+			<h:panelGroup class="label-campo">Tipo do Telefone:</h:panelGroup>
+			<h:selectOneMenu id="novotipotelefone" 
+							 value="#{telefonesMB.telefone.tipotelefone}" 
+							 styleClass="select-form">
+				<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+				<f:selectItems value="#{tiposTelefoneMB.recuperar()}" var="tipotelefone" itemLabel="#{tipotelefone.cnmtipotelefone}"/>
+				<f:converter converterId="tipotelefoneConv"/>
+			</h:selectOneMenu>
+		</h:panelGroup>
+		<h:panelGroup layout="block" styleClass="area-input-25">
+			<h:panelGroup class="label-campo">Telefone:</h:panelGroup>
+			<h:inputText id="novotel" value="#{telefonesMB.telefone.cnmtelefone}" styleClass="input-form" onkeypress="javascript: mascara(this, tel_mask);"/>
+		</h:panelGroup>
+		<h:panelGroup layout="block" styleClass="area-input-25">
+			<h:panelGroup class="label-campo"> </h:panelGroup>
+			<h:commandButton value="Adicionar">
+				<f:ajax event="click" execute="novotipotelefone novotel" render="@form" listener="#{buscarPessoasMB.incluirtel()}"/>
+			</h:commandButton>
+		</h:panelGroup>			
+		<br/>
+		<h:panelGroup layout="block" class="clear"/>
+		<br/>
+		   <rich:dataTable rows="5" keepSaved="true" id="dtpessoatels" value="#{buscarPessoasMB.telefonespessoa}" var="telefone">
+			<f:facet name="header">
+				<rich:columnGroup>
+					<rich:column>
+						<h:outputText value="" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Tipo" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Telefone" />
+					</rich:column>
+					<rich:column>
+						<h:outputText value="Ativo" />
+					</rich:column>
+				</rich:columnGroup>
+			</f:facet>
+			<rich:column>
+				<h:selectBooleanCheckbox id="checkboxtel" value="#{telefone.checked}">
+					<a4j:ajax render="acoestel" listener="#{telefonesMB.selecionarCheckboxTel(telefone)}"/>
+				</h:selectBooleanCheckbox>
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{telefone.tipotelefone.cnmtipotelefone}"/>
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{telefone.cnmtelefone}"/>
+			</rich:column>
+			<rich:column>
+				<h:outputText value="#{telefone.flagativo}">
+					<f:converter converterId="ativosConv"/>
+				</h:outputText>
+			</rich:column>
+			<f:facet name="footer">
+				<rich:dataScroller/>
+        	</f:facet>
+		</rich:dataTable>
+		<h:panelGroup layout="block" styleClass="alinhaBotaoEsq">
+			<h:commandButton value="Ativar/Desativar selecionados">
+	        	<a4j:ajax listener="#{telefonesMB.setModalconfirmaacaotel(true)}" render="modalconfirmaacaotels"/>
+			</h:commandButton>
+			<h:panelGroup styleClass="acoes">
+				<h:selectOneMenu id="acoestel" value="#{telefonesMB.acao}" disabled="#{telefonesMB.ocultaacoes}" styleClass="select-form">
+					<f:selectItem id="itemnulotel" itemValue="0" itemLabel="Ações"/>
+					<f:selectItem id="itemeditartel" itemValue="1" itemLabel="Editar"/>
+					<a4j:ajax 
+						listener="#{telefonesMB.efetuaracao()}" 
+						render="acoestel :formbuscarpessoas:popupaltpessoatel" 
+						execute="acoestel"/>
+				</h:selectOneMenu>
+			</h:panelGroup>
+		</h:panelGroup>
+		<h:panelGroup layout="block" class="clear"/>
+
+			
+	</rich:popupPanel>
+	<rich:popupPanel id="modalconfirmaacaotels" domElementAttachment="form" modal="true" width="450" height="150" zindex="3" show="#{telefonesMB.modalconfirmaacaotel}" showWhenRendered="#{telefonesMB.modalconfirmaacaotel}">
+		<f:facet name="header">
+			<h:outputText value="Confirmação Necessária" />
+		</f:facet>
+		<f:facet name="controls">
+			<h:outputLink value="#" onclick="#{rich:component('modalconfirmaacaotels')}.hide(); return false;">
+				<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+			</h:outputLink>
+		</f:facet>
+		<h:outputText value="Confirma ação nos selecionados?"/>
+		<h:outputText value=" "/>
+		<h:commandButton value="Sim">
+			<a4j:ajax render="@form" listener="#{telefonesMB.ativarDesativarSelecionados()}"/>
+		</h:commandButton>
+		<h:commandButton value="Não" onclick="#{rich:component('modalconfirmaacaotels')}.hide(); return false;"/>
+	</rich:popupPanel>
+	<ui:include src="buscarpessoasedittels.xhtml"/>
+</html>

@@ -1,0 +1,317 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+			
+       		<h:form id="formcadpessoas">
+				<rich:tabPanel id="tabpanelcadpes" switchType="client">	
+       			
+					<rich:tab id="tab2" header="Pessoa">
+
+					<!-- PAINEL DE PESSOAS -->
+						
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Nome completo:</h:panelGroup>	
+							<h:inputText id="cnmnome" styleClass="input-form" value="#{cadPessoasMB.pessoa.cnmnome}"/>
+						</h:panelGroup>					
+					    <h:panelGroup layout="block" class="clear"></h:panelGroup>
+					    
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">CPF:</h:panelGroup>	
+							<h:inputText styleClass="input-form" id="cdscpf" value="#{cadPessoasMB.pessoa.cdscpf}" onkeypress="javascript: mascara(this, cpf_mask);"  maxlength="14">
+								<f:converter converterId="cpfConv"/>
+							</h:inputText>
+						</h:panelGroup>
+										
+					    <h:panelGroup layout="block" class="clear"></h:panelGroup>
+					    
+					    <h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Área Principal:</h:panelGroup>
+							
+							<h:selectOneMenu id="areaprincipal"
+								value="#{cadPessoasMB.pessoa.area}"
+								styleClass="select-form">
+								<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+	   							<f:selectItems 
+	   								value="#{areasMB.areas}" 
+	   								var="a"
+	   								itemLabel="#{a.cnmsiglaarea} / #{a.cnmdescarea}" 
+	   								itemValue="#{a}" />
+	   								
+	   								<f:converter converterId="areaConv"/>
+	   								
+	   						</h:selectOneMenu>
+						         		                    		                						
+						</h:panelGroup>
+						
+						<h:panelGroup layout="block" class="clear"></h:panelGroup>
+						
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Cargo:</h:panelGroup>
+							
+							<h:selectOneMenu id="cargo"
+								value="#{cadPessoasMB.pessoa.cargo}"
+								styleClass="select-form">
+								<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+	   							<f:selectItems 
+	   								value="#{cargosMB.recuperar()}" 
+	   								var="c"
+	   								itemLabel="#{c.cnmcargo}" 
+	   								itemValue="#{c}" />
+	   								
+	   								<f:converter converterId="cargoConv"/>
+	   								
+	   						</h:selectOneMenu>
+						         		                    		                						
+						</h:panelGroup>
+					    
+					    <h:panelGroup layout="block" class="clear"></h:panelGroup>
+					    
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Localização:</h:panelGroup>	
+							<h:inputText id="cnmlocalizacao" styleClass="input-form" value="#{cadPessoasMB.pessoa.cnmlocalizacao}"/>
+						</h:panelGroup>
+						
+					    <h:panelGroup layout="block" class="clear"></h:panelGroup>
+					    <h:panelGroup layout="block" class="linha"></h:panelGroup>						
+						
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Tipo de Usuário:</h:panelGroup>
+							<h:selectOneMenu id="tipousuario" 
+											 value="#{cadPessoasMB.pessoa.usuario.tipousuario}"
+											 styleClass="select-form">
+								<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+								<f:selectItems value="#{tiposUsuarioMB.recuperar()}" var="tipousuario" itemLabel="#{tipousuario.cnmtipousuario}"/>
+				      			<f:converter converterId="tipousuarioConv"/>
+					        </h:selectOneMenu>
+						</h:panelGroup>
+					    <h:panelGroup layout="block" class="clear"></h:panelGroup>						
+					    
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Login:</h:panelGroup>	
+							<h:inputText styleClass="input-form" id="cnmloginrede" value="#{cadPessoasMB.pessoa.usuario.cnmlogin}"/>
+							<h:selectBooleanCheckbox id="chkboxloginrede" title="Login de Rede" value="#{cadPessoasMB.pessoa.usuario.flagloginrede}">
+								<a4j:ajax execute="chkboxloginrede" render="a4jpanelsenha"/>
+							</h:selectBooleanCheckbox>
+							Login de Rede
+						</h:panelGroup>
+					    <h:panelGroup layout="block" class="clear"></h:panelGroup>						
+					    
+					    <a4j:outputPanel id="a4jpanelsenha">
+						<h:panelGroup id="pgsenha" rendered="#{!cadPessoasMB.pessoa.usuario.flagloginrede}" layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Senha:</h:panelGroup>	
+							<h:inputSecret styleClass="input-form" id="cnmsenha" value="#{cadPessoasMB.pessoa.usuario.cnmsenha}"/>
+						</h:panelGroup>		
+						</a4j:outputPanel>			
+					    <h:panelGroup layout="block" class="clear"></h:panelGroup>	
+					    					
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Grupo:</h:panelGroup>
+							<h:selectOneMenu id="grupo" 
+											 value="#{cadPessoasMB.pessoa.usuario.grupo}"
+											 styleClass="select-form">
+								<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+								<f:selectItems value="#{gruposMB.recuperar()}" var="grupo" itemLabel="#{grupo.cnmgrupo}"/>
+				      			<f:converter converterId="grupoConv"/>
+					        </h:selectOneMenu>
+						</h:panelGroup>
+					    <h:panelGroup layout="block" class="clear"></h:panelGroup>
+					</rich:tab>
+					
+					<rich:tab id="tab3" header="e-Mails">
+						<!-- INCLUIR EMAILS -->
+						<a4j:outputPanel id="panelincemail">
+							<h:panelGroup rendered="#{!cadPessoasMB.editemail}">
+								<h:panelGroup layout="block" id="email" class="area-input-25">
+									<h:panelGroup class="label-campo">Email:</h:panelGroup>
+									<h:inputText id="cnmemail"
+												 value="#{cadPessoasMB.email.cnmemail}" 
+												 styleClass="input-form" />
+								</h:panelGroup>
+								
+								<h:panelGroup layout="block" class="area-input-10">
+									<h:panelGroup layout="block" class="label-campo"></h:panelGroup>
+									<h:commandButton value="Adicionar">
+										<a4j:ajax event="click" 
+												  execute="cnmemail"
+												  render="panelemails :panelexibealerta :panelexibeerro"
+												  listener="#{cadPessoasMB.addemail()}" />
+									</h:commandButton>
+								</h:panelGroup>
+							</h:panelGroup>
+						</a4j:outputPanel>
+	
+						<!-- EDITAR EMAILS -->
+						<a4j:outputPanel id="paneleditemail">
+							<h:panelGroup id="editaremail" rendered="#{cadPessoasMB.editemail}">
+								<h3>Editar email: #{cadPessoasMB.emailupdate.cnmemail}</h3>
+								<h:panelGroup layout="block" id="emailfuncedit"
+									class="area-input-25">
+									<h:panelGroup class="label-campo">Email:</h:panelGroup>
+									<h:inputText id="editcnmemail"
+										value="#{cadPessoasMB.emailupdate.cnmemail}"
+										styleClass="input-form" />
+								</h:panelGroup>
+								
+								<h:panelGroup layout="block" class="area-input-10">
+									<h:panelGroup layout="block" class="label-campo"/>
+									<h:commandButton value="Alterar">
+										<a4j:ajax event="click" execute="editcnmemail"
+											render="panelincemail paneleditemail panelemails :panelexibealerta"
+											listener="#{cadPessoasMB.saveemail()}" />
+									</h:commandButton>
+								</h:panelGroup>
+							</h:panelGroup>
+						</a4j:outputPanel>
+						<h:panelGroup layout="block" class="clear" />
+						<h:panelGroup layout="block" class="linha"/>
+						<a4j:outputPanel id="panelemails">
+							<h:dataTable id="dtlistaemails" value="#{cadPessoasMB.pessoa.pessoaemails}"
+								var="email" rendered="#{not empty cadPessoasMB.pessoa.pessoaemails}"
+								captionClass="cadCaption" headerClass="cadHeader"
+								footerClass="cadFooter" rowClasses="oddRow,evenRow"
+								cellpadding="0" cellspacing="0" columnClasses="oddColumn">
+								<h:column>
+									<f:facet name="header">Email</f:facet>#{email.cnmemail}
+							    </h:column>
+							    <h:column>
+									<h:commandButton value="Editar">
+										<a4j:ajax event="click" render=":formcadpessoas:paneleditemail :formcadpessoas:panelincemail"
+											listener="#{cadPessoasMB.editemail(email)}" />
+									</h:commandButton>
+								</h:column>
+								<h:column>
+									<h:commandButton value="Remover">
+										<a4j:ajax event="click"
+											render="panelemails"
+											listener="#{cadPessoasMB.deleteemail(email)}" />
+									</h:commandButton>
+								</h:column>
+							</h:dataTable>
+						</a4j:outputPanel>
+					</rich:tab>
+					
+					<rich:tab id="tab4" header="Telefones">
+						<!-- INCLUIR TELEFONES -->
+						<a4j:outputPanel id="panelinctelefone">
+							<h:panelGroup rendered="#{!cadPessoasMB.edittelefone}">
+								<h:panelGroup layout="block" id="pgtipotelefone" class="area-input-25">
+									<h:panelGroup class="label-campo">Tipo do Telefone:</h:panelGroup>
+									<h:selectOneMenu id="tipotelefone" 
+												 value="#{cadPessoasMB.telefone.tipotelefone}" 
+												 styleClass="select-form">
+										<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+										<f:selectItems value="#{tiposTelefoneMB.recuperar()}" var="tipotelefone" itemLabel="#{tipotelefone.cnmtipotelefone}"/>
+						      			<f:converter converterId="tipotelefoneConv"/>
+						       	 	</h:selectOneMenu>
+								</h:panelGroup>
+								<h:panelGroup layout="block" id="telefone" class="area-input-25">
+									<h:panelGroup class="label-campo">Telefone:</h:panelGroup>
+									<h:inputText id="cnmtelefone"
+												 value="#{cadPessoasMB.telefone.cnmtelefone}" 
+												 styleClass="input-form"
+												 onkeypress="javascript: mascara(this, tel_mask);"
+												 maxlength="15"/>
+								</h:panelGroup>
+								
+								<h:panelGroup layout="block" class="area-input-10">
+									<h:panelGroup layout="block" class="label-campo"></h:panelGroup>
+									<h:commandButton value="Adicionar">
+										<a4j:ajax event="click" 
+												  execute="tipotelefone cnmtelefone"
+												  render="paneltelefones :panelexibealerta :panelexibeerro"
+												  listener="#{cadPessoasMB.addtel()}" />
+									</h:commandButton>
+								</h:panelGroup>
+							</h:panelGroup>
+						</a4j:outputPanel>
+	
+						<!-- EDITAR TELEFONES -->
+						<a4j:outputPanel id="paneledittelefone">
+							<h:panelGroup id="editartelefone" rendered="#{cadPessoasMB.edittelefone}">
+								<h3>Editar telefone: #{cadPessoasMB.telefoneupdate.cnmtelefone}</h3>
+								<h:panelGroup layout="block" id="pgedittipotelefone" class="area-input-25">
+									<h:panelGroup class="label-campo">Tipo do Telefone:</h:panelGroup>
+									<h:selectOneMenu id="edittipotelefone" 
+												 value="#{cadPessoasMB.telefoneupdate.tipotelefone}" 
+												 styleClass="select-form">
+										<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+										<f:selectItems value="#{tiposTelefoneMB.recuperar()}" var="tipotelefone" itemLabel="#{tipotelefone.cnmtipotelefone}"/>
+						      			<f:converter converterId="tipotelefoneConv"/>
+						       	 	</h:selectOneMenu>
+								</h:panelGroup>
+								<h:panelGroup layout="block" id="telefonefuncedit"
+									class="area-input-25">
+									<h:panelGroup class="label-campo">Telefone:</h:panelGroup>
+									<h:inputText id="editcnmtelefone"
+										value="#{cadPessoasMB.telefoneupdate.cnmtelefone}"
+										styleClass="input-form"
+										onkeypress="javascript: mascara(this, mtel);"  maxlength="15"/>
+								</h:panelGroup>
+								
+								<h:panelGroup layout="block" class="area-input-10">
+									<h:panelGroup layout="block" class="label-campo"/>
+									<h:commandButton value="Alterar">
+										<a4j:ajax event="click" execute="edittipotelefone editcnmtelefone"
+											render="panelinctelefone paneledittelefone paneltelefones :panelexibealerta :panelexibeerro"
+											listener="#{cadPessoasMB.savetel()}" />
+									</h:commandButton>
+								</h:panelGroup>
+							</h:panelGroup>
+						</a4j:outputPanel>
+						<h:panelGroup layout="block" class="clear" />
+						<h:panelGroup layout="block" class="clear" />
+						<h:panelGroup layout="block" class="linha"/>
+						<a4j:outputPanel id="paneltelefones">
+							<h:dataTable id="dtlistatelefones" value="#{cadPessoasMB.pessoa.pessoatelefones}"
+								var="telefone" rendered="#{not empty cadPessoasMB.pessoa.pessoatelefones}"
+								captionClass="cadCaption" headerClass="cadHeader"
+								footerClass="cadFooter" rowClasses="oddRow,evenRow"
+								cellpadding="0" cellspacing="0" columnClasses="oddColumn">
+								<h:column>
+									<f:facet name="header">Tipo do Telefone</f:facet>#{telefone.tipotelefone.cnmtipotelefone}
+							    </h:column>
+								<h:column>
+									<f:facet name="header">Telefone</f:facet>#{telefone.cnmtelefone}
+							    </h:column>
+							    <h:column>
+									<h:commandButton value="Editar">
+										<a4j:ajax event="click" render=":formcadpessoas:paneledittelefone :formcadpessoas:panelinctelefone"
+											listener="#{cadPessoasMB.edittel(telefone)}" />
+									</h:commandButton>
+								</h:column>
+								<h:column>
+									<h:commandButton value="Remover">
+										<a4j:ajax event="click"
+											render="paneltelefones"
+											listener="#{cadPessoasMB.deletetel(telefone)}" />
+									</h:commandButton>
+								</h:column>
+							</h:dataTable>
+						</a4j:outputPanel>
+					</rich:tab>
+					
+					<rich:tab id="tab5" header="Áreas">
+				    	<rich:tree id="treeareas" value="#{cadPessoasMB.areanos}" var="no" toggleType="client">  
+							<rich:treeNode id="areatreenode" iconLeaf="none">  
+								<h:selectBooleanCheckbox value="#{no.area.checked}" onclick="checaRecursivo(this.checked,'#{no.area.idarea}|#{no.area.areapai.idarea}');"/>
+								<h:outputText value="#{no.area.cnmsiglaarea}"/>  
+							</rich:treeNode>
+						</rich:tree>
+					</rich:tab>
+				</rich:tabPanel>
+				<h:panelGroup layout="block" class="botao-cadastra-tabs">
+					<h:commandButton value="Cadastrar">
+						<f:ajax event="click" render=":panelexibesucesso :panelexibealerta :panelexibeerro" execute="@form" listener="#{cadPessoasMB.incluir()}"/>
+					</h:commandButton>
+				</h:panelGroup>	
+			</h:form>
+  	</ui:define>
+</ui:composition>

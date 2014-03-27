@@ -1,0 +1,86 @@
+<ui:composition template="../template/padrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+
+		<h:form id="formcadmodfuncomp">
+
+			<!-- INCLUIR FUNCIONALIDADE -->
+			<a4j:outputPanel id="panelincfunc">
+				<h:panelGroup rendered="#{!cadFuncionalidadesMB.edit}">
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup class="label-campo">Módulo:</h:panelGroup>
+						<a4j:outputPanel id="panelmodfunc">
+							<h:selectOneMenu id="addmodulofunc"
+								value="#{cadFuncionalidadesMB.funcionalidade.modulofuncionalidade}"
+								styleClass="select-form">
+								<f:selectItems value="#{cadModulosMB.modulos}" var="modulo"
+									itemValue="#{modulo}" itemLabel="#{modulo.cnmmodulo}" />
+								<f:converter converterId="moduloConv" />
+							</h:selectOneMenu>
+						</a4j:outputPanel>
+					</h:panelGroup>
+					<h:panelGroup layout="block" id="pgpretfunc"
+						styleClass="area-input-25">
+						<h:panelGroup layout="block" styleClass="label-campo">Tipo de funcionalidade:</h:panelGroup>
+						<h:selectOneMenu id="addtfunc"
+							value="#{cadFuncionalidadesMB.funcionalidade.tipofuncionalidade}"
+							styleClass="select-form">
+							<f:selectItems
+								value="#{cadFuncionalidadesMB.recuperarTiposFunc()}"
+								var="tipofuncionalidade" itemValue="#{tipofuncionalidade}"
+								itemLabel="#{tipofuncionalidade.cnmtipofuncionalidade}" />
+							<f:converter converterId="tfuncConv" />
+						</h:selectOneMenu>
+					</h:panelGroup>
+					<h:panelGroup layout="block" id="pgprefunc"
+						styleClass="area-input-25">
+						<h:panelGroup layout="block" styleClass="label-campo">Funcionalidade:</h:panelGroup>
+						<h:inputText id="cnmfuncionalidade"
+							value="#{cadFuncionalidadesMB.funcionalidade.cnmfuncionalidade}"
+							styleClass="input-form" />
+					</h:panelGroup>
+					<h:panelGroup layout="block" id="pgprealvo"
+						styleClass="area-input-25">
+						<h:panelGroup layout="block" styleClass="label-campo">Alvo:</h:panelGroup>
+						<h:inputText id="cnmaction"
+							value="#{cadFuncionalidadesMB.funcionalidade.cnmaction}"
+							styleClass="input-form" />
+					</h:panelGroup>
+					<h:panelGroup layout="block" id="pgprefuncpai"
+						styleClass="area-input-25">
+						<h:panelGroup layout="block" styleClass="label-campo">Funcionalidade pai:</h:panelGroup>
+						<a4j:outputPanel id="panelfuncpai">
+							<h:selectOneMenu id="addfuncpai"
+								value="#{cadFuncionalidadesMB.funcionalidade.funcionalidadepai}"
+								styleClass="select-form">
+								<f:selectItem itemLabel="Nenhum" noSelectionOption="true" />
+								<f:selectItems value="#{cadFuncionalidadesMB.funcionalidades}"
+									var="funcionalidade" itemValue="#{funcionalidade}"
+									itemLabel="#{funcionalidade.cnmfuncionalidade}" />
+								<f:converter converterId="funcConv" />
+							</h:selectOneMenu>
+						</a4j:outputPanel>
+					</h:panelGroup>
+					<h:panelGroup layout="block" styleClass="area-input-25">
+						<h:panelGroup layout="block" styleClass="label-campo"></h:panelGroup>
+						<h:commandButton value="Adicionar">
+							<a4j:ajax event="click"
+								execute="addmodulofunc addtfunc cnmfuncionalidade cnmaction addfuncpai"
+								render="panelfunc panelfuncpai funccomp"
+								listener="#{cadFuncionalidadesMB.add()}" />
+						</h:commandButton>
+					</h:panelGroup>
+				</h:panelGroup>
+			</a4j:outputPanel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

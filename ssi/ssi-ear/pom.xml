@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>ssi-pom</artifactId>
+		<groupId>com.ssi</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>ssi-ear</artifactId>
+	<packaging>ear</packaging>
+
+	<name>Modulo EAR do SSI-VIVO - ssi-ear</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>admin</artifactId>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>compras-common</artifactId>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>compras-service</artifactId>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>compras-web</artifactId>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>kernel</artifactId>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>redes-common</artifactId>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>redes-service</artifactId>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>redes-web</artifactId>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>regulatorio-common</artifactId>
+			<type>jar</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>regulatorio-service</artifactId>
+			<type>ejb</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>regulatorio-web</artifactId>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>redes-common</artifactId>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>ssi-ear</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.6</version>
+				<inherited>true</inherited>
+				<configuration>
+					<version>6</version>
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<generateApplicationXml>false</generateApplicationXml>
+					<earSourceDirectory>${basedir}/src/main/resources</earSourceDirectory>
+					<modules>
+						<jarModule>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>compras-common</artifactId>
+							<bundleFileName>compras-common.jar</bundleFileName>
+						</jarModule>
+						<jarModule>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>redes-common</artifactId>
+							<bundleFileName>redes-common.jar</bundleFileName>
+						</jarModule>
+						<jarModule>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>regulatorio-common</artifactId>
+							<bundleFileName>regulatorio-common.jar</bundleFileName>
+						</jarModule>
+						<ejbModule>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>kernel</artifactId>
+							<bundleFileName>kernel.jar</bundleFileName>
+						</ejbModule>
+						<ejbModule>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>compras-service</artifactId>
+							<bundleFileName>compras-service.jar</bundleFileName>
+						</ejbModule>
+						<ejbModule>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>redes-service</artifactId>
+							<bundleFileName>redes-service.jar</bundleFileName>
+						</ejbModule>
+						<ejbModule>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>regulatorio-service</artifactId>
+							<bundleFileName>reguatorio-service.jar</bundleFileName>
+						</ejbModule>
+						<webModule>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>admin</artifactId>
+							<contextRoot>ADMIN</contextRoot>
+							<bundleFileName>admin.war</bundleFileName>
+						</webModule>
+						<webModule>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>compras-web</artifactId>
+							<contextRoot>COMPRAS</contextRoot>
+							<bundleFileName>compras-web.war</bundleFileName>
+						</webModule>
+						<webModule>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>redes-web</artifactId>
+							<contextRoot>REDES</contextRoot>
+							<bundleFileName>redes-web.war</bundleFileName>
+						</webModule>
+						<webModule>
+							<groupId>${project.groupId}</groupId>
+							<artifactId>regulatorio-web</artifactId>
+							<contextRoot>REGULATORIO</contextRoot>
+							<bundleFileName>regulatorio-web.war</bundleFileName>
+						</webModule>
+					</modules>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

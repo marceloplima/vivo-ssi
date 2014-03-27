@@ -1,0 +1,52 @@
+<ui:composition template="../template/padrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+		<h:form id="formcadgercomp">
+			<h:panelGroup>
+				<h:panelGroup layout="block" id="pgpessoas" class="area-input-25">
+					<h:panelGroup class="label-campo">Grupo Módulo:</h:panelGroup>
+						<h:selectOneMenu id="grupomodulo"
+							value="#{gerentesComprasMB.participante.gerentecompra.grupoModulo}"
+							styleClass="select-form">
+							<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+							<f:selectItems value="#{gerentesComprasMB.recuperarGruposModulos()}" var="gm" itemLabel="#{gm.cnmgrupomodulo}" />
+							<f:converter converterId="grupomoduloConv" />
+						</h:selectOneMenu>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="area-input-10">
+					<h:panelGroup layout="block" class="label-campo"></h:panelGroup>
+					<h:commandButton value="Definir Grupo Gerentes Compras">
+						<a4j:ajax event="click" execute="@form" render=":panelexibesucesso :panelexibealerta :panelexibeerro"
+								  listener="#{gerentesComprasMB.definir()}" />
+					</h:commandButton>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="clear"/>
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup><h:selectBooleanCheckbox value="#{gerentesComprasMB.participante.gerentecompra.flaglp1}"/></h:panelGroup>	
+					<h:panelGroup styleClass="label-check">LP1 - Infraestrutura de Redes</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>
+					<h:panelGroup><h:selectBooleanCheckbox value="#{gerentesComprasMB.participante.gerentecompra.flaglp2a}"/></h:panelGroup>	
+					<h:panelGroup styleClass="label-check">LP2 - Serviços</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>
+					<h:panelGroup><h:selectBooleanCheckbox value="#{gerentesComprasMB.participante.gerentecompra.flaglp2b}"/></h:panelGroup>	
+					<h:panelGroup styleClass="label-check">LP2 - Redes e Obras</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>
+					<h:panelGroup><h:selectBooleanCheckbox value="#{gerentesComprasMB.participante.gerentecompra.flaglp3}"/></h:panelGroup>	
+					<h:panelGroup styleClass="label-check">LP3 - Produtos do Mercado</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>
+					<h:panelGroup><h:selectBooleanCheckbox value="#{gerentesComprasMB.participante.gerentecompra.flaglp4}"/></h:panelGroup>	
+					<h:panelGroup styleClass="label-check">LP4 - Sistemas de Informação</h:panelGroup>
+				</h:panelGroup>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+		</h:form>
+	</ui:define>
+</ui:composition>

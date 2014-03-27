@@ -1,0 +1,65 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formabrerc">
+		<rich:popupPanel id="popupabrerc" domElementAttachment="form" modal="true" width="500" height="340" zindex="2" show="#{aberturaRcMB.exibepopup}" showWhenRendered="#{aberturaRcMB.exibepopup}">
+			<f:facet name="header">
+				<h:outputText value="Abertura de Requisição de Compra" />
+			</f:facet>
+	        
+	        <ui:include src="autoredatacorrente.xhtml"/>
+			<h:panelGroup layout="block" class="clear"/>
+	        <h:panelGroup layout="block" class="area-input-100" id="rcpg">
+				<h:panelGroup  class="label-campo">RC:</h:panelGroup>	
+					<h:inputTextarea styleClass="textarea-form-2-linhas" id="rc" value="#{aberturaRcMB.evento.arc.cnmrc}" maxlength="255"
+						required="true" requiredMessage="Campo RC é de preenchimento obrigatório.">
+						<h:message for="rc" />
+					</h:inputTextarea>
+				</h:panelGroup> 
+																
+				<h:panelGroup layout="block" class="clear"/>
+					     
+				<h:panelGroup layout="block" styleClass="alinhaBotao">
+					<h:commandButton value="Efetuar Abertura de RC">
+						<f:ajax render="@form" 
+								event="click"
+								listener="#{aberturaRcMB.preGravar()}"
+								execute="rc"/>
+					</h:commandButton>	        
+					<h:commandButton value="Fechar">
+						<f:ajax render="@form" 
+								event="click"
+								listener="#{aberturaRcMB.desabilitaModal()}"/>
+					</h:commandButton>	        
+				</h:panelGroup>
+		</rich:popupPanel>
+		
+		<rich:popupPanel id="popupconfirmaaberturarc" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{aberturaRcMB.exibeconfirmacao}" showWhenRendered="#{aberturaRcMB.exibeconfirmacao}">
+	
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma registro do RC ?</h:panelGroup>	
+				<h:commandButton value="Sim">
+			    	<a4j:ajax 
+						listener="#{aberturaRcMB.gravar()}"                
+						render="@form :demandaform:idorcamentocapex :demandaform:idorcamentos" 
+						oncomplete="#{demandasMB.alteraOrcamentoComRC(aberturaRcMB.orcamentoSelecionado)}"
+						event="click"		
+					/>					
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax render="@form" 
+					event="click"
+					listener="#{aberturaRcMB.desabilitaConfirmacao()}"/>
+				</h:commandButton>	
+			</h:panelGroup>	
+	
+		</rich:popupPanel>
+	</h:form>
+</html>

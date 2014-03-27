@@ -1,0 +1,45 @@
+<ui:composition template="../template/padrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+
+		<h:form id="formcadmodfuncomp">
+
+			<!-- INCLUIR FUNCIONALIDADE -->
+			<a4j:outputPanel id="panelincfunc">
+				<h:panelGroup rendered="#{!cadFuncionalidadesMB.edit}">
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup class="label-campo">Módulo:</h:panelGroup>
+						<a4j:outputPanel id="panelmodfunc">
+							<h:selectOneMenu id="addmodulofunc"
+								value="#{cadFuncionalidadesMB.funcionalidade.modulofuncionalidade}"
+								styleClass="select-form">
+								<f:selectItems value="#{cadModulosMB.modulos}" var="modulo"
+									itemValue="#{modulo}" itemLabel="#{modulo.cnmmodulo}" />
+								<f:converter converterId="moduloConv" />
+							</h:selectOneMenu>
+						</a4j:outputPanel>
+					</h:panelGroup>
+
+					<h:panelGroup layout="block" styleClass="area-input-25">
+						<h:panelGroup layout="block" styleClass="label-campo"></h:panelGroup>
+						<h:commandButton value="Buscar">
+							<a4j:ajax event="click"
+								execute="addmodulofunc addtfunc cnmfuncionalidade cnmaction addfuncpai"
+								render="panelfunc panelfuncpai funccomp"
+								listener="#{cadFuncionalidadesMB.add()}" />
+						</h:commandButton>
+					</h:panelGroup>
+				</h:panelGroup>
+			</a4j:outputPanel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

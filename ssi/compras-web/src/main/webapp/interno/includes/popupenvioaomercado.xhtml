@@ -1,0 +1,88 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formenvioaomercado" method="post">
+ 	
+		<rich:popupPanel id="popupenvioaomercado" domElementAttachment="form" modal="true" width="500" height="400" zindex="2" show="#{envioAoMercadoMB.exibeenvioaomercado}" showWhenRendered="#{envioAoMercadoMB.exibeenvioaomercado}">
+			<f:facet name="header">
+	            <h:outputText value="Envio ao Mercado" />
+	        </f:facet>
+		       	
+				<ui:include src="autoredatacorrente.xhtml"></ui:include>
+						
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">Data de envio:</h:panelGroup>	
+					<rich:calendar styleClass="input-form calendar-form"
+						id="dataenvio" 
+						value="#{envioAoMercadoMB.evento.em.dataenvio}" 
+						datePattern="dd/MM/yyyy"
+						locale="pt_BR"
+						converter="dateToCalendarConverter" 
+						required="true" 
+						requiredMessage="Data do envio obrigatório."
+						enableManualInput="true"
+						oninputkeypress="javascript: mascara(this, data_mask);"
+						maxlength="10">						
+				
+						<h:message for="dataenvio"/>					
+					
+					</rich:calendar>
+				</h:panelGroup>							
+							
+						
+				<h:panelGroup layout="block" class="area-input-100">
+					<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+					<h:inputTextarea styleClass="textarea-form-2-linhas" 
+						id="comentarioenvio" 
+						value="#{envioAoMercadoMB.evento.cnmcomentario}">
+																
+						<h:message for="comentarioenvio" />
+					
+					</h:inputTextarea>
+				</h:panelGroup> 
+				<h:panelGroup layout="block" class="clear"/>
+				     
+				<h:panelGroup layout="block" styleClass="alinhaBotao">
+					<h:commandButton value="Enviar">
+						<f:ajax render="@form popupconfirmaenvioaomercado" 
+									event="click"
+									listener="#{envioAoMercadoMB.preEnviaAoMercado()}"
+									execute="comentarioenvio dataenvio"/>
+					</h:commandButton>	        
+					<h:commandButton value="Fechar" onclick="#{rich:component('popupenvioaomercado')}.hide(); return false;"/>       
+				</h:panelGroup>
+		</rich:popupPanel>
+		
+	<!-- ############## POPUP DE CONFIRMAÇÃO ################ -->
+		
+	<rich:popupPanel id="popupconfirmaenvioaomercado" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{envioAoMercadoMB.exibeconfirmaenvioaomercado}" showWhenRendered="#{envioAoMercadoMB.exibeconfirmaenvioaomercado}">
+
+		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Confirma envio ao mercado ?</h:panelGroup>	
+			<h:commandButton value="Sim">
+				<f:ajax 
+					render="@form :demandaform" 
+					execute="@form" 
+					listener="#{envioAoMercadoMB.efetuarEnvioAoMercado()}"
+					immediate="true"/>
+			</h:commandButton>
+			<h:commandButton value="Não">
+				<f:ajax 
+					render="@form" 
+					listener="#{envioAoMercadoMB.fechaConfirmacaoEnvioAoMercado()}"
+					immediate="true"/>
+			</h:commandButton>
+			 	
+		</h:panelGroup>	
+
+	</rich:popupPanel>		
+		
+	</h:form>
+</html>

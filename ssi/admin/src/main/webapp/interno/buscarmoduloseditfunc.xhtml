@@ -1,0 +1,44 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<rich:popupPanel id="popupaltmodfunc" modal="true" width="950" height="100" domElementAttachment="form" zindex="3" style="text-align:left;">
+		<f:facet name="header">
+	    	<h:outputText value="Edição de Funcionalidade" />
+	    </f:facet>
+	    <f:facet name="controls">
+			<h:outputLink value="#" onclick="#{rich:component('popupaltmodfunc')}.hide(); return false;">
+				<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+			</h:outputLink>
+       	</f:facet>
+		<h:panelGroup rendered="#{buscarFuncionalidadesMB.edit}">
+			Módulo: <h:selectOneMenu id="editmodulofunc" value="#{buscarFuncionalidadesMB.funcionalidade.modulofuncionalidade}" styleClass="select-form">
+						<f:selectItems value="#{buscarFuncionalidadesMB.modulos}" var="modulo" itemLabel="#{modulo.cnmmodulo}"/>
+						<f:converter converterId="moduloConv"/>
+					</h:selectOneMenu>
+			Tipo da Funcionalidade: <h:selectOneMenu id="edittfunc" value="#{buscarFuncionalidadesMB.funcionalidade.tipofuncionalidade}" styleClass="select-form">
+										<f:selectItems value="#{buscarFuncionalidadesMB.tiposfuncionalidade}" var="tipofuncionalidade" itemValue="#{tipofuncionalidade}" itemLabel="#{tipofuncionalidade.cnmtipofuncionalidade}"/>
+										<f:converter converterId="tfuncConv"/>
+									</h:selectOneMenu>
+			Funcionalidade: <h:inputText id="editmodfunc" value="#{buscarFuncionalidadesMB.funcionalidade.cnmfuncionalidade}" />
+			Alvo: <h:inputText id="editcnmaction" value="#{buscarFuncionalidadesMB.funcionalidade.cnmaction}" />
+			<a4j:outputPanel id="editpanelfuncpai">
+				Funcionalidade Pai: <h:selectOneMenu id="editfuncpai" value="#{buscarFuncionalidadesMB.funcionalidade.funcionalidadepai}" styleClass="select-form">
+										<f:selectItem itemLabel="Nenhum" noSelectionOption="true"/>
+										<f:selectItems value="#{buscarFuncionalidadesMB.funcionalidadespai}" var="funcionalidade" itemValue="#{funcionalidade}" itemLabel="#{funcionalidade.cnmfuncionalidade}"/>
+										<f:converter converterId="funcConv"/>
+									</h:selectOneMenu>
+			</a4j:outputPanel>
+							
+			<h:commandButton value="Alterar">
+				<f:ajax event="click" execute="editmodulofunc edittfunc editmodfunc editcnmaction editpanelfuncpai" render="dtmodfunc" listener="#{buscarFuncionalidadesMB.save()}"/>
+			</h:commandButton>
+		</h:panelGroup>
+	</rich:popupPanel>
+</html>

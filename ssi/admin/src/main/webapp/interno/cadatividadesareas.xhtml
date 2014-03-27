@@ -1,0 +1,50 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+
+			<h:form id="formcadmodfunpessoa">
+				<rich:tabPanel id="tabpanelcadpes" switchType="client">
+					
+					<rich:tab id="tab1" header="Atividade">
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Atividade:</h:panelGroup>	
+							<h:inputText styleClass="input-form"/>
+						</h:panelGroup>								
+					    <h:panelGroup layout="block" class="clear"></h:panelGroup>
+					    
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo"></h:panelGroup>	
+					    	<h:commandLink value="Adicionar outra atividade"/>
+						</h:panelGroup>	
+					    <h:panelGroup layout="block" class="clear"></h:panelGroup>
+					    
+					</rich:tab>
+					
+					<rich:tab id="tab2" header="Área">
+						<h:panelGroup layout="block"  class="area-input-100" style="text-align:left;">
+							<h:panelGroup layout="block"  class="label-campo">Áreas:</h:panelGroup>
+					    	<rich:tree value="#{areasTreeMB.stationNodes}" var="station" toggleType="client" >  
+								<rich:treeNode iconLeaf="none">  
+									<h:selectBooleanCheckbox/><h:outputText value="#{station}" />  
+								</rich:treeNode>  
+							</rich:tree>
+						</h:panelGroup>							
+					    <h:panelGroup layout="block" class="clear"></h:panelGroup>
+					</rich:tab>
+					
+				</rich:tabPanel>
+				<h:panelGroup layout="block" class="botao-cadastra-tabs">
+					<h:commandButton value="Cadastrar"/> 
+				</h:panelGroup>	
+				
+			</h:form>
+  	</ui:define>
+</ui:composition>

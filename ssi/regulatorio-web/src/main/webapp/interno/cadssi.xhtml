@@ -1,0 +1,785 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich"
+ 	xmlns:hh="http://balusc.net/jsf/html">
+
+	<ui:define name="conteudosistema">
+	
+     <h:form id="demandaform" method="post" enctype="multipart/form-data">
+        
+        <h:panelGroup layout="block" styleClass="alinhaBotao">
+       
+        	<h:panelGroup layout="block" style="z-index:1" styleClass="item-acoes">
+	            <h:panelGroup styleClass="acoes">	            
+	            	<rich:dropDownMenu>
+		                <f:facet name="label">
+		                    <h:panelGroup>
+		                        <h:outputText value="Ações" />
+		                    </h:panelGroup>
+		                </f:facet>	            	
+
+	            		<rich:menuItem rendered="#{permissoesMB.verificarConclusao()}" 
+	            			label="Concluir SSI" 
+	            			actionListener="#{concluirMB.mostrarConcluirSSI()}" 
+	            			render=":panelexibesucesso :formconcluir:concluir @form :panelexibeerro" 
+	            			mode = "ajax"
+	            			/>
+	            			
+	            		<rich:menuItem rendered="false"
+	            			mode="ajax"
+	            			label="Salvar" 
+	            			action="#{demandasMB.salvarGenerico()}" 
+	            			render=":panelexibesucesso :panelexibeerro @form :demandaform:acompanhamento :demandaform:idlogsdemanda" 
+	            			execute="@form"
+	            			/>
+
+	            		<rich:menuItem rendered="#{permissoesMB.verificarPermissoesEmissor()}"
+	            			mode="ajax"
+	            			label="Salvar como Rascunho" 
+	            			action="#{demandasMB.salvarComoRascunho()}" 
+	            			render=":panelexibesucesso :panelexibeerro @form :demandaform:acompanhamento :demandaform:idlogsdemanda" 
+	            			execute="@form"
+	            			/>
+	            		
+	            		
+	            		<rich:menuItem rendered="#{permissoesMB.verificarEncaminharSSI()}" 
+	            			label="Encaminhar" 
+	            			mode="ajax" 
+	            			actionListener="#{encaminharMB.preEncaminhar()}" 
+	            			render=":formencaminhar:popupconfirmaencaminharssi :panelexibeerro @form :demandaform:acompanhamento :demandaform:idlogsdemanda" 
+	            			execute="@form"/>
+
+	            		<rich:menuItem rendered="#{permissoesMB.verificarAnaliseAreaRequisitada()}" 
+	            			label="Efetuar Análise" 
+	            			mode="ajax" 
+	            			actionListener="#{analisePelaAreaRequisitadaMB.mostrarTelaAnalise()}" 
+	            			render=":formanalisearearequisitada:analarearequisitada" />
+
+	            		<rich:menuItem rendered="#{permissoesMB.verificarInformacoesComplementares()}" 
+	            			label="Responder Informações Complementares" 
+	            			mode="ajax" 
+	            			actionListener="#{informacoesComplementaresMB.mostraTelaInfoComplementares()}" 
+	            			render=":forminformacoescomplementares:informacoescomplementares" />
+	            		
+	            		<rich:menuItem label="Cancelar" 
+	            			rendered="#{permissoesMB.verificarCancelarSSI()}" 
+	            			action="#{demandasMB.mostraTelaCancelar()}"  
+	            			mode="ajax" 
+	            			render=":formcancelademanda:cancelssi"/>
+	            			
+	            	</rich:dropDownMenu>
+
+				</h:panelGroup>
+			</h:panelGroup>
+
+  <!-- ######################### FIM - SINALIZAÇÃO DE SUCESSO ########################### -->  
+        	
+		</h:panelGroup>
+		<h:panelGroup layout="block" class="clear"/>
+		    
+     	<rich:tabPanel id="tabpanelcadcompra">
+     	
+			<rich:tab id="tab1" header="Dados de Abertura">
+			
+				<rich:collapsiblePanel header="Instrução" switchType="client" id="idPanelDadosBasicos">
+				
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Solicitante:</h:panelGroup>	
+						<h:outputText value="#{demandasMB.demandas.autor.cnmnome}" id="autordemanda" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="area-input-50" id="status">
+						<h:panelGroup  class="label-campo">Status:</h:panelGroup>
+						<h:outputText value="#{demandasMB.demandas.status.cnmstatus}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+				
+					<h:panelGroup layout="block" class="area-input-25" id="pgnumerodademanda">
+						<h:panelGroup  class="label-campo">Número SSI:</h:panelGroup>	
+						<h:outputText value="#{demandasMB.demandas.cnmnumero}" id="numerodemanda" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" id="pgcopiados" class="area-input-25">
+						<h:panelGroup class="label-campo">Copiados</h:panelGroup>
+						
+						<h:commandButton value="#{permissoesMB.verificarCopiados()?'Incluir Copiados':'Visualizar'}">
+							<f:ajax render=":formcopiados:idcopiados"
+							event="click"
+							listener="#{demandasCopiadosMB.mostrarTelaCopiados()}"
+							immediate="true"/>
+						</h:commandButton>
+						
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="area-input-25" id="pgnumeroassociado">
+						<h:panelGroup  class="label-campo">SSI Associada:</h:panelGroup>	
+						<h:outputText value="#{demandasMB.demandas.numeroassociado}" id="numeroassociado" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>
+						<h:outputText value="#{demandasMB.demandas.datacadastro.time}" id="datacadastrodemanda" styleClass="label-campo destaque">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+						</h:outputText>
+					</h:panelGroup>
+					
+				    <h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>					
+					
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Regionais:</h:panelGroup>
+						
+						<h:selectManyCheckbox id="regionais" 
+							value="#{demandasMB.regionaischecked}"
+							rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+							styleClass="select-form">
+							
+   							<f:selectItems 
+   								value="#{regionaisMB.regionais}" 
+   								var="r"
+   								itemLabel="#{r.cnmregional}" 
+   								itemValue="#{r}" />
+   								
+   								<f:converter converterId="regionalConverter"/>
+   								
+   						</h:selectManyCheckbox>
+
+						<h:selectManyCheckbox id="regionaisoutput" 
+							value="#{demandasMB.regionaischecked}"
+							rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+							styleClass="select-form">
+							
+   							<f:selectItems
+   								itemDisabled="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+   								value="#{regionaisMB.regionais}" 
+   								var="r"
+   								itemLabel="#{r.cnmregional}" 
+   								itemValue="#{r}" />
+   								
+   								<f:converter converterId="regionalConverter"/>
+   								
+   						</h:selectManyCheckbox>
+   						           						           						         		                    		                					
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Área Solicitante:</h:panelGroup>
+						
+						<h:selectOneMenu id="areasolicitante" 
+							value="#{demandasMB.demandas.areasolicitante}"
+							rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+							styleClass="select-form"
+							valueChangeListener="#{atividadesRedesMB.setaArea}">
+							<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+   							<f:selectItems 
+   								value="#{areasMB.areaspessoas}" 
+   								var="a"
+   								itemLabel="#{a.cnmsiglaarea} / #{a.cnmdescarea}"
+   								itemValue="#{a}" />
+   								
+   								<f:converter converterId="areaConv"/>
+   								<a4j:ajax event="valueChange" execute="@this" render="panelexibeativ"/>
+   								
+   						</h:selectOneMenu>
+   						
+   						<h:outputText rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" value="#{demandasMB.demandas.areasolicitante.cnmsiglaarea}" id="areasolicitanteoutput" styleClass="label-campo destaque"/>
+						         		                    		                						
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Área Requisitada:</h:panelGroup>
+						
+						<h:selectOneMenu id="arearequisitada"
+							value="#{demandasMB.demandas.arearequisitada}"
+							rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+							styleClass="select-form">
+							<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+   							<f:selectItems 
+   								value="#{areasMB.areas}" 
+   								var="a"
+   								itemLabel="#{a.cnmsiglaarea} / #{a.cnmdescarea}" 
+   								itemValue="#{a}" />
+   								
+   								<f:converter converterId="areaConv"/>
+   								
+   						</h:selectOneMenu>
+   						
+   						<h:outputText rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" value="#{demandasMB.demandas.arearequisitada.cnmsiglaarea}" id="arearequisitadaoutput" styleClass="label-campo destaque"/>
+						         		                    		                						
+					</h:panelGroup>
+		
+				    <h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+					<a4j:outputPanel id="panelexibeativ">
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Título:</h:panelGroup>
+							<h:selectOneMenu id="atividade" 
+								value="#{demandasMB.demandas.atividade}"
+								rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+								styleClass="select-form"
+								valueChangeListener="#{rotasMB.setarAtividade}">
+								<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+	   							<f:selectItems 
+	   								value="#{atividadesRedesMB.recuperarporarea()}" 
+	   								var="a"
+	   								itemLabel="#{a.cnmatividade}" 
+	   								itemValue="#{a}" />
+	   								<a4j:ajax event="valueChange" execute="@this" render="panelexiberota"/>
+	   								<f:converter converterId="atividadeConv"/>
+	   								
+	   						</h:selectOneMenu>
+	   						
+							<h:outputText rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" value="#{demandasMB.demandas.atividade.cnmatividade}" id="atividadeoutput" styleClass="label-campo destaque"/>	   						
+	   						
+						</h:panelGroup>
+					</a4j:outputPanel>
+															
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Prazo para Execução:</h:panelGroup>	
+			            <rich:calendar
+			                rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+			                styleClass="calendar-form" 
+			                id="datafinalcontratacaodemanda" 
+			                value="#{demandasMB.demandas.prazoexecucao}" 
+			                datePattern="dd/MM/yyyy"
+							locale="pt_BR"
+			                converter="dateToCalendarConverter"
+			                enableManualInput="true"
+							oninputkeypress="javascript: mascara(this, data_mask);"
+							maxlength="10"/>
+			                
+						<h:outputText value="#{demandasMB.demandas.prazoexecucao.time}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque">
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>							
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Prioridade:</h:panelGroup>
+						
+						<h:selectOneMenu id="propriedade" 
+							value="#{demandasMB.demandas.prioridade}"
+							rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+							styleClass="select-form">
+							
+							<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+   							<f:selectItems 
+   								value="#{prioridadesMB.prioridades}" 
+   								var="p"
+   								itemLabel="#{p.cnmprioridade}" 
+   								itemValue="#{p}" />
+   								
+   								<f:converter converterId="prioridadeConverter"/>
+   								
+   						</h:selectOneMenu>
+   						
+   						<h:outputText value="#{demandasMB.demandas.prioridade.cnmprioridade}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+								                    		                    		                						
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-25"/>
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Telefone:</h:panelGroup>	
+						<h:inputText id="telefone" value="#{demandasMB.demandas.cnmtelefone}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="input-form" onkeypress="javascript: mascara(this, tel_mask);"  maxlength="15"/>
+						<h:outputText value="#{demandasMB.demandas.cnmtelefone}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Motivação:</h:panelGroup>
+						
+						<h:selectOneMenu id="motivacao"
+							value="#{demandasMB.demandas.motivacao}"
+							rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+							styleClass="select-form">
+							<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+   							<f:selectItems 
+   								value="#{motivacoesMB.recuperarMotivacoesRedes()}" 
+   								var="m"
+   								itemLabel="#{m.cnmmotivacao}" 
+   								itemValue="#{m}" />
+   								
+   								<f:converter converterId="motivacaoConv"/>
+   								
+   						</h:selectOneMenu>
+						        
+						<h:outputText rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" value="#{demandasMB.demandas.motivacao.cnmmotivacao}" id="motivacaooutput" styleClass="label-campo destaque"/>						        
+						         		                    		                						
+					</h:panelGroup>
+				    
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Referência:</h:panelGroup>	
+						<h:inputText id="referencia" value="#{demandasMB.demandas.cnmreferencia}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="input-form" />
+						<h:outputText value="#{demandasMB.demandas.cnmreferencia}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				</rich:collapsiblePanel>
+				
+				<rich:collapsiblePanel header="Detalhes" switchType="client" id="iddetalhes">
+					<h:panelGroup layout="block" class="area-input-100">
+						<h:panelGroup  class="label-campo">Objetivo:</h:panelGroup>	
+						<h:inputTextarea styleClass="textarea-form-2-linhas" id="objetivo" value="#{demandasMB.demandas.cdsobjetivo}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+						<h:inputTextarea styleClass="textarea-form-2-linhas" readonly="true" value="#{demandasMB.demandas.cdsobjetivo}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-100">
+						<h:panelGroup  class="label-campo">Área de Aplicação:</h:panelGroup>	
+						<h:inputTextarea styleClass="textarea-form-2-linhas" id="areaaplicacao" value="#{demandasMB.demandas.cdsareaaplicacao}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+						<h:inputTextarea styleClass="textarea-form-2-linhas" readonly="true" value="#{demandasMB.demandas.cdsareaaplicacao}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-100">
+						<h:panelGroup  class="label-campo">Cenário Atual:</h:panelGroup>	
+						<h:inputTextarea styleClass="textarea-form-2-linhas" id="cenarioatual" value="#{demandasMB.demandas.cdscenarioatual}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+						<h:inputTextarea styleClass="textarea-form-2-linhas" readonly="true" value="#{demandasMB.demandas.cdscenarioatual}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-100">
+						<h:panelGroup  class="label-campo">Cenário Proposto:</h:panelGroup>	
+						<h:inputTextarea styleClass="textarea-form-2-linhas" id="cenarioproposto" value="#{demandasMB.demandas.cdscenarioproposto}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+						<h:inputTextarea styleClass="textarea-form-2-linhas" readonly="true" value="#{demandasMB.demandas.cdscenarioproposto}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-100">
+						<h:panelGroup  class="label-campo">Atividades Para Execução:</h:panelGroup>	
+						<h:inputTextarea styleClass="textarea-form-2-linhas" id="atividadesexec" value="#{demandasMB.demandas.cdsatividadesexecucao}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+						<h:inputTextarea styleClass="textarea-form-2-linhas" readonly="true" value="#{demandasMB.demandas.cdsatividadesexecucao}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-100">
+						<h:panelGroup  class="label-campo">Recursos Necessários:</h:panelGroup>	
+						<h:inputTextarea styleClass="textarea-form-2-linhas" id="recursosnec" value="#{demandasMB.demandas.cdsrecursosnecessarios}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+						<h:inputTextarea styleClass="textarea-form-2-linhas" readonly="true" value="#{demandasMB.demandas.cdsrecursosnecessarios}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-100">
+						<h:panelGroup  class="label-campo">Testes Recomendados:</h:panelGroup>	
+						<h:inputTextarea styleClass="textarea-form-2-linhas" id="testesrec" value="#{demandasMB.demandas.cdstestesrecomendados}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+						<h:inputTextarea styleClass="textarea-form-2-linhas" readonly="true" value="#{demandasMB.demandas.cdstestesrecomendados}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+					</h:panelGroup>
+				    
+				    <h:panelGroup layout="block" class="clear"/>
+				</rich:collapsiblePanel>
+				
+				<rich:collapsiblePanel header="Identificação de Impacto" switchType="client" id="idimpacto">
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Tarifação?</h:panelGroup>	
+		                <h:selectOneRadio styleClass="label-radio" value="#{demandasMB.demandas.flagtarifacao}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+		                    <f:selectItem itemLabel="Sim" itemValue="true"/>
+		                    <f:selectItem itemLabel="Não" itemValue="false"/>
+		                </h:selectOneRadio>
+		                <h:outputText value="Sim" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.flagtarifacao==true}" styleClass="label-campo destaque"/>
+		                <h:outputText value="Não" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.flagtarifacao==false}" styleClass="label-campo destaque"/>						
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Detalhe:</h:panelGroup>	
+						<h:inputText id="detalhetarifacao" value="#{demandasMB.demandas.cnmdetalhetarifacao}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="input-form" />
+						<h:outputText value="#{demandasMB.demandas.cnmdetalhetarifacao}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Sinalização?</h:panelGroup>	
+		                <h:selectOneRadio styleClass="label-radio" value="#{demandasMB.demandas.flagsinalizacao}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+		                    <f:selectItem itemLabel="Sim" itemValue="true"/>
+		                    <f:selectItem itemLabel="Não" itemValue="false"/>
+		                </h:selectOneRadio>
+		                <h:outputText value="Sim" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.flagsinalizacao==true}" styleClass="label-campo destaque"/>
+		                <h:outputText value="Não" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.flagsinalizacao==false}" styleClass="label-campo destaque"/>						
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Detalhe:</h:panelGroup>	
+						<h:inputText id="detalhesinalizacao" value="#{demandasMB.demandas.cnmdetalhesinalizacao}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="input-form" />
+						<h:outputText value="#{demandasMB.demandas.cnmdetalhesinalizacao}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Segurança?</h:panelGroup>	
+		                <h:selectOneRadio styleClass="label-radio" value="#{demandasMB.demandas.flagseguranca}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+		                    <f:selectItem itemLabel="Sim" itemValue="true"/>
+		                    <f:selectItem itemLabel="Não" itemValue="false"/>
+		                </h:selectOneRadio>
+		                <h:outputText value="Sim" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.flagseguranca==true}" styleClass="label-campo destaque"/>
+		                <h:outputText value="Não" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.flagseguranca==false}" styleClass="label-campo destaque"/>						
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Detalhe:</h:panelGroup>	
+						<h:inputText id="detalheseguranca" value="#{demandasMB.demandas.cnmdetalheseguranca}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="input-form" />
+						<h:outputText value="#{demandasMB.demandas.cnmdetalheseguranca}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Alarmística?</h:panelGroup>	
+		                <h:selectOneRadio styleClass="label-radio" value="#{demandasMB.demandas.flagalarmistica}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+		                    <f:selectItem itemLabel="Sim" itemValue="true"/>
+		                    <f:selectItem itemLabel="Não" itemValue="false"/>
+		                </h:selectOneRadio>
+		                <h:outputText value="Sim" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.flagalarmistica==true}" styleClass="label-campo destaque"/>
+		                <h:outputText value="Não" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.flagalarmistica==false}" styleClass="label-campo destaque"/>						
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Detalhe:</h:panelGroup>	
+						<h:inputText id="detalhealarmistica" value="#{demandasMB.demandas.cnmdetalhealarmistica}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="input-form" />
+						<h:outputText value="#{demandasMB.demandas.cnmdetalhealarmistica}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Dados de Tráfego?</h:panelGroup>	
+		                <h:selectOneRadio styleClass="label-radio" value="#{demandasMB.demandas.flagdadostrafego}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+		                    <f:selectItem itemLabel="Sim" itemValue="true"/>
+		                    <f:selectItem itemLabel="Não" itemValue="false"/>
+		                </h:selectOneRadio>
+		                <h:outputText value="Sim" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.flagdadostrafego==true}" styleClass="label-campo destaque"/>
+		                <h:outputText value="Não" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.flagdadostrafego==false}" styleClass="label-campo destaque"/>						
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Detalhe:</h:panelGroup>	
+						<h:inputText id="detalhedadostrafego" value="#{demandasMB.demandas.cnmdadostrafego}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="input-form" />
+						<h:outputText value="#{demandasMB.demandas.cnmdadostrafego}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Aviso à Imprensa?</h:panelGroup>	
+		                <h:selectOneRadio styleClass="label-radio" value="#{demandasMB.demandas.flagavisoimprensa}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+		                    <f:selectItem itemLabel="Sim" itemValue="true"/>
+		                    <f:selectItem itemLabel="Não" itemValue="false"/>
+		                </h:selectOneRadio>
+		                <h:outputText value="Sim" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.flagavisoimprensa==true}" styleClass="label-campo destaque"/>
+		                <h:outputText value="Não" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.flagavisoimprensa==false}" styleClass="label-campo destaque"/>						
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Detalhe:</h:panelGroup>	
+						<h:inputText id="detalheavisoimprensa" value="#{demandasMB.demandas.cnmdetalheavisoimprensa}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="input-form" />
+						<h:outputText value="#{demandasMB.demandas.cnmdetalheavisoimprensa}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				    
+				    <h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup class="label-campo">Responsável técnico:</h:panelGroup>
+						<h:outputText value="#{demandasMB.demandas.responsaveltecnico.cnmnome}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+				    
+				    <h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Complexidade</h:panelGroup>	
+		                <h:outputText value="#{demandasMB.demandas.complexidade}" styleClass="label-campo destaque"/>						
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+				</rich:collapsiblePanel>
+			
+				<rich:collapsiblePanel header="Rotas" switchType="client" id="idrotas">
+					<a4j:region>
+						<a4j:outputPanel id="panelexiberota">
+							<h:panelGroup layout="block" class="area-input-100">
+					
+								<rich:dataTable keepSaved="true" rows="4" id="dtrotas" value="#{demandasMB.demandas.rotas}" var="rota" rendered="#{rotasMB.exiberota}">
+						            <f:facet name="header">
+										<rich:columnGroup>
+											<rich:column style="text-align:left">
+												<h:outputText value="Rota"/>
+											</rich:column>
+											<rich:column style="text-align:left">
+												<h:outputText value="Descrição"/>
+											</rich:column>
+											
+										</rich:columnGroup>
+									</f:facet>
+									<rich:column style="text-align:left;">
+										<h:outputText value="#{rota.cnmrota}"/>
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<h:outputText value="#{rota.cnmdescricao}"/>
+									</rich:column>
+									<rich:column style="text-align:right;">
+										<a4j:commandButton image="${pageContext.request.contextPath}/imagens/busca_azul.png"
+														   id="buttondetrota" 
+														   value="Detalhes" 
+														   rendered="true"
+														   action="#{rotasMB.habilitarPopupLupa(rota)}"
+														   render=":formrotaslupa:panelrotaslupa"/>
+													   
+										<a4j:commandButton id="buttonaltrota"
+														   image="${pageContext.request.contextPath}/imagens/alterar_ok.png"
+														   value="Alterar" 
+														   rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"
+														   action="#{rotasMB.habilitarEditar(rota)}"
+														   render=":formrotas:panelrotas"/>
+														   
+										<a4j:commandButton id="buttonremover"
+														   image="${pageContext.request.contextPath}/imagens/remover_ok.png"
+														   rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+														   value="Remover"
+														   action="#{rotasMB.preRemover(rota)}"
+														   render=":formrotas:popupconfirmaexcluirrota"/>
+									</rich:column>
+									
+									<f:facet name="footer">
+						            	<rich:dataScroller id="scrollermodfuncbottom"/>
+						            </f:facet>
+						        </rich:dataTable>						
+											
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="clear"/>
+							<h:panelGroup layout="block" class="area-input-25" rendered="#{rotasMB.exiberota}">
+								<h:panelGroup  class="label-campo">
+									<h:commandButton value="Nova Rota" rendered="#{rotasMB.exiberota}">
+										<f:ajax 
+											render=":formrotas:panelrotas" 
+											event="click"
+											listener="#{rotasMB.habilitarPopup()}"
+											immediate="true"
+											execute="@this"/>								
+									</h:commandButton>
+								</h:panelGroup>
+							</h:panelGroup>
+						</a4j:outputPanel>
+					</a4j:region>
+				    <h:panelGroup layout="block" class="clear"/>
+				</rich:collapsiblePanel>
+				
+			</rich:tab>
+			<rich:tab id="tabanexos" header="Anexos">
+
+				<h:panelGroup layout="block" class="area-input-15" style="text-align:left;">
+					<h:panelGroup styleClass="acoes-tab-interna">
+						<rich:dropDownMenu style="z-index:5;">
+			                <f:facet name="label">
+			                    <h:panelGroup>
+			                        <h:outputText value="Anexar" />
+			                    </h:panelGroup>
+			                </f:facet>	            		
+		            		
+		            		<rich:menuItem
+		            			label="Cálculo de Risco"
+		            			mode="ajax" 
+		            			actionListener="#{uploadBean.habilitaUpload('1')}" 
+		            			render=":formupload:popupupload"
+		            		/>
+		            		
+		            		<rich:menuItem
+		            			label="Matriz de Responsabilidades"
+		            			mode="ajax" 
+		            			actionListener="#{uploadBean.habilitaUpload('2')}" 
+		            			render=":formupload:popupupload"
+		            		/>
+		            		
+		            		<rich:menuItem
+		            			label="Solicitação de Acesso"
+		            			mode="ajax" 
+		            			actionListener="#{uploadBean.habilitaUpload('3')}" 
+		            			render=":formupload:popupupload"
+		            		/>
+		            		
+		            		<rich:menuItem
+		            			label="Procedimento"
+		            			mode="ajax" 
+		            			actionListener="#{uploadBean.habilitaUpload('4')}" 
+		            			render=":formupload:popupupload"
+		            		/>
+		            		
+		            	</rich:dropDownMenu>
+	            	</h:panelGroup>
+				
+				</h:panelGroup>
+			
+				<h:panelGroup layout="block" class="area-input-100">
+					<h:panelGroup  class="label-campo"></h:panelGroup>	
+			        <rich:dataTable keepSaved="true" id="dtresanexos" value="#{anexosMB.dataModel}" var="anexo">
+			            <f:facet name="header">
+							<rich:columnGroup>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Arquivo" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Data" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Tipo" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Ações" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{anexo.cnmcaminhoanexo}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{anexo.datacadastro.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{anexo.tipoanexo.cnmtipoanexo}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:commandButton image="${pageContext.request.contextPath}/imagens/download_ok.png" id="buttondownload" value="Download" action="#{downloadFileMB.downloadFile(anexo)}" immediate="true"/>
+							<h:graphicImage value="${pageContext.request.contextPath}/imagens/remover_nao.png" rendered="#{!permissoesMB.verificarPodeRemoverAnexo(anexo)}" id="buttonremovernao"/>
+							<h:commandButton image="${pageContext.request.contextPath}/imagens/remover_ok.png" rendered="#{permissoesMB.verificarPodeRemoverAnexo(anexo)}" id="buttonremover" value="Remover">
+								<f:ajax 
+									listener="#{anexosMB.preRemover(anexo)}" 
+									render="@form"
+									immediate="true"/>
+							</h:commandButton>
+						</rich:column>
+						<f:facet name="footer">
+			            	<rich:dataScroller id="scrollermodfuncbottom"/>
+			            </f:facet>
+			        </rich:dataTable>						
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="clear"/>
+								
+			</rich:tab>
+			
+			<rich:tab id="tabeventos" header="Eventos">
+					<rich:collapsiblePanel header="Eventos" switchType="client">
+						<a4j:region>
+							<h:panelGroup layout="block" class="area-input-100">
+								<rich:dataTable keepSaved="true" rows="3" id="dtreseventos" value="#{eventosMB.dataModel}" var="evento">
+									<f:facet name="header">
+										<rich:columnGroup>
+											<rich:column style="text-align:left;">
+												 <h:outputText value="Data" />
+											</rich:column>
+											<rich:column style="text-align:left;">
+												<h:outputText value="Evento" />
+											</rich:column>
+											<rich:column style="text-align:left;">
+												<h:outputText value="Autor" />
+											</rich:column>
+											<rich:column style="text-align:left;">
+												<h:outputText value="Parecer" />
+											</rich:column>
+										</rich:columnGroup>
+									</f:facet>
+									<rich:column style="text-align:left;">
+										<h:outputText value="#{evento.datacadastro.time}">
+											<f:convertDateTime pattern="dd/MM/yyyy"/>
+										</h:outputText>
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<h:outputText value="#{evento.status.cnmstatus}"/>
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<h:outputText value="#{evento.autor.cnmnome}"/>
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<h:outputText value="#{evento.parecer.cnmparecer}"/>
+									</rich:column>
+									<f:facet name="footer">
+						            	<rich:dataScroller id="scrollermodfuncbottom"/>
+						            </f:facet>
+						        </rich:dataTable>						
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="clear"/>
+						</a4j:region>			
+					</rich:collapsiblePanel>
+			</rich:tab>
+			<rich:tab id="acompanhamento" header="Acompanhamento">
+			
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">Onde está:</h:panelGroup>	
+					<h:outputText styleClass="label-form destaque" value="#{demandasMB.comQuemEsta}" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="clear"/>
+				
+				<h:panelGroup layout="block" class="area-input-100">
+					<h:panelGroup  class="label-campo">Por onde passou:</h:panelGroup>	
+						<rich:dataTable rows="20" rowClasses="odd-row, even-row" value="#{demandasMB.logsDemanda}" var="log" id="idlogsdemanda">
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Data" />
+				                </f:facet>
+				                <h:outputText value="#{log.datacadastro}" converter="dateToCalendarConverter" />
+				            </rich:column>
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Autor" />
+				                </f:facet>
+				                <h:outputText value="#{log.autor.cnmnome}" />
+				            </rich:column>
+				           	<rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Descrição" />
+				                </f:facet>
+				                <h:outputText value="#{log.cnmdescricao}" />
+				            </rich:column>			            
+						</rich:dataTable>
+				</h:panelGroup>	
+				<h:panelGroup layout="block" class="clear"/>							
+			
+			</rich:tab>
+			
+		</rich:tabPanel>
+		
+		<rich:popupPanel id="popupconfirmaapagaranexo" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{anexosMB.exibeconfirmacaoapagar}" showWhenRendered="#{anexosMB.exibeconfirmacaoapagar}">
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma remoção do anexo ?</h:panelGroup>	
+				<h:commandButton value="Sim">
+					<f:ajax 
+						render="@form :demandaform"
+						listener="#{anexosMB.removerAnexo()}"
+						immediate="true"/>
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render="@form" 
+						listener="#{anexosMB.fecharPopupConfirmacaoRemoverAnexo()}"
+						immediate="true"/>
+				</h:commandButton>
+				 	
+			</h:panelGroup>	
+		</rich:popupPanel>
+				
+	</h:form>
+	<ui:include src="includes/popuprotas.xhtml"/>
+	<ui:include src="includes/popuprotaslupa.xhtml"/>
+	<ui:include src="includes/popupencaminhar.xhtml"/>
+	<ui:include src="includes/popupanalisepelaarearequisitada.xhtml"/>
+	<ui:include src="includes/popupinformacoescomplementares.xhtml"/>
+	<ui:include src="includes/popupconcluir.xhtml"/>
+	<ui:include src="includes/popupcopiados.xhtml"/>
+	<ui:include src="includes/upload.xhtml"/>
+	
+  	</ui:define>
+</ui:composition>

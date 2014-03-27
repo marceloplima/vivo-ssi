@@ -1,0 +1,61 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+	<rich:popupPanel id="popupeditararea" domElementAttachment="form" modal="true" width="600" height="220" zindex="2" show="#{buscarAreasMB.exibepopupeditar}" showWhenRendered="#{buscarAreasMB.exibepopupeditar}">
+		<f:facet name="header">
+			<h:outputText value="Edição de Área" />
+		</f:facet>
+		<f:facet name="controls">
+	        <h:outputLink value="#" onclick="#{rich:component('popupeditararea')}.hide(); return false;">
+	        	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+	    	</h:outputLink>
+        </f:facet>
+        
+        <h:panelGroup layout="block" id="pgprepaiedit"
+					  styleClass="area-input-25">
+			<h:panelGroup layout="block" styleClass="label-campo">Área Pai:</h:panelGroup>
+			<a4j:outputPanel id="editpanelareapai">
+				<h:selectOneMenu id="editareapai"
+					value="#{buscarAreasMB.obj.areapai}"
+					styleClass="select-form">
+					<f:selectItem itemLabel="Nenhum" noSelectionOption="true" />
+					<f:selectItems value="#{buscarAreasMB.objs}"
+						var="obj" itemValue="#{obj}"
+						itemLabel="#{obj.cnmsiglaarea}" />
+						<f:converter converterId="areaConv" />
+				</h:selectOneMenu>
+			</a4j:outputPanel>
+		</h:panelGroup>
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Sigla da Área:</h:panelGroup>	
+			<h:inputText id="cnmsiglaareaedit" styleClass="input-form" value="#{buscarAreasMB.obj.cnmsiglaarea}"/>
+		</h:panelGroup>					
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Descrição:</h:panelGroup>	
+			<h:inputText id="cnmdescareaedit" styleClass="input-form" value="#{buscarAreasMB.obj.cnmdescarea}" size="35"/>
+		</h:panelGroup>
+		<h:panelGroup layout="block" id="pgpapelareaedit" class="area-input-25">
+			<h:panelGroup class="label-campo">Papel:</h:panelGroup>
+			<h:selectOneMenu id="papelareaedit"
+				value="#{buscarAreasMB.obj.papelarea}"
+				styleClass="select-form">
+				<f:selectItem itemLabel="Nenhum" noSelectionOption="true" />
+					<f:selectItems value="#{papeisAreasMB.buscar()}"
+						var="obj" itemValue="#{obj}"
+						itemLabel="#{obj.cnmpapelarea}" />
+						<f:converter converterId="papelareaConv" />
+			</h:selectOneMenu>
+		</h:panelGroup>
+		<h:panelGroup layout="block" class="clear"/>	
+		<h:commandButton value="Alterar">
+			<f:ajax render="@form" execute="@form" listener="#{buscarAreasMB.alterar()}"/>
+		</h:commandButton>	
+	</rich:popupPanel>
+</html>

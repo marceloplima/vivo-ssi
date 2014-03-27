@@ -1,0 +1,63 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+	<rich:popupPanel id="popupdetev_16" domElementAttachment="form" modal="true" width="500" height="620" zindex="2" show="#{eventosMB.exibepopupdetev_16}" showWhenRendered="#{eventosMB.exibepopupdetev_16}">
+		<f:facet name="header">
+			<h:outputText value="Evento de Finalização de Leilão" />
+		</f:facet>
+		<f:facet name="controls">
+	        <h:outputLink value="#" onclick="#{rich:component('popupdetev_16')}.hide(); return false;">
+	        	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+	    	</h:outputLink>
+        </f:facet>
+        <h:outputText value="Autor: "/>
+        <h:outputText value="#{eventosMB.evento.eleilao.autor.cnmnome}" />
+        <h:panelGroup layout="block" class="clear"/>
+        <h:outputText value="Data de Cadastro: "/>
+        <h:outputText value="#{eventosMB.evento.eleilao.datacadastro}">
+        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+        </h:outputText>
+        <h:panelGroup layout="block" class="clear"/>
+        <h:outputText value="Status: "/>
+        <h:outputText value="#{eventosMB.evento.eleilao.status.cnmstatus}"/>
+        <h:panelGroup layout="block" class="clear"/>
+        <h:outputText value="Modalidade: "/>
+        <h:outputText value="#{eventosMB.evento.eleilao.modalidade.cnmmodalidade}"/>
+        <h:panelGroup layout="block" class="clear"/>
+        <h:outputText value="Data do Leilão "/>
+        <h:outputText value="#{eventosMB.evento.eleilao.dataleilao}">
+        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+        </h:outputText>
+        <h:panelGroup layout="block" class="clear"/>
+        <h:outputText value="Hora do Leilão: "/>
+        <h:outputText value="#{eventosMB.evento.eleilao.cnmhoraleilao}"/>
+        <h:panelGroup layout="block" class="clear"/>
+        <h:outputText value="Tipo do Leilão: "/>
+        <h:outputText value="#{eventosMB.evento.eleilao.tipoleilao.cnmtipoleilao}"/>
+        <h:panelGroup layout="block" class="clear"/>
+        <h:outputText value="Valor Fator Inicial: "/>
+        <h:outputText value="#{eventosMB.evento.eleilao.nnrvalorfatorinicial}"/>
+        <h:panelGroup layout="block" class="clear"/>
+        <h:outputText value="Valor Inicial: "/>
+        <h:outputText value="#{eventosMB.evento.eleilao.nnrvalorinicial}"/>
+        <h:panelGroup layout="block" class="clear"/>
+        <h:outputText value="Valor Salvaguarda "/>
+        <h:outputText value="#{eventosMB.evento.eleilao.nnrsalvaguarda}"/>
+        <h:panelGroup layout="block" class="clear"/>
+        <h:outputText value="Decréscimo"/>
+        <h:outputText value="#{eventosMB.evento.eleilao.nnrdecrescimoacrescimo}"/>
+        <h:panelGroup layout="block" class="clear"/>
+        <h:outputText value="Lance Vencedor"/>
+        <h:outputText value="#{eventosMB.evento.eleilao.nnrlancevencedor}"/>
+        <h:panelGroup layout="block" class="clear"/>
+        <h:outputText value="Comentário"/>
+        <h:outputText value="#{eventosMB.evento.eleilao.cnmcomentario}"/>
+	</rich:popupPanel>
+</html>

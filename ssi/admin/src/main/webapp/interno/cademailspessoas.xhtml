@@ -1,0 +1,45 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+			
+       		<h:form id="formcadpessoas">
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">Pessoas:</h:panelGroup>	
+			          <h:selectOneMenu styleClass="select-form">
+			              <f:selectItem itemValue="0" itemLabel="Option 1" />
+			              <f:selectItem itemValue="1" itemLabel="Option 2" />
+			              <f:selectItem itemValue="2" itemLabel="Option 3" />
+			              <f:selectItem itemValue="3" itemLabel="Option 4" />
+			              <f:selectItem itemValue="4" itemLabel="Option 5" />
+			          </h:selectOneMenu>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo">e-Mail:</h:panelGroup>	
+					<h:inputText styleClass="input-form"/>
+				</h:panelGroup>	
+				
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo"></h:panelGroup>	
+					<h:selectOneRadio value="#">
+						<f:selectItem itemValue="Principal" itemLabel="Principal" />
+					</h:selectOneRadio>
+				</h:panelGroup>							
+			    <h:panelGroup layout="block" class="clear"></h:panelGroup>
+			    
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup  class="label-campo"></h:panelGroup>	
+			    	<h:commandLink value="Adicionar outro e-Mail"/>
+				</h:panelGroup>	
+			    <h:panelGroup layout="block" class="clear"></h:panelGroup>
+				
+			</h:form>
+  	</ui:define>
+</ui:composition>

@@ -1,0 +1,88 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formanaliseaquisicao">
+		<rich:popupPanel id="popupanaliseaquisicao" domElementAttachment="form" modal="true" width="500" height="400" zindex="2" show="#{analiseAquisicaoMB.exibepopupanaliseaquisicao}" showWhenRendered="#{analiseAquisicaoMB.exibepopupanaliseaquisicao}">
+			<f:facet name="header">
+				<h:outputText value="Análise de Aquisição" />
+			</f:facet>
+	        
+	        <ui:include src="autoredatacorrente.xhtml"/>
+			<h:panelGroup layout="block" class="clear"/>
+	        
+	        <h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Parecer:</h:panelGroup>
+					<h:selectOneMenu id="parecer" 
+						value="#{analiseAquisicaoMB.evento.egenerico.parecer}"
+						styleClass="select-form" required="true" requiredMessage="Parecer é obrigatório.">
+						<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+						<f:selectItems value="#{analiseAquisicaoMB.recuperarPareceres()}" var="parecer" itemLabel="#{parecer.cnmparecer}"/>
+						<f:converter converterId="parecerConv"/>
+						<h:message for="parecer" />
+					</h:selectOneMenu>
+				</h:panelGroup>								
+	        <h:panelGroup layout="block" class="clear"/>
+	        
+	        <h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Analista de aquisição:</h:panelGroup>
+					<h:selectOneMenu id="analistaaquisicao" 
+						value="#{demandasMB.demandas.analistaDeAquisicaoResponsavel}" styleClass="select-form">
+						<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+						<f:selectItems value="#{analiseAquisicaoMB.analistasAquisicao}" var="analista" itemLabel="#{analista.cnmnome}"/>
+						<f:converter converterId="pessoaConv"/>
+						<h:message for="analistaaquisicao" />
+					</h:selectOneMenu>
+				</h:panelGroup>								
+	        <h:panelGroup layout="block" class="clear"/>	        
+	        
+	        <h:panelGroup layout="block" class="area-input-100" id="idcomentarioanaliseaquisicaopanel">
+				<h:panelGroup  class="label-campo">Comentários:</h:panelGroup>	
+					<h:inputTextarea styleClass="textarea-form-2-linhas" id="idcomentarioanaliseaquisicao" value="#{analiseAquisicaoMB.evento.cnmcomentario}" maxlength="255">
+						<h:message for="idcomentarioanaliseaquisicao" />
+					</h:inputTextarea>
+				</h:panelGroup> 
+																
+				<h:panelGroup layout="block" class="clear"/>
+					     
+				<h:panelGroup layout="block" styleClass="alinhaBotao">
+					<h:commandButton value="Efetuar Análise de Aquisição">
+						<f:ajax render="@form" 
+								event="click"
+								listener="#{analiseAquisicaoMB.preAnaliseAquisicao()}"
+								execute="parecer idcomentarioanaliseaquisicao analistaaquisicao"/>
+					</h:commandButton>	        
+					<h:commandButton value="Fechar">
+						<f:ajax render="@form" 
+								event="click"
+								listener="#{analiseAquisicaoMB.desabilitaAnaliseAquisicao()}"/>
+					</h:commandButton>	        
+				</h:panelGroup>
+		</rich:popupPanel>
+		
+		<rich:popupPanel id="popupconfirmaanaliseaquisicao" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{analiseAquisicaoMB.exibeconfirmacaoanaliseaquisicao}" showWhenRendered="#{analiseAquisicaoMB.exibeconfirmacaoanaliseaquisicao}">
+	
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma a Análise da Aquisição?</h:panelGroup>	
+				<h:commandButton value="Sim">
+					<f:ajax 
+						render="@form :panelexibesucesso :demandaform :demandaform:acompanhamento :demandaform:idlogsdemanda :formvaltec :menuform:panelbandeirasverdes :menuform:panelbandeirasvermelhas" 
+						execute="parecer idcomentarioanaliseaquisicao" 
+						listener="#{analiseAquisicaoMB.efetuarAnaliseAquisicao()}"/>
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax render="@form :formvaltec" 
+					event="click"
+					listener="#{analiseAquisicaoMB.desabilitaConfirmaAnaliseAquisicao()}"/>
+				</h:commandButton>	
+			</h:panelGroup>	
+	
+		</rich:popupPanel>
+	</h:form>
+</html>

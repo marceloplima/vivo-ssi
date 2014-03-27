@@ -1,0 +1,1405 @@
+@font-face {
+ font-family: officina;
+ src: url("../../font/officinaserifitcttbook.eot") /* EOT file for IE */
+}
+@font-face {
+ font-family: officina;
+ src: url("../../font/officinaserifitcttbook.ttf") /* TTF file for CSS3 browsers */
+}		
+@font-face {
+ font-family: officina;
+ src: url("../../font/officinaserifitcttbook.woff") /*  */
+}		
+@font-face {
+ font-family: officina;
+ src: url("../../font/officinaserifitcttbook.otf") /*  */
+}
+
+@font-face {
+ font-family: itc;
+ src: url("../../font/ITC.eot") /* EOT file for IE */
+}
+@font-face {
+ font-family: itc;
+ src: url("../../font/ITC.ttf") /* TTF file for CSS3 browsers */
+}		
+@font-face {
+ font-family: itc;
+ src: url("../../font/ITC.woff") /*  */
+}		
+@font-face {
+ font-family: itc;
+ src: url("../../font/ITC.otf") /*  */
+}
+
+
+body {
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:12px;
+	color:#000;
+	border:0;
+	padding:0;
+	margin:0;
+	background:#eee;
+}
+
+.pagina {
+	width:100%;
+	margin:0;
+	padding:0;
+}
+
+p {
+	color:#333;
+	font-size:13px;
+	font-family: Arial;
+	margin:0;
+}
+
+.topo {
+	width:100%;
+	height:40px;
+
+	background: #0085f4; /* Old browsers */
+	background: -moz-linear-gradient(top,  #0085f4 0%, #0066cc 99%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0085f4), color-stop(99%,#0066cc)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #0085f4 0%,#0066cc 99%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #0085f4 0%,#0066cc 99%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #0085f4 0%,#0066cc 99%); /* IE10+ */
+	background: linear-gradient(to bottom,  #0085f4 0%,#0066cc 99%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0085f4', endColorstr='#0066cc',GradientType=0 ); /* IE6-9 */
+
+    position: fixed;
+    top: 0;
+    z-index: 2;
+}
+
+	.topo-itens {
+		width:984px;
+		margin:0 auto;
+		position:relative;
+	}
+
+	.logomarca {
+		width:115px;
+		height:29px;
+	}
+	.usuario {
+		float:left;
+		margin: -19px 0 0 272px;
+		font-size:0.9em;	
+	}
+	
+	.flag-topo {
+	    left: 50%;
+	    margin-left: -125px;
+	    position: absolute;
+	    top: 0;
+	    width: 250px;
+	}
+		.grade-topo {
+		    float: left;
+		    height: 40px;
+		    width: 40px;		
+		}
+		
+		.bandeira-topo {
+			width:20px;
+			height:20px;
+			background: url('../../imagens/flags_m.png') no-repeat 0 -10px;
+			margin:10px 0 0 20px;
+			float:left;
+		}
+		.balao {
+			height:30px;
+			background:url('../../imagens/barrinha.png') no-repeat 0 -50px;
+		    padding: 2px 0 0 10px;
+		    width: 26px;
+			float:left;
+			margin: 9px 0 0 2px;
+		}
+		.exclamacao-topo {
+			width:20px;
+			height:20px;
+			background: url('../../imagens/flags_m.png') no-repeat -20px -10px;
+			margin:10px 0 0 7px;
+			float:left;	
+		}
+		
+	.menu-usuario {
+	    background: url("../../imagens/barrinha.png") no-repeat scroll -4px -8px transparent;
+	    color: #FFFFFF;
+	    font-weight: bold;
+	    height: 21px;
+	    margin: 10px 0 0;
+	    padding-left: 36px;
+	    padding-top: 5px;
+	    position: absolute;
+	    right: 0;
+	    text-align: left;
+	    top: 0;
+	    width: 155px;
+	}
+	
+	.menu-usuario input{
+		background-color:transparent !important;
+		background-image:none !important;
+		background: transparent !important;
+		color: #fff !important;
+	}
+	
+	.menu-usuario .rf-sel-btn-arrow {
+		background: url("../../imagens/setas.png") no-repeat scroll -3px -63px transparent;;
+	}
+	
+	.menu-usuario .rf-sel-btn {
+		background-color:transparent !important;
+		background-image:none !important;
+		background: transparent !important;
+		border-left:0;
+	}
+
+.menu {
+	width:100%;
+	height: 102px;
+	border-bottom:1px solid #ccc;
+	
+	background: #dedede; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffffff 0%, #e6e6e6 65%, #dcdcdc 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(65%,#e6e6e6), color-stop(100%,#dcdcdc)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#e6e6e6 65%,#dcdcdc 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffffff 0%,#e6e6e6 65%,#dcdcdc 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffffff 0%,#e6e6e6 65%,#dcdcdc 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #ffffff 0%,#e6e6e6 65%,#dcdcdc 100%); /* W3C */
+	/*
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#dcdcdc',GradientType=0 );
+	*/
+	
+	-webkit-box-shadow:  1px 1px 4px 1px rgba(120, 120, 120, 0.5);       
+    box-shadow:  1px 1px 4px 2px rgba(120, 120, 120, 0.5);	
+    
+	position: fixed;
+    top: 40px;
+    z-index: 2;
+}
+	.menu-itens {
+		width:984px;
+		margin:0 auto;
+	}
+	.titulo-sistema {
+		float:left;
+		margin-top: 19px;
+		font-family:officina !important;
+		font-size:20px !important;
+		font-weight:bold !important;
+		color:#333 !important;
+	}
+	
+	.titulo-sistema input{
+		background-color:transparent !important;
+		background-image:none !important;
+		background: transparent !important;
+		color:#333 !important;
+		font-family:officina !important;
+		font-size:20px !important;
+		font-weight:bold !important;
+		padding: 2px 5px !important;
+		width:auto !important;
+	}
+	
+	.titulo-sistema input.rf-sel-inp {
+		width: 200px !important;
+	}
+	
+	.titulo-sistema .rf-sel-btn-arrow {
+		background: url("../../imagens/setas.png") no-repeat scroll -64px -59px transparent;;
+	}
+	
+	.titulo-sistema .rf-sel-btn {
+		background-color:transparent !important;
+		background-image:none !important;
+		background: transparent !important;
+		border-left:0;
+		margin-top: 4px;
+	}
+	
+	.titulo-sistema .rf-sel-opt, .titulo-sistema .rf-sel-lst-cord {
+		font-family:officina !important;
+		font-size:20px !important;
+		font-weight:bold !important;	
+	}
+	
+	.titulo-sistema .rf-sel-sel {
+	
+	}
+	
+	.logo-modulo {
+		width:44px;
+		height:44px;
+		border-radius:5px;
+		margin: 10px 10px 6px 0px;
+		float:left;
+	}
+	.menu-barra {
+		margin-top: 6px;
+	}
+	.flag-verde {
+		float:left;
+		width:20px;
+		height:20px;
+		background:url('../../imagens/flags_m.png') no-repeat 0 -89px;
+		margin: 22px 0 0 33px;
+	}	
+	.num-verde {
+		float:left;
+		font-family:Arial;
+		color:#3cb133;
+		font-size:16pt;
+		margin:19px 0 0 5px;
+	}	
+	.exclamacao-vermelho{
+		float:left;
+		width:20px;
+		height:20px;
+		background:url('../../imagens/flags_m.png') no-repeat -25px -89px;
+		margin: 22px 0 0 11px;
+	}	
+	.num-vermelho {
+		float:left;
+		font-family:Arial;
+		color:#e53e3e;
+		font-size:16pt;
+		margin:19px 0 0 5px;
+	}	
+
+
+.conteudo {
+	background:#eee;
+	width:100%;
+	margin-top:132px;
+	margin-bottom: 170px;
+}
+
+	.miolo {
+	    margin: 0 auto;
+    	width: 984px;
+    	padding-top: 17px;
+    	position:relative;	
+	}
+
+.rodape {
+	width:100%;
+	height: 70px;
+	position: fixed;
+	bottom:0;
+	z-index:1;
+	background: #eeeeee; /* Old browsers */
+	background: -moz-linear-gradient(top,  #eeeeee 0%, #ffffff 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #eeeeee 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #eeeeee 0%,#ffffff 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #eeeeee 0%,#ffffff 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #eeeeee 0%,#ffffff 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+	
+	-webkit-box-shadow:  1px 1px 4px 1px rgba(120, 120, 120, 0.5);       
+    box-shadow:  1px 1px 4px 2px rgba(120, 120, 120, 0.5);	
+}
+		.logomarca-vivo {
+			position:absolute;
+			top:0;
+			right:10%;
+		}
+		.logomarca-telefonica {
+			position:absolute;
+			top:0;
+			left:10%;
+		}
+		.acesso-seguro {
+			width:220px;
+			font-size: 0.8em;
+			color:#999;
+			position:absolute;
+			top:24px;
+			margin-left:-110px;
+			left:50%;		
+		}
+
+
+
+/* #################################### INÃƒï¿½CIO - ELEMENTOS ESSENCIAIS ##########################################*/
+
+a {
+	font-size: 0.9em;
+	text-decoration:none;
+	color:#666;	
+}
+
+a:hover {
+	color:#000;
+}
+
+.titulo {
+	color:#3e3e3e;
+	font-size:1.2em;
+	font-weight:bold;
+	margin: 8px 0;
+}
+
+.breadcrumb label{
+	font-size:1em;
+}
+
+.breadcrumb label a:hover{
+	text-decoration:underline;
+}
+
+.detalhe-item {
+	font-size:0.8em;
+}
+
+.divisoria {
+	width:100%;
+	height:2px;
+	border-bottom:1px dotted #ccc;
+	margin:5px 0;
+}
+
+.sub-titulo-esquerda {
+	font-size:0.9em;
+	font-weight:bold;
+	float:left;
+	margin-bottom:5px;
+}
+
+.sub-titulo-direita {
+	font-size:0.9em;
+	font-weight:bold;
+	float:right;
+	margin-bottom:5px;
+}
+
+.alerta {
+	width:100%;
+	min-height: 73px;
+	background: #eec33f;
+	color:#333 !important;
+	font-size:14pt;
+	font-family:Arial;
+	position:fixed;
+	bottom:0;
+	left:0;
+	z-index:9998;
+}
+	.alerta-simbolo {
+		width:50px;
+		height:50px;
+		background:url('../../imagens/mensagem_icones.png')no-repeat 0 -100px;
+		float:left;
+		margin-top:12px;
+		margin-left:50px;
+	}
+	
+	.alerta-texto {
+		margin-top:26px;
+	}	
+	
+	#msgsalerta .rf-ulst-itm {
+	    color: #333 !important;
+	    font-size: 14px;
+	    list-style: none outside none;
+	    margin: 10px 0 0 10px;
+	}	
+
+.erro {
+	width:100%;
+	min-height: 73px;
+	background: #d54141;
+	color:#fff;
+	font-size:14pt;
+	font-family:Arial;
+	position:fixed;
+	bottom:0;
+	left:0;
+	z-index:9998;
+}
+	.erro-simbolo {
+		width:50px;
+		height:50px;
+		background:url('../../imagens/mensagem_icones.png')no-repeat 0 -50px;
+		float:left;
+		margin-top:12px;
+		margin-left:50px;		
+	}
+	
+	.erro-texto li {
+	    color: #FFFFFF !important;
+	    font-size: 16px;
+	    list-style: none outside none;
+	    margin: 9px 0 0 68px;
+	}
+	
+	.msgserro {
+	    color: #FFFFFF !important;
+	    font-size: 14px;
+	    list-style: none outside none;
+	    margin: 28px 0 0 30px;
+	}
+	
+.sucesso {
+	width:100%;
+	min-height: 73px;
+	background: #54b65c;
+	color:#fff;
+	font-size:14pt;
+	font-family:Arial;
+	position:fixed;
+	bottom:0;
+	left:0;
+	z-index:9998;
+}
+	.sucesso-simbolo {
+		width:50px;
+		height:50px;
+		background:url('../../imagens/mensagem_icones.png')no-repeat 0 0;
+		float:left;
+		margin-top:12px;
+		margin-left:50px;		
+	}
+	
+	.sucesso-texto {
+		margin-top:26px;
+	}
+	
+	#msgssucesso .rf-ulst-itm {
+	    color: #FFFFFF !important;
+	    font-size: 14px;
+	    list-style: none outside none;
+	    margin: 10px 0 0 10px;
+	}
+
+.lista {
+	margin-top: 28px;
+}
+
+.fechar {
+	position:absolute;
+	right:5px;
+	top:5px;
+	cursor:pointer;
+}
+/* #################################### FIM - ELEMENTOS ESSENCIAIS ##########################################*/
+
+
+/* #################################### INÃƒï¿½CIO - ITENS DE FORMULÃƒï¿½RIO ##########################################*/
+
+input[type="submit"] {
+	background-color: #0066CC !important;
+    background-image: none !important;
+	border-radius:3px !important;
+	padding: 2px 10px !important;
+	color:#fff !important;
+	border:0 !important;
+}
+
+.botao-cadastra-tabs input[type="submit"] {
+	background-color: #0066CC !important;
+    background-image: none !important;
+	border-radius:3px !important;
+	padding: 12px 10px !important;
+	color:#fff !important;
+	border:0 !important;
+}
+
+.fundo-branco {
+	background:white;
+	padding:20px;
+	text-align:left;
+	border:1px solid #c8c8c8;
+	border-radius:4px;
+}
+
+.bt-topo {
+	float:right;
+	margin:-22px 25px 0 0;	
+}
+.bt-topo button {
+	margin-bottom:5px;
+}
+
+
+.linha-divisoria { /*CRIAÃƒâ€¡ÃƒÆ’O DE UMA LINHA MERAMENTE ESTÃƒï¿½TICA PARA DIVISÃƒÆ’O DE CONTEÃƒÅ¡DOS DENTRO DE UM FORM */
+	width:100%;
+	height:1px;
+	background-color:#999;
+	margin:10px 0;	
+}
+
+.clear {
+	clear:both;
+	display:block;	
+}	
+
+	/* ########### INÃƒï¿½CIO - TAMANHO PRÃƒâ€°-DEFINIDO EM CAMPOS DE FORMULÃƒï¿½RIOS FLEXÃƒï¿½VEIS ############ */
+	
+	.area-input-100 { /* input com 2/4 de tamanho */
+		width:98.5%;
+		float:left;
+		margin:5px 1.5% 5px 0;
+		position:relative;
+	}
+	
+	.area-input-75 {
+		width:73.5%;
+		float:left;
+		margin:5px 1.5% 0 0;
+		position:relative;
+	}
+	.area-input-75-token { /* USADO PARA A TELA DE TOKEN DE LOGIN*/
+		width:75.5%;
+		float:left;
+		margin:5px 1.5% 0 0;
+		position:relative;
+	}
+	
+	.area-input-50 { /* input com 2/4 de tamanho */
+		width:48.5%;
+		float:left;
+		margin:5px 1.5% 0 0;
+		position:relative;
+	}
+	
+	
+	.area-input-40{ /* input com 1/4 de tamanho */
+		width:38.9%;
+		float:left;
+		margin:5px 1.5% 0 0;
+		position:relative;
+	}
+	
+	
+	.area-input-30{ /* input com 1/4 de tamanho */
+		width:31.8%;
+		float:left;
+		margin:5px 1.5% 0 0;
+		position:relative;
+	}
+	
+	.area-input-25{ /* input com 1/4 de tamanho */
+		width:23.5%;
+		float:left;
+		margin:5px 1.5% 0 0;
+		position:relative;
+	}
+	.area-input-15 { /* input com 1/6 de tamanho */
+		width:15.15%;
+		float:left;
+		margin:5px 1.5% 0 0;
+		position:relative;
+	}
+	.area-input-10 { /* */
+		width:11%;
+		float:left;
+		margin:5px 1.5% 0 0;
+		position:relative;
+		text-align:left;
+	}
+	
+	.area-input-8 { /* */
+		width:8%;
+		float:left;
+		margin:5px 1.5% 0 0;
+		position:relative;
+	}
+	.area-input-5 { /* */
+		width:4.05%;
+		float:left;
+		margin:5px 1.5% 0 0;
+		position:relative;
+	}
+	
+	.area-input-3 { /* */
+		width:1.5%;
+		float:left;
+		margin:5px 1.5% 0 0;
+		position:relative;
+	}
+	
+	/* ########### FIM - TAMANHO PRÃƒâ€°-DEFINIDO EM CAMPOS DE FORMULÃƒï¿½RIOS FLEXÃƒï¿½VEIS ############ */
+
+
+	/* ###########
+	
+		INÃƒï¿½CIO - DEFINIÃƒâ€¡ÃƒÆ’O DE REGIÃƒÆ’O PARA FORMS (O INTUITO Ãƒâ€° DEFINIR COLUNAS PARA DETERMINADOS FORMULÃƒï¿½RIOS)
+	
+	 ############ */
+	
+	
+	.area-form-100 { /* */
+		width:100%;
+		float:left;
+	}
+	.area-form-100-fundo-cinza { /* CLASSE PARA DEFINIR UM BLOCO COM FUNDO CINZA */
+		width:98.5%;
+		float:left;
+		padding:10px;
+		background:#f1f1f1;
+	}
+		
+	.area-form-85 { /*  */
+		width:85%;
+		float:left;
+	}	
+	.area-form-75 { /* */
+		width:75%;
+		float:left;
+	}	
+	.area-form-70 { /*  */
+		width:70%;
+		float:left;
+	}	
+	
+	.area-form-60 { /* */
+		width:60%;
+		float:left;
+	}	
+	.area-form-50 { /* */
+	    float: left;
+	    margin-right: 5px;
+	    width: 49.4%;
+	}	
+	.area-form-40 { /* */
+		width:40%;
+		float:left;
+	}	
+	.area-form-30 { /* */
+		width:30%;
+		float:left;
+	}
+	
+	.area-form-25 { /* */
+		width:25%;
+		float:left;
+	}	
+	.area-form-15 { /* */
+		width:15%;
+		float:left;
+	}	
+	
+	
+	/* ###########
+	
+		FIM - DEFINIÃƒâ€¡ÃƒÆ’O DE REGIO PARA FORMS (O INTUITO Ãƒâ€° DEFINIR COLUNAS PARA DETERMINADOS FORMULÃƒï¿½RIOS)
+	
+	 ############ */	
+	
+
+	/* ########### INÃƒï¿½CIO - COMPONENTES NECESSÃƒï¿½RIOS A CADA CAMPO DE UM FORMULÃƒï¿½RIO ############ */
+	
+	.alinhaBotao {
+		float:right; 
+		margin:10px 11px 10px 0;
+	}
+	
+	.alinhaBotaoEsq {
+		float:left; 
+		margin:10px 11px 15px 0;
+	}
+	
+	.alinhaBotao input[type="submit"]{
+		margin-left:5px;
+	}
+	
+	.alinhaBotaoEsq input[type="submit"]{
+		margin-left:5px;
+	}
+	
+	.label-campo {
+		width:100% !important;
+		display:block;
+		color:#666;
+		font-size: 11px;
+		height:14px;
+		white-space:nowrap;
+		text-align: left;
+		margin-bottom: 4px;
+		font-family: Arial;
+	}
+	
+	.label-check {
+		color:#333;
+		font-size:12px;
+		font-family: Arial;
+	}
+	
+	.destaque {
+	    background: none repeat scroll 0 0 #DDDDDD;
+	    color: #333333 !important;
+	    font-size: 14px !important;
+	    height: 19px;
+	    padding: 3px 0;
+	    width: 200px;
+	}
+
+	.input-form { /* input com ocupaÃƒÂ§ÃƒÂ£o total da ÃƒÂ¡rea */
+		width:100%;
+		float:left;
+		height:24px;
+		font-size:1em !important;
+		color:#333333 !important;
+		padding: 0 2px;
+		border-radius: 4px;
+		background-image:none !important;
+		
+		-webkit-box-shadow:  1px 1px 4px 1px rgba(120, 120, 120, 0.5);       
+        box-shadow:  1px 1px 4px 2px rgba(120, 120, 120, 0.5);	
+	}
+	
+	.input-form-textarea { /* input com ocupaÃƒÂ§ÃƒÂ£o total da ÃƒÂ¡rea */
+		width:100%;
+		float:left;
+		height:50px;
+		font-size:1em !important;
+		color:#333333 !important;
+		padding: 0 2px;
+		border-radius: 4px;
+		background-image:none !important;
+		
+		-webkit-box-shadow:  1px 1px 4px 1px rgba(120, 120, 120, 0.5);       
+        box-shadow:  1px 1px 4px 2px rgba(120, 120, 120, 0.5);	
+	}
+
+	.input-form-login { /* input com ocupaÃƒÂ§ÃƒÂ£o total da ÃƒÂ¡rea */
+		width:100%;
+		float:left;
+		height:34px;
+		font-size:1em !important;
+		color:#333333 !important;
+		padding: 0 2px;
+		border-radius: 4px;
+		background-image:none !important;
+		
+		-webkit-box-shadow:  1px 1px 4px 1px rgba(120, 120, 120, 0.5);       
+        box-shadow:  1px 1px 4px 2px rgba(120, 120, 120, 0.5);	
+	}
+	
+	.select-form { /*  */
+	    background-image: none !important;
+	    border-radius: 4px 4px 4px 4px;
+	    box-shadow: 1px 1px 4px 2px rgba(120, 120, 120, 0.5);
+	    color: #333333;
+	    float: left;
+	    font-size: 1em;
+	    height: 26px;
+	    padding: 3px 6px 3px 2px;
+	    width: 100%;
+	}
+
+	.select-form-login { /*  */
+	    background-image: none !important;
+	    border-radius: 4px 4px 4px 4px;
+	    box-shadow: 1px 1px 4px 2px rgba(120, 120, 120, 0.5);
+	    color: #333333;
+	    float: left;
+	    font-size: 1em;
+	    height: 37px;
+	    padding: 8px 6px 8px 2px;
+	    width: 100%;
+	}
+
+	
+	.calendar-form input{ /* input com ocupaÃƒÂ§ÃƒÂ£o total da ÃƒÂ¡rea */
+		width:100%;
+		float:left;
+		height:26px;
+		font-size:1em !important;
+		color:#333333 !important;
+		padding: 0 2px;
+		border-radius: 4px;
+		background-image:none !important;
+		
+		-webkit-box-shadow:  1px 1px 4px 1px rgba(120, 120, 120, 0.5);       
+        box-shadow:  1px 1px 4px 2px rgba(120, 120, 120, 0.5);	
+	}
+	
+	.autocomplete-form input{ /* input com ocupaÃƒÂ§ÃƒÂ£o total da ÃƒÂ¡rea */
+		width:100% !important;
+		float:left;
+		height:25px !important;
+		font-size:1em !important;
+		color:#333333 !important;
+		padding: 0 2px;
+		border-radius: 4px;
+		background-image:none !important;
+		border: 1px solid #999 !important;
+		
+		-webkit-box-shadow:  1px 1px 4px 1px rgba(120, 120, 120, 0.5);       
+        box-shadow:  1px 1px 4px 2px rgba(120, 120, 120, 0.5);	
+	}
+		
+	.calendar-form img {
+
+	}
+	.calendar-form button {
+		background:none !important;
+		background-image:none !important;
+		border:none;
+		position:absolute;
+		right:-5px;
+		top:12px;
+	}
+	
+	.textarea-form-3-linhas{ /* PARA CRIAR UM TEXTAREA COM 3 LINHAS */
+		width:100%;
+		float:left;
+		border:1px solid #cdcdcd;
+		background:#fff !important;
+		font-size:1.1em;
+		height:108px;
+		color:#333333;	
+		margin-top:4px;
+		padding: 2px 0 0 0;	
+		border-radius:4px !important;
+	}
+	.textarea-form-2-linhas { /* PARA CRIAR UM TEXTAREA COM 2 LINHAS */
+		width:100%;
+		float:left;
+		border:1px solid #cdcdcd;
+		background:#fff;
+		background-color: transparent !important;
+		background-image: none !important;
+		font-size:1.1em;
+		height:56px;
+		color:#333333;		
+		margin-top:4px;
+		padding: 2px 0 0 0;
+	}
+	.textarea-form-2-linhas li{ /* PARA CRIAR UM TEXTAREA COM 2 LINHAS */
+		list-style: none;
+	}
+
+	.textarea-form-1-linha { /* PARA CRIAR UM TEXTAREA COM 1 LINHA */
+		width:100%;
+		float:left;
+		border:1px solid #cdcdcd;
+		background:#fff;
+		font-size:1.1em;
+		height:24px;
+		color:#333333;
+		margin-top:4px;
+		padding: 2px 0 0 0;
+	}
+	
+	.botao-cadastra-tabs {
+		position:absolute;
+	    right: 11px;
+	    top: 25px;
+		
+	}	
+	
+	.ico {
+	text-align:right;
+	width:100%;
+	height:15px;
+	float:left;	
+	position:absolute;
+	top:0;
+	right:0;
+	}
+	
+	.ico img {
+	margin-left:3px;
+	}
+	
+.linha {
+	height:0.1px;
+	width:100%;
+	border-top:1px solid #c8c8c8;
+	border-bottom:1px solid #ffffff;
+	margin:10px 0;
+}
+
+ input[type="submit"], input[type="button"] {
+ 	height:24px !important;
+ 	margin-top: 1px !important;
+ 	margin-right: 5px;
+ }
+ 
+ .botao-cadastra-tabs input[type="submit"], .botao-cadastra-tabs input[type="button"] {
+ 	height:auto !important;
+ }
+ 
+ .bt-ico {
+ 	background:0066cc;
+ 	padding:4px;
+ }
+
+
+/* #################################### FIM - ITENS DE FORMULÃƒï¿½RIO ##########################################*/
+
+/* #################################### INÃƒï¿½CIO - Ãƒï¿½CONES ##########################################*/
+.ico-excluir {
+	width:16px;
+	height:16px;
+	background:url(../../imagens/acesso_seguro.png) no-repeat;
+}
+
+.ico-fechar {
+	width:24px;
+	height:24px;
+	background:url(../../imagens/actions.png) no-repeat 0 -140px;	
+}
+
+.ico-alterar {
+	width:24px;
+	height:24px;
+	background:url(../../imagens/alterar.png) no-repeat 0 -140px;	
+}
+
+.ico-rc {
+	width:24px;
+	height:24px;
+	background:url(../../imagens/comprar.png) no-repeat 0 -140px;	
+}
+
+.ico-remover-lixeira {
+	width:24px;
+	height:24px;
+	background:url(/imagens/remover.png) no-repeat 0 -140px;	
+}
+
+.ico-remover-x {
+	width:24px;
+	height:24px;
+	background:url(../../imagens/remover2.png) no-repeat 0 -140px;	
+}
+
+.ico-download {
+	width:24px;
+	height:24px;
+	background:url(../../imagens/download.png) no-repeat 0 -140px;	
+}
+
+/* #################################### FIM - Ãƒï¿½CONES ##########################################*/
+
+/* #################################### INÃ�CIO - SOBRESCRIÃ‡ÃƒO DE CLASSES DO RICHFACES ##########################################*/
+
+.acoes {
+	float:right;
+	margin-left:5px;
+	margin-top:1px;
+}
+.acoes-tab-interna {
+	float:left;
+	margin-left:5px;
+	margin-top:1px;
+}
+.acoes input.rf-sel-inp {
+	color: #FFFFFF !important;
+	width:80px !important;
+	padding: 5px !important;
+	border-radius:3px !important;
+	background: #0066cc !important;
+}
+
+.acoes .rf-sel-btn {
+    margin-left: -19px;
+    margin-top: 4px;
+    background: transparent !important;
+    border-left: 0px solid #C4C0B9;
+}
+
+.acoes .rf-sel-btn-arrow {
+	background-image: none !important;
+    background: url("../../imagens/actions.png") no-repeat scroll -3px -51px transparent !important;
+}
+
+.rf-sel-cntr {
+	border:0 !important;
+}
+
+.rf-ddm-sel {
+	background-color: #0066cc !important;
+	background-image:none !important;
+	border-radius: 3px 3px 0 0;
+	border:1px solid #0066cc !important;
+	color:#fff !important;
+	font-weight:normal !important;
+}
+
+.rf-ddm-lbl {
+    padding: 6px 5px !important;
+}
+
+	.acoes .rf-ddm-lbl {
+		background-color: #0066cc !important;
+		background-image:none !important;
+		border-radius: 3px;
+		border:2px solid #0066cc !important;
+		color:#fff !important;
+		font-weight:normal !important;
+	}
+	.acoes-tab-interna .rf-ddm-lbl {
+		background-color: #0066cc !important;
+		background-image:none !important;
+		border-radius: 3px;
+		border:2px solid #0066cc !important;
+		color:#fff !important;
+		font-weight:normal !important;
+	}
+
+.rf-ddm-lst {
+    background-color: #0066cc !important;
+    border: 0 !important;
+    color: #fff !important;
+    border-radius: 0 5px 5px 5px !important;
+}
+
+	.acoes .rf-ddm-lst {
+	    background-color: #0066cc !important;
+	    border: 0 !important;
+	    color: #fff !important;
+	    border-radius: 0 0 5px 5px !important;
+	}
+	
+	 .acoes-tab-interna .rf-ddm-lst {
+	    background-color: #0066cc !important;
+	    border: 0 !important;
+	    color: #fff !important;
+	    border-radius: 0 0 5px 5px !important;
+	}
+
+.rf-ddm-lbl-dec {
+    font-weight: normal !important;
+    font-size:12px;
+}
+
+div .rf-ddm-itm:first-child {
+	border-top:1px solid #0a76e2 !important;
+}
+
+.rf-ddm-itm-sel {
+	background-color: #0052b8 !important;
+	background-image:none !important;
+	border-top:0px solid #0a76e2 !important;
+	border-bottom:1px solid #0a76e2 !important;
+	border-left: 1px solid #0052b8!important;
+	border-right: 1px solid #0052b8!important;
+}
+.rf-ddm-itm-unsel {
+	border-top:0px solid #0a76e2 !important;
+	border-bottom:1px solid #0a76e2 !important;
+	border-left: 1px solid #0066cc!important;
+	border-right: 1px solid #0066cc!important;
+}
+
+.rf-ddm-itm-lbl {
+	color: #fff !important;
+	line-height:25px !important;
+}
+
+.rf-ddm-lst-bg {
+    background-image:none !important;
+    background-position: left center;
+    background-repeat: repeat-y;
+    padding: 10px 0 !important;
+    border: none !important;
+}
+
+.rf-ddm-nd {
+	background-image:none !important;
+    background: url("../../imagens/setas.png") no-repeat 0 0 !important;
+    top: 5px !important;
+    height: 15px !important;
+    width: 15px !important;
+}
+
+
+
+.rf-tab-hdr-tabline-vis.rf-tab-hdr-tabline-top {
+	height:40px !important;
+	padding-top:0 !important;
+	
+	background: #ffffff !important; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffffff 0%, #eeeeee 100%) !important; /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eeeeee)) !important; /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#eeeeee 100%) !important; /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffffff 0%,#eeeeee 100%) !important; /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffffff 0%,#eeeeee 100%) !important; /* IE10+ */
+	background: linear-gradient(to bottom,  #ffffff 0%,#eeeeee 100%) !important; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ) !important; /* IE6-9 */
+	
+	border-color:#d2d2d2 !important;
+	
+}
+
+.rf-tab-lbl {
+	font-family: itc !important;
+	font-size:15px !important;
+}
+
+.rf-tab-lbl img {
+	margin-top: -7px;
+}
+
+.rf-tab-hdr {
+	border-top: 0;
+}
+
+.rf-tab-hdr-act.rf-tab-hdr-top {
+	color: #0066cc !important;
+	padding: 10px 20px 0 20px !important;
+	border-top:4px solid #0066cc !important;
+	
+	background: #ffffff !important; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffffff 0%, #eeeeee 100%) !important; /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eeeeee)) !important; /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#eeeeee 100%) !important; /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffffff 0%,#eeeeee 100%) !important; /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffffff 0%,#eeeeee 100%) !important; /* IE10+ */
+	background: linear-gradient(to bottom,  #ffffff 0%,#eeeeee 100%) !important; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ) !important; /* IE6-9 */	
+	
+	border-right: 1px solid #d2d2d2 !important;
+	border-bottom:0 !important;
+	border-left:0;
+	
+	font-weight: normal !important;
+}
+
+
+
+.rf-tab-hdr-inact.rf-tab-hdr-top {
+	color: #bbbbbb !important;
+	padding: 14px 20px 0 20px !important;
+	
+	background: #ffffff !important; /* Old browsers */
+	background: -moz-linear-gradient(top,  #ffffff 0%, #eeeeee 100%) !important; /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#eeeeee)) !important; /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#eeeeee 100%) !important; /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffffff 0%,#eeeeee 100%) !important; /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffffff 0%,#eeeeee 100%) !important; /* IE10+ */
+	background: linear-gradient(to bottom,  #ffffff 0%,#eeeeee 100%) !important; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ) !important; /* IE6-9 */
+	
+	border-right: 1px solid #d2d2d2 !important;
+	border-bottom:0 !important;	
+	border-left:0;
+	border-top:0 !important;
+	
+	font-weight: normal !important;
+}
+
+	td .rf-tab-hdr-act.rf-tab-hdr-top:first-child {
+		border-left: 1px solid #d2d2d2 !important;
+	}
+	
+	td .rf-tab-hdr-inact.rf-tab-hdr-top:first-child {
+		border-left: 1px solid #d2d2d2 !important;
+	}
+
+.rf-tab-hdr-brd {
+    background: transparent !important;
+    border-color: none !important;
+    border-image: none !important;
+    border-right: 0px solid #C4C0B9 !important;
+    border-style: none solid solid !important;
+    border-width: 0 !important;
+    height:0 !important;		
+}
+
+.rf-tab-cnt {
+    background: none repeat scroll 0 0 #eeeeee !important;
+    border-top: 0 !important;
+    border-left: 1px solid #d2d2d2 !important;
+    border-right: 1px solid #d2d2d2 !important;
+    border-bottom: 1px solid #d2d2d2 !important;
+}
+
+.rf-tab-hortab-tabspcr-wdh {
+	padding:0 !important;
+}
+
+.rf-dt {
+	font:12pt !important;
+	background:#eee !important;
+	border-width: 0 !important;
+	width:100% !important;
+}
+
+.rf-dt-r:nth-child(2n+1) {
+	background:#ddd;
+	border:0 !important;	
+}
+
+.oddRow td, .cadHeader{
+	padding: 2px 10px 2px 2px;
+	color:#333;
+	
+}
+
+.oddColumn {
+	padding:0 10px;
+}
+
+.oddRow:nth-child(2n+1) {
+	background:#ddd;
+	border:0 !important;	
+}
+.grid-crud {
+	width:200px;
+}
+
+.rf-dt-c {
+    border-bottom: 0px solid #C4C0C9 !important;
+    border-right: 0px solid #C4C0C9 !important;
+}
+
+.rf-dt-hdr-c {
+    background-color: transparent !important;
+    background-image: none !important;
+    border-bottom: 0px solid #C4C0C9 !important;
+    border-right: 0px solid #C4C0C9 !important;
+    border-top: 0px solid #C4C0C9 !important;
+    border-left: 0px solid #C4C0C9 !important;
+}
+
+.rf-tb {
+	background-color: transparent !important;
+	background-image: none !important;
+	border: 0 !important;
+}
+
+.rf-tb-itm {
+    padding: 0 8px 0 0 !important;
+}
+
+.rf-dt-ftr-c {
+    background-color: transparent !important;
+    border-bottom: 0px solid #C4C0C9 !important; 
+    border-right: 0px solid #C4C0C9 !important;    
+}
+
+.rf-ds {
+    background: none !important;
+}
+
+.rf-ds-nmb-btn {
+    padding: 5px 0 !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-width: 0 !important;
+    color: #333 !important;
+}
+
+.rf-ds-act, .rf-ds-act:hover {
+	background:#0066cc !important;
+	border-radius:4px !important;
+	color: #fff !important;
+}
+
+.rf-ds-btn {
+    background-color: transparent !important;
+    background-image: none !important;
+    border-width: 0 !important;
+}
+
+.rf-pp-cnt-scrlr {
+    background: #EEEEEE !important;
+}
+
+.rf-tbp {
+	position:relative !important;
+}
+
+.rf-pp-hdr {
+    background:#eee !important;
+	border-bottom: 1px solid #c8c8c8 !important;
+	border-radius: 4px 4px 0 0 !important;
+
+	background: -moz-linear-gradient(top,  #ffffff 0%, #eeeeee 43%) !important; /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(43%,#eeeeee)) !important; /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #ffffff 0%,#eeeeee 43%) !important; /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #ffffff 0%,#eeeeee 43%) !important; /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #ffffff 0%,#eeeeee 43%) !important; /* IE10+ */
+	background: linear-gradient(to bottom,  #ffffff 0%,#eeeeee 43%) !important; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ) !important; /* IE6-9 */
+	
+}
+
+.rf-pp-hdr-cnt {
+    color: #333333 !important;
+    font-size: 13pt !important;
+    padding: 7px 2px 7px 10px !important;
+}
+
+.rf-pp-shdw {
+	background:none !important;
+}
+
+.rf-pp-hdr-cntrls {
+    background: none repeat scroll 0 0 #0066CC !important;
+    border-radius: 0 0 4px 4px !important;
+    color: #333333 !important;
+    padding: 3px 17px !important;
+    right: 17px !important;
+    top: 0 !important;
+    
+}
+
+.rf-pp-cnt-scrlr {
+	border-radius: 0 0 4px 4px !important;
+}
+
+.rf-pp-cntr {
+	border-radius: 4px !important;
+	box-shadow: 0px 0px 0px 8px rgba(0,0,0,0.3) !important;
+	border:0 !important;
+}
+
+.rf-pp-cnt {
+	border-top: 1px solid #FFFFFF !important;
+}
+
+.rf-pp-shade {
+    background-color: #000000 !important;
+}
+
+.rf-cal-btn {
+    margin: 3px -24px !important;
+}
+
+.rf-cal-today {
+	background: #0066cc !important;
+}
+
+.rf-cal-day-lbl {
+	background-color:#eee !important;
+}
+
+.rf-cal-holiday {
+	color:#0066cc !important;
+	background-color:#D1DEFF !important;
+}
+
+.rf-cal-week {
+	color:#F1EEE9 !important;
+}
+
+
+input.rf-insp-inp[type="text"] {
+	width:86% !important;
+	padding:4px 0 0 !important;
+}
+	
+.rf-insp-dec, .rf-insp-inc, .rf-insp-dec-dis, .rf-insp-inc-dis {
+    margin-top: 4px !important;	
+}
+
+.rf-au {
+	border:0 !important;
+	width:100% !important;
+	font-size:1em !important;
+}
+    
+/* #################################### FIM - SOBRESCRIÃ‡ÃƒO DE CLASSES DO RICHFACES ##########################################*/

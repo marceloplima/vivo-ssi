@@ -1,0 +1,225 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formrotas" method="post">
+ 	
+	<!-- ############## POPUP DE ROTA ################ -->
+
+		<rich:popupPanel id="panelrotas" domElementAttachment="form" modal="true" width="900" height="580" zindex="2" show="#{rotasMB.exibepopuprotas}" showWhenRendered="#{rotasMB.exibepopuprotas}">
+				<f:facet name="header">
+		            <h:outputText value="Inclusão de Rota" />
+		        </f:facet>
+		       	
+				<h:panelGroup layout="block" class="clear"/>
+				    	     		     						
+					<ui:include src="autoredatacorrente.xhtml"/>
+					
+					<h:panelGroup layout="block" class="clear"/>
+					
+					<h:panelGroup layout="block" class="clear"/>
+						<h:panelGroup layout="block" class="area-input-100">
+							<h:panelGroup  class="label-campo">Marque se deseja reutilizar os dados inseridos aqui na próxima rota a ser cadastrada</h:panelGroup>
+							<h:selectBooleanCheckbox id="salvarrotaanterior" value="#{rotasMB.aproveitarrotaanterior}"/>
+						</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>
+					
+					<rich:collapsiblePanel header="Informações Gerais" switchType="client" id="idinfogeral">
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Rota - nome da rota como aparece no bilhete:</h:panelGroup>	
+							<h:inputText styleClass="input-form" id="rota" value="#{rotasMB.rota.cnmrota}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+							<h:outputText styleClass="label-campo destaque" value="#{rotasMB.rota.cnmrota}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Descrição - descreva a função da rota:</h:panelGroup>	
+							<h:inputText styleClass="input-form" id="descricao" value="#{rotasMB.rota.cnmdescricao}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+							<h:outputText styleClass="label-campo destaque" value="#{rotasMB.rota.cnmdescricao}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Sentido da Rota</h:panelGroup>	
+			                <h:selectOneRadio styleClass="label-radio" value="#{rotasMB.rota.cnmsentidorota}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+			                    <f:selectItem itemLabel="Bi-direcional" itemValue="Bi-direcional"/>
+			                    <f:selectItem itemLabel="Entrada" itemValue="Entrada"/>
+			                    <f:selectItem itemLabel="Saída" itemValue="Saída"/>
+			                </h:selectOneRadio>
+			                <h:outputText value="#{rotasMB.rota.cnmsentidorota}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>					
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Tipo da Rota</h:panelGroup>	
+			                <h:selectOneRadio styleClass="label-radio" value="#{rotasMB.rota.cnmtiporota}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+			                    <f:selectItem itemLabel="Interna" itemValue="Interna"/>
+			                    <f:selectItem itemLabel="Interligação" itemValue="Interligação"/>
+			                    <f:selectItem itemLabel="Externa" itemValue="Externa"/>
+			                </h:selectOneRadio>
+			                <h:outputText value="#{rotasMB.rota.cnmtiporota}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>					
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="clear"/>
+					</rich:collapsiblePanel>
+					
+					<rich:collapsiblePanel header="Origem" switchType="client" id="idrotaorigem">
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">UF:</h:panelGroup>
+							<h:selectOneMenu id="ufrotaorigem" 
+								value="#{rotasMB.rota.uforigem}"
+								rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+								styleClass="select-form"
+								valueChangeListener="#{rotasMB.setarUforigem}">
+								<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+		   						<f:selectItems 
+		   							value="#{ufsMB.ufs}" 
+		   							var="u"
+		   							itemLabel="#{u.cnmuf}" 
+		   							itemValue="#{u}" />
+		   								
+		   							<f:converter converterId="ufConverter"/>
+		   							<a4j:ajax event="valueChange" execute="@this" render="panelexibecentrais panelexibedetalhescentral"/>
+		   								
+		   					</h:selectOneMenu>
+		   				</h:panelGroup>
+						<a4j:outputPanel id="panelexibecentrais">
+							<h:panelGroup layout="block" class="area-input-25">
+								<h:panelGroup  class="label-campo">Central:</h:panelGroup>
+								<h:selectOneMenu id="centralorigem" 
+									value="#{rotasMB.rota.centralorigem}"
+									rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+									styleClass="select-form"
+									valueChangeListener="#{rotasMB.setarCentralorigem}">
+									<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+		   							<f:selectItems 
+		   								value="#{rotasMB.recuperarCentraisOrigemPorUf()}" 
+		   								var="c"
+		   								itemLabel="#{c.cnmcentral}" 
+		   								itemValue="#{c}" />
+		   								<a4j:ajax event="valueChange" execute="@this" render="panelexibedetalhescentral"/>
+		   								<f:converter converterId="centralConverter"/>
+		   						</h:selectOneMenu>
+							</h:panelGroup>
+						</a4j:outputPanel>
+						<h:panelGroup layout="block" class="clear"/>
+						<a4j:outputPanel id="panelexibedetalhescentral">
+							<h:panelGroup layout="block" class="area-input-100" rendered="#{rotasMB.exibedetalhesrotaorigem}">
+								<h:panelGroup  class="label-campo">OPC:</h:panelGroup>
+								<h:outputText styleClass="label-campo destaque" value="#{rotasMB.centralselecionadaorigem.cnmopc}"/>
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="area-input-100" rendered="#{rotasMB.exibedetalhesrotaorigem}">
+								<h:panelGroup  class="label-campo">CCC:</h:panelGroup>
+								<h:outputText styleClass="label-campo destaque" value="#{rotasMB.centralselecionadaorigem.cnmcodigoccc}"/>
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="area-input-100" rendered="#{rotasMB.exibedetalhesrotaorigem}">
+								<h:panelGroup  class="label-campo">Área Ponta B:</h:panelGroup>
+								<h:outputText styleClass="label-campo destaque" value="#{rotasMB.centralselecionadaorigem.cnmareaponta}"/>
+							</h:panelGroup>
+						</a4j:outputPanel>
+						<h:panelGroup layout="block" class="clear"/>
+					</rich:collapsiblePanel>
+					
+					<rich:collapsiblePanel header="Destino" switchType="client" id="idrotadestino">
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">UF:</h:panelGroup>
+							<h:selectOneMenu id="ufrotadestino" 
+								value="#{rotasMB.rota.ufdestino}"
+								rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+								styleClass="select-form"
+								valueChangeListener="#{rotasMB.setarUfdestino}">
+								<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+		   						<f:selectItems 
+		   							value="#{ufsMB.ufs}" 
+		   							var="u"
+		   							itemLabel="#{u.cnmuf}" 
+		   							itemValue="#{u}" />
+		   								
+		   							<f:converter converterId="ufConverter"/>
+		   							<a4j:ajax event="valueChange" execute="@this" render="panelexibecentraisdestino panelexibedetalhescentraldestino"/>
+		   								
+		   					</h:selectOneMenu>
+		   				</h:panelGroup>
+						<a4j:outputPanel id="panelexibecentraisdestino">
+							<h:panelGroup layout="block" class="area-input-25">
+								<h:panelGroup  class="label-campo">Central:</h:panelGroup>
+								<h:selectOneMenu id="central" 
+									value="#{rotasMB.rota.centraldestino}"
+									rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+									styleClass="select-form"
+									valueChangeListener="#{rotasMB.setarCentraldestino}">
+									<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+		   							<f:selectItems 
+		   								value="#{rotasMB.recuperarCentraisDestinoPorUf()}" 
+		   								var="c"
+		   								itemLabel="#{c.cnmcentral}" 
+		   								itemValue="#{c}" />
+		   								<a4j:ajax event="valueChange" execute="@this" render="panelexibedetalhescentraldestino"/>
+		   								<f:converter converterId="centralConverter"/>
+		   						</h:selectOneMenu>
+							</h:panelGroup>
+						</a4j:outputPanel>
+						<h:panelGroup layout="block" class="clear"/>
+						<a4j:outputPanel id="panelexibedetalhescentraldestino">
+							<h:panelGroup layout="block" class="area-input-100" rendered="#{rotasMB.exibedetalhesrotadestino}">
+								<h:panelGroup  class="label-campo">DPC:</h:panelGroup>
+								<h:outputText styleClass="label-campo destaque" value="#{rotasMB.centralselecionadadestino.cnmopc}"/>
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="area-input-100" rendered="#{rotasMB.exibedetalhesrotadestino}">
+								<h:panelGroup  class="label-campo">CCC:</h:panelGroup>
+								<h:outputText styleClass="label-campo destaque" value="#{rotasMB.centralselecionadadestino.cnmcodigoccc}"/>
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="area-input-100" rendered="#{rotasMB.exibedetalhesrotadestino}">
+								<h:panelGroup  class="label-campo">Área Ponta B:</h:panelGroup>
+								<h:outputText styleClass="label-campo destaque" value="#{rotasMB.centralselecionadadestino.cnmareaponta}"/>
+							</h:panelGroup>
+						</a4j:outputPanel>
+						<h:panelGroup layout="block" class="clear"/>
+					</rich:collapsiblePanel>
+					<h:panelGroup layout="block" class="clear"/><br/>
+					
+					<h:panelGroup layout="block" styleClass="alinhaBotao">
+							<h:commandButton value="Salvar">
+								<f:ajax 
+									render="@form panelrotas :demandaform" 
+									event="click"
+									listener="#{rotasMB.salvar()}"
+									execute="@form"
+								/>
+						</h:commandButton>
+						
+						<h:commandButton value="Fechar">						
+							<f:ajax render="@form" 
+									event="click"
+									listener="#{rotasMB.desabilitarPopup()}"
+									immediate="true"
+								/>				
+						</h:commandButton>
+					</h:panelGroup>					
+					       	
+		</rich:popupPanel>
+		
+		<!-- ############## POPUP DE EXCLUSÃO DE ROTA ################ -->
+		
+		<rich:popupPanel id="popupconfirmaexcluirrota" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{rotasMB.exibeconfirmacaoremover}" showWhenRendered="#{rotasMB.exibeconfirmacaoremover}">
+	
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma a exclusão ?</h:panelGroup>	
+				<h:commandButton value="Sim">
+					<f:ajax 
+						render="@form :demandaform popupconfirmaexcluirrota" 
+						execute="@form" 
+						listener="#{rotasMB.remover()}"
+						immediate="true"/>
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render="@form popupconfirmaexcluirrota" 
+						execute="@form" 
+						listener="#{rotasMB.fecharPopupConfirmacaoRemover()}"
+						immediate="true"/>
+				</h:commandButton>
+				 	
+			</h:panelGroup>
+		</rich:popupPanel>
+	</h:form>
+</html>

@@ -1,0 +1,75 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formrespostaquestionamento" method="post" enctype="multipart/form-data">
+ 	
+		<rich:popupPanel id="respostaquestionamentopanel" domElementAttachment="form" modal="true" width="400" height="300" zindex="1" show="#{questionamentoTecnicoMB.mostrarRespostaQuestionamentoTecnico}" showWhenRendered="#{questionamentoTecnicoMB.mostrarRespostaQuestionamentoTecnico}">
+			<f:facet name="header">
+	            <h:outputText value="Resposta Questionamento" />
+	        </f:facet>
+	       	
+				<ui:include src="autoredatacorrente.xhtml"></ui:include>
+				
+				<h:panelGroup layout="block" class="clear"/>
+				
+				<h:panelGroup layout="block" class="area-input-50" id="comentarioresposta">
+					<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+					<h:inputTextarea styleClass="textarea-form-2-linhas" value="#{questionamentoTecnicoMB.respostaQuestionamentoSelecionado.cnmcomentario}"
+					required="true" requiredMessage="Comentário obrigatório." id="comentarioquestionamento"/>
+					<h:message for="comentarioquestionamento"/>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" class="clear"/>
+				
+				<h:commandButton value="Anexar" rendered="#{demandasMB.demandas.iddemanda>=1}">
+					<a4j:ajax event="click"
+							  render=":formupload:popupupload"
+							  listener="#{uploadBean.habilitaUpload('9')}" />
+				</h:commandButton>
+				
+				<h:panelGroup layout="block" class="clear"/>
+				     
+				<h:panelGroup layout="block" styleClass="alinhaBotao">
+					<h:commandButton value="Incluir">
+						<f:ajax render="@form comentarioquestionamento popupconfirmaquestionamentotecnico respostaquestionamentopanel" 
+									event="click"
+									listener="#{questionamentoTecnicoMB.preSalvarRespostaQuestionamentoTecnico()}"
+									execute="comentarioquestionamento"/>
+					</h:commandButton>	        
+					<h:commandButton value="Fechar" onclick="#{rich:component('respostaquestionamentopanel')}.hide(); return false;"/>       
+				</h:panelGroup>
+		</rich:popupPanel>
+		
+	<!-- ############## POPUP DE CONFIRMAÇÃO ################ -->
+		
+	<rich:popupPanel id="popupconfirmaquestionamentotecnico" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{questionamentoTecnicoMB.mostrarTelaConfirmacaoRespostaQuestionamentoTecnico}" showWhenRendered="#{questionamentoTecnicoMB.mostrarTelaConfirmacaoRespostaQuestionamentoTecnico}">
+
+		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Confirma inclusão de questionamento ?</h:panelGroup>	
+			<h:commandButton value="Sim">
+				<f:ajax 
+					render="@form :demandaform:respostasquestionamentospanel popupconfirmaquestionamentotecnico" 
+					execute="@form" 
+					listener="#{questionamentoTecnicoMB.incluirResposta()}"
+					immediate="true"/>
+			</h:commandButton>
+			<h:commandButton value="Não">
+				<f:ajax 
+					render="@form popupconfirmaquestionamentotecnico" 
+					listener="#{questionamentoTecnicoMB.fechaTelaConfirmacaoRespostaQuestionario()}"
+					immediate="true"/>
+			</h:commandButton>
+			 	
+		</h:panelGroup>	
+
+	</rich:popupPanel>		
+		
+	</h:form>
+</html>

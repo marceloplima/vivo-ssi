@@ -1,0 +1,121 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+			
+       		<h:form id="formbuscardemandas">
+				<h:panelGroup layout="block" class="area-input-10">
+					<h:panelGroup  class="label-campo">Número:</h:panelGroup>	
+					<h:inputText id="cnmnumero" styleClass="input-form" value="#{demandasMB.cnmnumero}"/>
+				</h:panelGroup>					
+			    
+			    <h:panelGroup layout="block" class="area-input-25">
+				<h:panelGroup  class="label-campo">Status:</h:panelGroup>
+					<h:selectOneMenu id="buscastatus" 
+						value="#{demandasMB.filtrostatus}"
+						styleClass="select-form">
+						<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+						<f:selectItems value="#{statusMB.recuperarStatusBusca(1)}" var="status" itemLabel="#{status.cnmstatus}"/>
+						<f:converter converterId="statusConv"/>
+					</h:selectOneMenu>
+				</h:panelGroup>
+			    
+			    <h:panelGroup layout="block" id="pggrupomodulo" class="area-input-25">
+					<h:panelGroup class="label-campo">Solicitante:</h:panelGroup>
+					<rich:autocomplete styleClass="autocomplete-form" id="solicitante" value="#{demandasMB.autor}" mode="cachedAjax" minChars="2" autocompleteMethod="#{pessoasMB.searchbyName}"/>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" class="area-input-10">
+					<h:panelGroup  class="label-campo">Período:</h:panelGroup>
+					<rich:calendar 
+		                styleClass="calendar-form" 
+		                id="filtroinicioperiodo" 
+		                value="#{demandasMB.datainicial}" 
+		                datePattern="dd/MM/yyyy"
+						locale="pt_BR"
+		                converter="dateToCalendarConverter"
+		                enableManualInput="true"
+						oninputkeypress="javascript: mascara(this, data_mask);"
+						maxlength="10"/>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" class="area-input-10">
+					<h:panelGroup  class="label-campo"/>
+					<rich:calendar 
+		                styleClass="calendar-form" 
+		                id="filtrofimperiodo" 
+		                value="#{demandasMB.datafinal}" 
+		                datePattern="dd/MM/yyyy"
+						locale="pt_BR"
+		                converter="dateToCalendarConverter"
+		                enableManualInput="true"
+						oninputkeypress="javascript: mascara(this, data_mask);"
+						maxlength="10"/>
+				</h:panelGroup>	
+			    
+				<h:panelGroup layout="block" class="area-input-10">
+					<h:panelGroup  class="label-campo"></h:panelGroup>	
+					<h:commandButton value="Buscar">
+            			<a4j:ajax event="click" execute="@form" listener="#{demandasMB.buscar()}" render="panelresbuscademandas"/>
+            		</h:commandButton>
+				</h:panelGroup>
+									
+			    <h:panelGroup layout="block" class="clear"/>				    
+			    <h:panelGroup layout="block" class="linha"/>
+			    
+			     <a4j:outputPanel id="panelresbuscademandas">
+			        <rich:dataTable keepSaved="true" rows="8" rendered="#{demandasMB.exibelistagem}" id="dtresbuscademandas" value="#{demandasMB.dataModel}" var="demanda">
+			        	<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Número" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Status" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Data Cadastro" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value=" " />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:column style="text-align:left;">
+							<h:link outcome="cadssi">
+								<f:param name="iddemanda" value="#{demanda.iddemanda}"/>
+								<h:outputText value="#{demanda.cnmnumero}"/>
+							</h:link>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{demanda.status.cnmstatus}"/>
+						</rich:column>
+						
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{demanda.datacadastro.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:link outcome="cadssi">
+								<f:param name="iddemanda" value="#{demanda.iddemanda}"/>
+								<h:graphicImage value="${pageContext.request.contextPath}/imagens/busca_azul.png"/>
+							</h:link>
+						</rich:column>
+						<f:facet name="footer">
+			            	<rich:dataScroller id="scrollermodfuncbottom"/>
+			            </f:facet>
+			        </rich:dataTable>
+			        
+			        <h:panelGroup layout="block" class="clear"/>	
+				</a4j:outputPanel>
+			</h:form>
+  	</ui:define>
+</ui:composition>

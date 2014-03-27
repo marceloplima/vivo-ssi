@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+     <h:form id="menuform">
+		 <div class="menu-itens">
+			<div class="logo-modulo">
+				<img src="#{request.contextPath}/imagens/logomodulo.png" alt="Logo Módulo" />
+			</div>
+			
+			<div class="titulo-sistema">
+				<div class="titulo-sistema">
+					<h:outputText value="Compras"/>
+				</div>	
+			</div>
+			
+			<div class="flag-verde"></div>
+			<h:panelGroup class="num-verde" id="panelbandeirasverdes">
+				<h:commandLink id="bandeirasverdes" value="#{pessoasMB.demandasMinhas.size()}" action="#{demandasMB.buscarBandeirinhaAutor()}"/>		
+			</h:panelGroup>
+			<div class="exclamacao-vermelho"></div>
+			<h:panelGroup class="num-vermelho" id="panelbandeirasvermelhas">
+				<h:commandLink id="bandeirasvermelhas" value="#{pessoasMB.demandasComigo.size()}" action="#{demandasMB.mostrarMinhasPendencias()}"/> 			
+			</h:panelGroup>
+			
+			<div class="clear"></div>
+			<div class="menu-barra">
+				<h:form id="formMenu">
+					<rich:toolbar id="toolbarMenuIndex">
+						<rich:toolbarGroup itemSeparator="line">
+							<rich:toolbar binding="#{menuBarMB.menuBar}"/>
+						</rich:toolbarGroup>
+					</rich:toolbar>
+				</h:form>
+			</div>
+		</div>
+	</h:form> 
+</ui:composition>

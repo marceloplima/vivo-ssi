@@ -1,0 +1,193 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formleilao">
+		<rich:popupPanel id="popupcompletaleilao" domElementAttachment="form" modal="true" width="500" height="340" zindex="2" show="#{leiloesMB.exibecompletarleilao}" showWhenRendered="#{leiloesMB.exibecompletarleilao}">
+			<f:facet name="header">
+				<h:outputText value="Completar Registro de Leilão" />
+			</f:facet>
+	        
+			<h:panelGroup layout="block" class="area-input-50" id="pgpropvenc">
+				<h:panelGroup  class="label-campo">Vencedores:</h:panelGroup>
+				<h:selectManyListbox id="vencpart" value="#{leiloesMB.leilao.propvenc}" size="4">
+					<f:selectItems value="#{leiloesMB.recuperarPropostasAprovadas()}" var="obj" itemLabel="#{obj.fornecedorprop.cnmfornecedor}"/>		   								   																   								   			   								   							 
+					<f:converter converterId="propostaConv"/>
+				</h:selectManyListbox>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50" id="pglancevenccomp">
+				<h:panelGroup  class="label-campo">Lance Vencedor:</h:panelGroup>	
+				<h:inputText maxlength="18" size="18" onkeypress="javascript: mascara(this, moeda_mask);" value="#{leiloesMB.leilao.lancevencedor}" id="lancevenccomp" styleClass="input-form">
+					<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+				</h:inputText>
+			</h:panelGroup>
+					
+			<h:panelGroup layout="block" class="area-input-100" id="pgcomentarioleilaocomp">
+				<h:panelGroup  class="label-campo">Comentários:</h:panelGroup>	
+				<h:inputTextarea styleClass="textarea-form-2-linhas" id="idcomentarioleilaocomp" value="#{leiloesMB.leilao.comentario}" maxlength="255"/>
+			</h:panelGroup>
+																
+			<h:panelGroup layout="block" class="clear"/>
+					     
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Registrar">
+					<f:ajax render="@form :panelexibesucesso :panelexibealerta :panelexibeerro" 
+							event="click"
+							listener="#{leiloesMB.preRegistrar()}"
+							execute="vencpart lancevenccomp idcomentarioleilaocomp"/>
+				</h:commandButton>
+					        
+				<h:commandButton value="Fechar">
+					<f:ajax render="@form" 
+							event="click"
+							listener="#{leiloesMB.desabilitaCompletar()}"/>
+				</h:commandButton>	        
+			</h:panelGroup>
+		</rich:popupPanel>
+		
+		<rich:popupPanel id="popupconfirmaregistraleilao" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{leiloesMB.exibeconfirmacao}" showWhenRendered="#{leiloesMB.exibeconfirmacao}">
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma registro do Leilão?</h:panelGroup>	
+				<h:commandButton value="Sim">
+					<f:ajax 
+						render="@form :demandaform"
+						listener="#{leiloesMB.registrar()}"
+						immediate="true"/>
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render="@form" 
+						listener="#{leiloesMB.desabilitaConfirmacao()}"
+						immediate="true"/>
+				</h:commandButton>	
+			</h:panelGroup>	
+		</rich:popupPanel>
+		
+		<rich:popupPanel id="popupdetleilao" domElementAttachment="form" modal="true" width="750" height="450" zindex="2" show="#{leiloesMB.exibedetalhesleilao}" showWhenRendered="#{leiloesMB.exibedetalhesleilao}">
+			<f:facet name="header">
+				<h:outputText value="Registro de Leilão" />
+			</f:facet>		
+			<h:panelGroup layout="block" class="area-input-50" id="pgdetautor">
+				<h:panelGroup  class="label-campo">Autor:</h:panelGroup>
+				<h:outputText value="#{leiloesMB.leilao.autor.cnmnome}" styleClass="label-campo destaque"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-25" id="pgdetdatacadleilao">
+				<h:panelGroup  class="label-campo">Data do Cadastro:</h:panelGroup>
+				<h:outputText value="#{leiloesMB.leilao.datacadastro.time}" id="detdatacadleilao" styleClass="label-campo destaque">
+					<f:convertDateTime pattern="dd/MM/yyyy"/>
+				</h:outputText>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-25" id="pgdetmodalidadeleilao">
+				<h:panelGroup  class="label-campo">Modalidade:</h:panelGroup>
+				<h:outputText value="#{leiloesMB.leilao.modalidade.cnmmodalidade}" styleClass="label-campo destaque"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-25" id="pgdetdataleilao">
+				<h:panelGroup  class="label-campo">Data do Leilão:</h:panelGroup>
+				<h:outputText value="#{leiloesMB.leilao.dataleilao.time}" id="detdataleilao" styleClass="label-campo destaque">
+					<f:convertDateTime pattern="dd/MM/yyyy"/>
+				</h:outputText>
+			</h:panelGroup>					
+			<h:panelGroup layout="block" class="area-input-25" id="pgdethoraminutoleilao">
+				<h:panelGroup  class="label-campo">Hora do Leilão:</h:panelGroup>
+				<h:outputText value="#{leiloesMB.leilao.horaleilao} : #{leiloesMB.leilao.minutoleilao}" styleClass="label-campo destaque"/>
+			</h:panelGroup>			
+			<h:panelGroup layout="block" class="area-input-25" id="pgdettipoleilao">
+				<h:panelGroup  class="label-campo">Tipo:</h:panelGroup>
+				<h:outputText value="#{leiloesMB.leilao.tipoleilao.cnmtipoleilao}" styleClass="label-campo destaque"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-25" id="pgdetfatorinicial">
+				<h:panelGroup  class="label-campo">Valor do Fator Inicial:</h:panelGroup>
+				<h:outputText value="#{leiloesMB.leilao.fatorinicial}" styleClass="label-campo destaque">
+					<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+				</h:outputText>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-25" id="pgdetvalorinicial">
+				<h:panelGroup  class="label-campo">Valor Inicial:</h:panelGroup>
+				<h:outputText value="#{leiloesMB.leilao.valorinicial}" styleClass="label-campo destaque">
+					<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+				</h:outputText>
+			</h:panelGroup>			
+			<h:panelGroup layout="block" class="area-input-25" id="pgdetsalvaguarda">
+				<h:panelGroup  class="label-campo">Salvaguarda:</h:panelGroup>
+				<h:outputText value="#{leiloesMB.leilao.salvaguarda}" styleClass="label-campo destaque">
+					<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+				</h:outputText>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-25" id="pgdetacredesc">
+				<h:panelGroup  class="label-campo">Decréscimo/Acréscimo:</h:panelGroup>
+				<h:outputText value="#{leiloesMB.leilao.decresacresc}" styleClass="label-campo destaque">
+					<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+				</h:outputText>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-25" id="pgdetlancevenc">
+				<h:panelGroup  class="label-campo">Lance Vencedor:</h:panelGroup>
+				<h:outputText value="#{leiloesMB.leilao.lancevencedor}" styleClass="label-campo destaque">
+					<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+				</h:outputText>
+			</h:panelGroup>			
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-50" id="pgdetpartleilao">
+				<h:panelGroup  class="label-campo">Participantes:</h:panelGroup>
+				<rich:list value="#{leiloesMB.leilao.proppart}" id="detpartleilao" var="proposta" styleClass="textarea-form-2-linhas">
+					<h:outputText value="#{proposta.fornecedorprop.cnmfornecedor}" />
+				</rich:list>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-50" id="pgdetvencleilao">
+				<h:panelGroup  class="label-campo">Vencedores:</h:panelGroup>
+				<rich:list value="#{leiloesMB.leilao.propvenc}" id="detvencleilao" var="proposta" styleClass="textarea-form-2-linhas">
+					<h:outputText value="#{proposta.fornecedorprop.cnmfornecedor}" />
+				</rich:list>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" class="area-input-100" id="pgdetcomentleilao">
+				<h:panelGroup  class="label-campo">Comentários:</h:panelGroup>
+				<h:outputText value="#{leiloesMB.leilao.comentario}" styleClass="label-campo destaque"/>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+			
+			<h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Finalizar" rendered="#{permissoesMB.verificarFinalizarLeilao(leiloesMB.leilao)}">
+						<f:ajax 
+							render="@form :demandaform"
+							listener="#{leiloesMB.preFinalizar()}"/>
+				</h:commandButton>
+				<h:commandButton value="Fechar Janela">
+					<f:ajax 
+						render="@form" 
+						listener="#{leiloesMB.desabilitaDetalhes()}"
+						immediate="true"/>
+				</h:commandButton>
+			</h:panelGroup>	
+		</rich:popupPanel>
+		
+		<rich:popupPanel id="popupconfirmafinalizaleilao" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{leiloesMB.exibeconfirmacaofinalizar}" showWhenRendered="#{leiloesMB.exibeconfirmacaofinalizar}">
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Realmente deseja finalizar esse leilão?</h:panelGroup>	
+				<h:commandButton value="Sim">
+					<f:ajax 
+						render="@form :demandaform"
+						listener="#{leiloesMB.finalizar()}"
+						immediate="true"/>
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render="@form" 
+						listener="#{leiloesMB.desabilitaConfirmacaoFinalizar()}"
+						immediate="true"/>
+				</h:commandButton>	
+			</h:panelGroup>	
+		</rich:popupPanel>
+	</h:form>
+</html>

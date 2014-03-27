@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+
+	<div class="logomarca-telefonica">
+		<img src="#{request.contextPath}/imagens/rodape_telefonica.png"/>
+	</div>
+	<div class="acesso-seguro">
+		<img src="#{request.contextPath}/imagens/acesso_seguro.png"/> ACESSO: #{loginMB.recuperarDataAcesso()}
+	</div>
+	<div class="logomarca-vivo">
+		<img src="#{request.contextPath}/imagens/rodape_vivo.png"/>
+	</div>
+
+</ui:composition>

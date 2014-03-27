@@ -1,0 +1,74 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+			
+     <h:form>
+		
+		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+			<h:inputText styleClass="input-form"/>
+		</h:panelGroup>
+			    		
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+			<h:inputText styleClass="input-form"/>
+		</h:panelGroup>	 		
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo"></h:panelGroup>	
+            <h:panelGroup styleClass="acoes-left">
+                <rich:select defaultLabel="Ações">
+	                <f:selectItem itemValue="0" itemLabel="Ação 1" />
+	                <f:selectItem itemValue="1" itemLabel="Ação 2" />
+	                <f:selectItem itemValue="2" itemLabel="Ação 3" />
+	                <f:selectItem itemValue="3" itemLabel="Ação 4" />
+	            </rich:select>
+			</h:panelGroup>
+		</h:panelGroup>	 		
+		<h:panelGroup layout="block" class="clear"/>
+		<h:panelGroup layout="block" class="linha"/>
+
+		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Destinatário:</h:panelGroup>	
+            <rich:pickList id="destinatario" listWidth="165px" listHeight="100px" orderable="true" addAllText="⇒" addText="→" downBottomText="⇓" downText="↓" removeAllText="⇐" removeText="←" upText="↑" upTopText="⇑">
+                <f:selectItems value="item1" var="capital" itemValue="item1"
+                    itemLabel="item1" />
+            </rich:pickList>
+        </h:panelGroup>
+		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Com cópia:</h:panelGroup>	
+            <rich:pickList id="copia" listWidth="165px" listHeight="100px" orderable="true" addAllText="⇒" addText="→" downBottomText="⇓" downText="↓" removeAllText="⇐" removeText="←" upText="↑" upTopText="⇑">
+                <f:selectItems value="item1" var="capital" itemValue="item1"
+                    itemLabel="item1" />
+            </rich:pickList>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="clear"/>
+        <h:panelGroup layout="block" class="linha"/>
+ 
+ 		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Assunto:</h:panelGroup>	
+			<h:inputText styleClass="input-form"/>
+		</h:panelGroup>
+        
+		<h:panelGroup layout="block" class="area-input-100">
+			<h:panelGroup  class="label-campo">Corpo:</h:panelGroup>	
+			<h:inputTextarea styleClass="textarea-form-2-linhas"/>
+		</h:panelGroup>       
+		    
+		<h:panelGroup layout="block" class="clear"/>
+ 
+         <h:panelGroup layout="block" styleClass="alinhaBotao">
+			<h:commandButton value="Salvar"/>	        
+			<h:commandButton value="Cancelar"/>	        
+		</h:panelGroup>
+     	
+	</h:form>
+  	</ui:define>
+</ui:composition>

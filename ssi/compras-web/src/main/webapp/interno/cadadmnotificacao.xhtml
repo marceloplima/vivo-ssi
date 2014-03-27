@@ -1,0 +1,60 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+			
+     <h:form>
+
+		<h:panelGroup layout="block" class="area-input-100">
+			<h:panelGroup  class="label-campo"></h:panelGroup>	
+	        <rich:dataTable rows="20" rowClasses="odd-row, even-row" >
+	            <rich:column>
+	                <f:facet name="header">
+	                    <h:outputText value="Ação" />
+	                </f:facet>
+	                <h:outputText value="item2" />
+	            </rich:column>
+	            <rich:column>
+	                <f:facet name="header">
+	                    <h:outputText value="Destinatário" />
+	                </f:facet>
+	                <h:outputText value="item2" />
+	            </rich:column>
+	            <rich:column>
+	                <f:facet name="header">
+	                    <h:outputText value="Cc" />
+	                </f:facet>
+	                <h:outputText value="item2" />
+	            </rich:column>
+	            <rich:column>
+	                <f:facet name="header">
+	                    <h:outputText value="Assunto" />
+	                </f:facet>
+	                <h:outputText value="item2" />
+	            </rich:column>
+	            <rich:column>
+	                <f:facet name="header">
+	                    <h:outputText value="Corpo" />
+	                </f:facet>
+	                <h:outputText value="item2" />
+	            </rich:column>
+	        </rich:dataTable>						
+		</h:panelGroup>
+		<h:panelGroup layout="block" class="clear"/>
+		
+		<h:panelGroup layout="block" styleClass="alinhaBotao">
+			<h:commandButton value="Novo"/>	        
+		</h:panelGroup>
+
+		<h:panelGroup layout="block" class="clear"/>
+
+	</h:form>
+  	</ui:define>
+</ui:composition>

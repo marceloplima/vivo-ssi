@@ -1,0 +1,97 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+		<div align="center">
+
+			<h:form id="formbuscamod">
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup layout="block" class="label-campo">Módulo:</h:panelGroup>
+						<h:selectOneMenu  styleClass="select-form">
+			                <f:selectItem itemValue="0" itemLabel="Módulo 1"/>
+			                <f:selectItem itemValue="1" itemLabel="Módulo 2"/>
+			                <f:selectItem itemValue="2" itemLabel="Módulo 3"/>
+			                <f:selectItem itemValue="3" itemLabel="Módulo 4"/>						
+						</h:selectOneMenu>
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:panelGroup layout="block" class="label-campo">Funcionalidade:</h:panelGroup>
+						<h:selectOneMenu  styleClass="select-form">
+			                <f:selectItem itemValue="0" itemLabel="Funcionalidade 1"/>
+			                <f:selectItem itemValue="1" itemLabel="Funcionalidade 2"/>
+			                <f:selectItem itemValue="2" itemLabel="Funcionalidade 3"/>
+			                <f:selectItem itemValue="3" itemLabel="Funcionalidade 4"/>						
+						</h:selectOneMenu>
+				</h:panelGroup>
+				<h:panelGroup layout="block"  class="area-input-10">
+					<h:panelGroup layout="block"  class="label-campo"></h:panelGroup>
+		            <h:commandButton value="Buscar">
+		            	<a4j:ajax event="click" execute="cnmmodulo" listener="#{buscarModulosMB.buscar()}" render="panelresbuscamod"/>
+		            </h:commandButton>
+				</h:panelGroup>
+
+		        <h:panelGroup layout="block"  class="clear"/>
+				<h:panelGroup layout="block"  class="linha"/>
+		        
+		        
+		        <a4j:outputPanel id="panelresbuscamod">
+			        <rich:dataTable rendered="#{not empty buscarModulosMB.modulos}" id="dtresbuscamod" value="#{buscarModulosMB.modulos}" var="modulo">
+			        	<f:facet name="header">
+							<rich:columnGroup>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Módulo" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Data Cadastro" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Ações" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{modulo.cnmmodulo}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{modulo.datacadastro.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<a4j:commandButton id="abrirfunc" value="Funcionalidades"
+                                               action="#{buscarFuncionalidadesMB.buscarPorModulo(modulo)}"
+                                               render="popupfunc"
+                                               oncomplete="#{rich:component('popupfunc')}.show();"/>
+						
+							<h:commandButton value="Remover">
+								<a4j:ajax event="click" render="dtresbuscamod" listener="#{buscarModulosMB.delete(modulo)}"/>
+							</h:commandButton>
+						</rich:column>
+			        </rich:dataTable>
+			        
+			        <h:panelGroup layout="block" styleClass="alinhaBotaoEsq" rendered="#{not empty buscarModulosMB.modulos}">
+						<h:commandButton value="Desativar selecionados"/>		        
+						<h:commandButton value="Novo"/>
+	                    <h:panelGroup styleClass="acoes">
+		                    <rich:select defaultLabel="Ações">
+				                <f:selectItem itemValue="0" itemLabel="Editar" />
+				                <f:selectItem itemValue="1" itemLabel="e-Mails" />
+				                <f:selectItem itemValue="2" itemLabel="Telefones" />
+				                <f:selectItem itemValue="3" itemLabel="Áreas" />
+				            </rich:select>
+						</h:panelGroup>
+					</h:panelGroup>
+			        <h:panelGroup layout="block" class="clear"/>				
+				</a4j:outputPanel>
+				
+			</h:form>
+		</div>
+  	</ui:define>
+</ui:composition>

@@ -1,0 +1,105 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formanalisearearequisitada" method="post" enctype="multipart/form-data">
+ 	
+		<rich:popupPanel id="analarearequisitada" domElementAttachment="form" modal="true" width="500" height="460" zindex="2" show="#{analisePelaAreaRequisitadaMB.mostrarAnaliseAreaRequisitada}" showWhenRendered="#{analisePelaAreaRequisitadaMB.mostrarAnaliseAreaRequisitada}">
+			<f:facet name="header">
+	            <h:outputText value="Análise Área Requisitada" />
+	        </f:facet>
+		       	
+				<ui:include src="autoredatacorrente.xhtml"></ui:include>
+				
+				<h:panelGroup layout="block" class="area-input-100">
+					<h:panelGroup  class="label-campo">Parecer:</h:panelGroup>	
+					<h:selectOneMenu id="pareceranalisearearequisitada" 
+						value="#{analisePelaAreaRequisitadaMB.evento.parecer}"
+						styleClass="select-form"
+						valueChangeListener="#{analisePelaAreaRequisitadaMB.setaParecer}">
+						<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+						<f:selectItems value="#{analisePelaAreaRequisitadaMB.pareceresRedes}" var="parecer" itemLabel="#{parecer.cnmparecer}"/>						
+						<f:converter converterId="parecerRedesConverter"/>
+						<a4j:ajax event="change" execute="@this" render="responsavelTecnico complexidade comentario @form"/>
+						<h:message for="pareceranalisearearequisitada" />
+					</h:selectOneMenu>			
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" class="area-input-100" id="responsavelTecnico" rendered="#{analisePelaAreaRequisitadaMB.mostraResponsavelTecnico}">
+					<h:panelGroup  class="label-campo">Responsável Técnico:</h:panelGroup>	
+					<h:selectOneMenu id="responsaveltecnicoanalisearearequisitada" 
+						value="#{analisePelaAreaRequisitadaMB.demanda.responsaveltecnico}"
+						styleClass="select-form">
+						<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+						<f:selectItems value="#{analisePelaAreaRequisitadaMB.responsaveisTecnicos}" var="responsavel" itemLabel="#{responsavel.cnmnome}"/>						
+						<f:converter converterId="pessoaConv"/>
+						<h:message for="responsaveltecnicoanalisearearequisitada" />
+					</h:selectOneMenu>			
+				</h:panelGroup>	
+				
+				<h:panelGroup layout="block" class="area-input-50" id="complexidade" rendered="#{analisePelaAreaRequisitadaMB.mostraComplexidade}">
+					<h:panelGroup  class="label-campo">Complexidade</h:panelGroup>
+					<h:selectOneMenu id="complexidadetecnicoanalisearearequisitada" 
+						value="#{analisePelaAreaRequisitadaMB.demanda.complexidade}"
+						styleClass="select-form">
+	                    <f:selectItem itemLabel="Baixa" itemValue="Baixa"/>
+	                    <f:selectItem itemLabel="Media" itemValue="Media"/>
+	                    <f:selectItem itemLabel="Alta" itemValue="Alta"/>
+						<h:message for="complexidade" />
+					</h:selectOneMenu>
+				</h:panelGroup>
+				
+				<h:panelGroup layout="block" class="clear"/>
+							
+				<h:panelGroup layout="block" class="area-input-100" id="comentario" rendered="#{analisePelaAreaRequisitadaMB.mostraComentario}">
+					<h:panelGroup class="label-campo">Comentários:</h:panelGroup>	
+						<h:inputTextarea styleClass="textarea-form-2-linhas" id="idcomentarioanalise" 
+							value="#{analisePelaAreaRequisitadaMB.evento.cnmcomentario}" 
+							maxlength="255">
+							<h:message for="comentario" />
+						</h:inputTextarea>
+				</h:panelGroup> 					
+				
+				<h:panelGroup layout="block" class="clear"/>
+				     
+				<h:panelGroup layout="block" styleClass="alinhaBotao">
+					<h:commandButton value="Encaminhar">
+						<f:ajax render="@form" 
+									event="click"
+									listener="#{analisePelaAreaRequisitadaMB.preAnalise()}"
+									execute="complexidadetecnicoanalisearearequisitada responsaveltecnicoanalisearearequisitada idcomentarioanalise"/>
+					</h:commandButton>	        
+					<h:commandButton value="Fechar" onclick="#{rich:component('analarearequisitada')}.hide(); return false;"/>       
+				</h:panelGroup>
+		</rich:popupPanel>
+		
+	<!-- ############## CONFIRMAÇÃO DA ANÁLISE ################ -->
+		
+	<rich:popupPanel id="popupconfirmaanalise" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{analisePelaAreaRequisitadaMB.mostrarConfirmarAnaliseAreaRequisitada}" showWhenRendered="#{analisePelaAreaRequisitadaMB.mostrarConfirmarAnaliseAreaRequisitada}">
+
+		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Confirma a análise ?</h:panelGroup>	
+			<h:commandButton value="Sim">
+				<f:ajax 
+					render="@form :demandaform :menuform:panelbandeirasverdes :menuform:panelbandeirasvermelhas" 
+					execute="@form" 
+					listener="#{analisePelaAreaRequisitadaMB.efetuarAnalise()}"/>
+			</h:commandButton>
+			<h:commandButton value="Não">
+				<f:ajax 
+					render="@form" 
+					listener="#{analisePelaAreaRequisitadaMB.fechaConfirmaAnalise()}"/>
+			</h:commandButton>
+			 	
+		</h:panelGroup>	
+
+	</rich:popupPanel>		
+		
+	</h:form>
+</html>

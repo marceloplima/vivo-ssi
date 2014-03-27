@@ -1,0 +1,218 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formagendamento">
+ 	   
+		<rich:popupPanel id="agendamento" domElementAttachment="form" modal="true" width="700" height="400" zindex="2" show="#{agendamentosMB.exibeMesaDeCompra}" showWhenRendered="#{agendamentosMB.exibeMesaDeCompra}">
+			<f:facet name="header">
+	            <h:outputText value="Agendamento de Mesa de Compra" />
+	        </f:facet>		    
+
+	     	<rich:tabPanel id="tabpanelcadcompra" switchType="client">
+				<rich:tab id="tabagendamento" header="Agendamento">					
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Status:</h:panelGroup>	
+						<h:outputText value="#{agendamentosMB.agendamentoSelecionado.status.cnmstatus}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+						<h:outputText value="#{agendamentosMB.agendamentoSelecionado.autor.cnmnome}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+						<h:outputText value="#{agendamentosMB.agendamentoSelecionado.datacadastro.time}" styleClass="label-campo destaque">
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Data Mesa:</h:panelGroup>	
+						<rich:calendar id="datamesa" 
+							value="#{agendamentosMB.agendamentoSelecionado.datamesa}" 
+							styleClass="input-form calendar-form" 
+							required="true" requiredMessage="Data da mesa é obrigatória." 
+							datePattern="dd/MM/yyyy"
+							locale="pt_BR" 
+							converter="dateToCalendarConverter"
+							rendered="#{agendamentosMB.agendamentoSelecionado.status.idstatus eq agendamentosMB.idStatusNovo}"
+							enableManualInput="true"
+							oninputkeypress="javascript: mascara(this, data_mask);"
+							maxlength="10"/>
+						<h:message for="datamesa"/>
+						<h:outputText value="#{agendamentosMB.agendamentoSelecionado.datamesa.time}" id="datamesadesab" rendered="#{agendamentosMB.agendamentoSelecionado.status.idstatus ne agendamentosMB.idStatusNovo}" styleClass="label-campo destaque">
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>
+					
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Hora Mesa:</h:panelGroup>
+						<rich:inputNumberSpinner minValue="1" maxValue="24" id="horamesa" value="#{agendamentosMB.agendamentoSelecionado.nnrhoramesa}" styleClass="input-form calendar-form" rendered="#{agendamentosMB.agendamentoSelecionado.status.idstatus eq agendamentosMB.idStatusNovo}">
+							<h:message for="horamesa"/>
+						</rich:inputNumberSpinner>
+						<h:outputText value="#{agendamentosMB.agendamentoSelecionado.nnrhoramesa}" id="horamesadesab" rendered="#{agendamentosMB.agendamentoSelecionado.status.idstatus ne agendamentosMB.idStatusNovo}" styleClass="label-campo destaque"/>	
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Minutos Mesa:</h:panelGroup>	
+						<rich:inputNumberSpinner minValue="1" maxValue="60" id="minutomesa" value="#{agendamentosMB.agendamentoSelecionado.nnrminutomesa}" rendered="#{agendamentosMB.agendamentoSelecionado.status.idstatus eq agendamentosMB.idStatusNovo}" styleClass="input-form calendar-form">
+							<h:message for="minutomesa"/>
+						</rich:inputNumberSpinner>
+						<h:outputText value="#{agendamentosMB.agendamentoSelecionado.nnrminutomesa}" id="minutomesadesab" rendered="#{agendamentosMB.agendamentoSelecionado.status.idstatus ne agendamentosMB.idStatusNovo}" styleClass="label-campo destaque"/>
+					</h:panelGroup>						
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Número ACM:</h:panelGroup>	
+						<h:inputText id="numeroacm" value="#{agendamentosMB.agendamentoSelecionado.cnmnumeroacm}" styleClass="input-form" required="true" requiredMessage="Número da ACM é obrigatório." maxlength="10" rendered="#{agendamentosMB.agendamentoSelecionado.status.idstatus eq agendamentosMB.idStatusNovo}"/>
+						<h:message for="numeroacm"/>
+						<h:outputText value="#{agendamentosMB.agendamentoSelecionado.cnmnumeroacm}" id="numeroacmdesab" rendered="#{agendamentosMB.agendamentoSelecionado.status.idstatus ne agendamentosMB.idStatusNovo}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>
+	
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Objeto:</h:panelGroup>	
+						<h:inputTextarea id="objeto" value="#{agendamentosMB.agendamentoSelecionado.cnmobjeto}" styleClass="textarea-form-2-linhas" required="true" requiredMessage="Objeto é obrigatório." rendered="#{agendamentosMB.agendamentoSelecionado.status.idstatus eq agendamentosMB.idStatusNovo}"/>
+						<h:message for="objeto"/>
+						<h:outputText value="#{agendamentosMB.agendamentoSelecionado.cnmobjeto}" id="objetodesab" rendered="#{agendamentosMB.agendamentoSelecionado.status.idstatus ne agendamentosMB.idStatusNovo}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+						<h:inputTextarea id="comentario" value="#{agendamentosMB.agendamentoSelecionado.cnmcomentario}" rendered="#{agendamentosMB.agendamentoSelecionado.status.idstatus eq agendamentosMB.idStatusNovo}" styleClass="textarea-form-2-linhas"/>
+						<h:message for="comentario"/>
+						<h:outputText value="#{agendamentosMB.agendamentoSelecionado.cnmcomentario}" id="comentariodesab" rendered="#{agendamentosMB.agendamentoSelecionado.status.idstatus ne agendamentosMB.idStatusNovo}" styleClass="label-campo destaque"/>						
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>					
+					
+				</rich:tab>
+				
+				<rich:tab id="tabresultado" header="Resultado" switchType="client" 
+					disabled="#{agendamentosMB.agendamentoSelecionado.status.idstatus eq agendamentosMB.idStatusNovo}">	
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Mesa realizada:</h:panelGroup>	
+	                	<h:selectOneRadio styleClass="label-radio" id="mesarealizada" value="#{agendamentosMB.agendamentoSelecionado.boolmesarealizada}" rendered="#{agendamentosMB.podeConcluir}">
+		                    <f:selectItem itemLabel="Sim" itemValue="true"/>
+		                    <f:selectItem itemLabel="Não" itemValue="false"/>
+		                </h:selectOneRadio>
+		                <h:outputText value="#{agendamentosMB.agendamentoSelecionado.boolmesarealizada eq true ? 'Sim' : 'Não'}" id="mesarealizadadesab" rendered="#{not agendamentosMB.podeConcluir}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Houve adjudicação:</h:panelGroup>	
+		                <h:selectOneRadio styleClass="label-radio" id="houveadjudicacao" value="#{agendamentosMB.agendamentoSelecionado.boolhouveadjudicacao}" rendered="#{agendamentosMB.podeConcluir}">
+		                    <f:selectItem itemLabel="Sim" itemValue="true"/>
+		                    <f:selectItem itemLabel="Não" itemValue="false"/>
+		                </h:selectOneRadio>
+		                <h:outputText value="#{agendamentosMB.agendamentoSelecionado.boolhouveadjudicacao eq true ? 'Sim' : 'Não'}" id="houveadjudicacaodesab" rendered="#{not agendamentosMB.podeConcluir}" styleClass="label-campo destaque"/>						
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+						<h:inputTextarea styleClass="textarea-form-2-linhas" value="#{agendamentosMB.agendamentoSelecionado.cnmcomentarioresultado}" id="comentarioresultado" validatorMessage="Comentário do resultado não pode ser maior que 255 caracteres." rendered="#{agendamentosMB.podeConcluir}">
+							<f:validateLength maximum="255" for="comentario"/>
+						</h:inputTextarea>
+						<h:message for="comentarioresultado"/>
+						<h:outputText value="#{agendamentosMB.agendamentoSelecionado.cnmcomentarioresultado}" id="comentarioresultadodesab" rendered="#{not agendamentosMB.podeConcluir}" styleClass="label-campo destaque"/>
+					</h:panelGroup>				
+					<h:panelGroup layout="block" class="clear"/>
+	
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Adjudicação:</h:panelGroup>	
+		                <h:selectOneRadio styleClass="label-radio" id="adjudicacao" value="#{agendamentosMB.agendamentoSelecionado.booladjudicacao}" rendered="#{agendamentosMB.podeConcluir}">
+		                    <f:selectItem itemLabel="Total" itemValue="true"/>
+		                    <f:selectItem itemLabel="Parcial" itemValue="false"/>
+		                </h:selectOneRadio>
+		                <h:outputText value="#{agendamentosMB.agendamentoSelecionado.booladjudicacao eq true ? 'Sim' : 'Não'}" id="adjudicacaodesab" rendered="#{not agendamentosMB.podeConcluir}" styleClass="label-campo destaque"/>						
+					</h:panelGroup>                						
+					<h:panelGroup layout="block" class="area-input-25" id="panelqtdadjudicados">
+						<h:panelGroup  class="label-campo">Qtd Adjudicados:</h:panelGroup>	
+						<h:outputText id="qtdadjudicados" value="#{agendamentosMB.qtdFornecedoresSelecionados}" styleClass="label-campo destaque"/>
+					</h:panelGroup>											
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Fornecedores Adjudicados:</h:panelGroup>	
+						
+						<rich:dataTable id="fornecedoresadjudicados" value="#{agendamentosMB.fornecedoresAgendamentos}" var="fornecedoragendamento">
+							<rich:column style="text-align:left;">
+								<h:selectBooleanCheckbox id="checkboxfornecedoradjudicado" value="#{fornecedoragendamento.checked}" disabled="#{not agendamentosMB.podeConcluir}">
+									<f:ajax event="click" 								 
+										immediate="true"
+										render=":formagendamento:panelqtdadjudicados"
+										execute="@this"/>
+								</h:selectBooleanCheckbox>
+							</rich:column>
+							<rich:column style="text-align:left;">
+								<h:outputText value="#{fornecedoragendamento.fornecedores.cnmfornecedor}"/>
+							</rich:column>
+							
+							<rich:column style="text-align:left;">
+								<h:inputText maxlength="18" size="18" onkeypress="javascript: mascara(this, moeda_mask);" value="#{fornecedoragendamento.nnrvaloradjudicado}" id="valorfornecedoresadjudicados" disabled="#{not agendamentosMB.podeConcluir}">
+									<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+								</h:inputText>
+							</rich:column>							
+						</rich:dataTable>						
+			        </h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>	        	
+				</rich:tab>
+			</rich:tabPanel>
+
+	        <h:panelGroup layout="block" styleClass="alinhaBotao">
+				<h:commandButton value="Salvar" rendered="#{(agendamentosMB.agendamentoSelecionado.status.idstatus ne agendamentosMB.idStatusConcluido) and (agendamentosMB.agendamentoSelecionado.status.idstatus ne agendamentosMB.idStatusNaoAdjudicado)}">
+					<f:ajax 
+						render="@form popupconfirmacaoagendamento" 
+						event="click"
+						execute="@form"
+						listener="#{agendamentosMB.preSalvar()}"/>
+				</h:commandButton>					        
+				<h:commandButton value="Agendar" rendered="#{agendamentosMB.podeAgendar}">
+					<f:ajax 
+						render="@form popupconfirmacaoagendamento" 
+						event="click"
+						listener="#{agendamentosMB.agendarConcluir(true)}"
+						execute="@form"/>
+				</h:commandButton>
+				<h:commandButton value="Concluir" rendered="#{agendamentosMB.podeConcluir}">
+					<f:ajax 
+						render="@form popupconfirmacaoagendamento" 
+						event="click"
+						listener="#{agendamentosMB.agendarConcluir(false)}"
+						execute="@form"/>				
+				</h:commandButton>
+				<h:commandButton value="Fechar">
+					<f:ajax 
+						render="@form" 
+						event="click"
+						listener="#{agendamentosMB.fechaTela()}"/>						
+				</h:commandButton>
+			</h:panelGroup>				
+			<h:panelGroup layout="block" class="clear"/>
+						
+		</rich:popupPanel>
+		
+	<!-- ############## POPUP DE CONFIRMAÇÃO ################ -->
+		
+		<rich:popupPanel id="popupconfirmacaoagendamento" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{agendamentosMB.exibeConfirmacaoMesaDeCompra}" showWhenRendered="#{agendamentosMB.exibeConfirmacaoMesaDeCompra}">
+	
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">
+					<h:outputLabel value="#{agendamentosMB.mensagemTelaConfirmacao}" />
+				</h:panelGroup>	
+				<h:commandButton value="Sim">
+					<f:ajax 
+						render="@form :demandaform:idagendamentos" 
+						execute="@form" 
+						listener="#{agendamentosMB.gravar()}"/>
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render="@form" 
+						listener="#{agendamentosMB.fechaTelaConfirmacao()}"
+						immediate="true"/>
+				</h:commandButton>
+				 	
+			</h:panelGroup>	
+	
+		</rich:popupPanel>			
+		
+	</h:form>
+</html>

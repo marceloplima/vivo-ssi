@@ -1,0 +1,76 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<h:form id="formbuscamodfunc">
+		<rich:popupPanel id="popupfunc" modal="true" width="750" height="500" zindex="2">
+			<f:facet name="header">
+	            <h:outputText value="Funcionalidades" />
+	        </f:facet>
+	        <f:facet name="controls">
+	            <h:outputLink value="#" onclick="#{rich:component('popupfunc')}.hide(); return false;">
+	               	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+	            </h:outputLink>
+        	</f:facet>
+			<h:outputText value="Módulo: #{buscarFuncionalidadesMB.modulo.cnmmodulo}"/>
+			<br/>
+			<br/>
+		    <rich:dataTable keepSaved="true" rows="10" id="dtmodfunc" value="#{buscarFuncionalidadesMB.dataModel}" var="funcionalidade">
+		    	<rich:dataScroller id="scrollermodfunctop"/>
+				<f:facet name="header">
+					<rich:columnGroup>
+						<rich:column>
+							<h:outputText value="Funcionalidade" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Tipo" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Alvo" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="Pai" />
+						</rich:column>
+						<rich:column>
+							<h:outputText value="" />
+						</rich:column>
+					</rich:columnGroup>
+				</f:facet>
+				<rich:column>
+					<h:outputText value="#{funcionalidade.cnmfuncionalidade}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{funcionalidade.tipofuncionalidade.cnmtipofuncionalidade}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{funcionalidade.cnmaction}"/>
+				</rich:column>
+				<rich:column>
+					<h:outputText value="#{funcionalidade.funcionalidadepai.cnmfuncionalidade}"/>
+				</rich:column>
+				<rich:column style="text-align:center;">
+					<h:commandButton value="Editar">
+						<a4j:ajax event="click" 
+								  render="popupaltmodfunc" 
+								  listener="#{buscarFuncionalidadesMB.edit(funcionalidade)}"
+								  oncomplete="#{rich:component('popupaltmodfunc')}.show();"/>
+					</h:commandButton>
+					<h:commandButton value="Remover">
+						<a4j:ajax event="click" render="dtmodfunc" listener="#{buscarFuncionalidadesMB.delete(funcionalidade)}"/>
+					</h:commandButton>
+				</rich:column>
+				 <f:facet name="footer">
+                   <rich:dataScroller id="scrollermodfuncbottom"/>
+                </f:facet>
+			</rich:dataTable>
+			
+		</rich:popupPanel>
+		<ui:include src="buscarmoduloseditfunc.xhtml"/>
+	</h:form>
+</html>

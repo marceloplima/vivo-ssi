@@ -1,0 +1,81 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formvalidacaolaudotecnico" method="post" enctype="multipart/form-data">
+ 	
+		<rich:popupPanel id="validacaolaudotecnico" domElementAttachment="form" modal="true" width="500" height="400" zindex="2" show="#{validacaoLaudoTecnicoMB.exibevalidacaolaudotecnico}" showWhenRendered="#{validacaoLaudoTecnicoMB.exibevalidacaolaudotecnico}">
+			<f:facet name="header">
+	            <h:outputText value="Validação Laudo Técnico" />
+	        </f:facet>
+	       	
+				<ui:include src="autoredatacorrente.xhtml"></ui:include>
+				
+				<h:panelGroup layout="block" class="area-input-100">
+					<h:panelGroup  class="label-campo">Parecer:</h:panelGroup>	
+					<h:selectOneMenu id="pareceranaliseaquisicao" 
+							value="#{validacaoLaudoTecnicoMB.evento.egenerico.parecer}"
+							styleClass="select-form"
+							required="true" 
+							requiredMessage="Parecer é obrigatório." 
+							immediate="true">
+						<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+						<f:selectItems value="#{validacaoLaudoTecnicoMB.pareceresValidacaoLaudoTecnico}" var="parecer" itemLabel="#{parecer.cnmparecer}"/>
+						<f:converter converterId="parecerConv"/>
+						<h:message for="pareceranaliseaquisicao" />
+					</h:selectOneMenu>			
+				</h:panelGroup>	
+											
+				<h:panelGroup layout="block" class="clear"/>
+				
+				<h:panelGroup layout="block" class="area-input-100">
+					<h:panelGroup  class="label-campo">Comentário:</h:panelGroup>	
+					<h:inputTextarea styleClass="textarea-form-2-linhas" id="comentario" value="#{validacaoLaudoTecnicoMB.evento.cnmcomentario}">
+					
+						<h:message for="comentario" />
+					
+					</h:inputTextarea>
+				</h:panelGroup> 
+				<h:panelGroup layout="block" class="clear"/>
+				     
+				<h:panelGroup layout="block" styleClass="alinhaBotao">
+					<h:commandButton value="Efetuar Validação">
+						<f:ajax render="@form" 
+									event="click"
+									listener="#{validacaoLaudoTecnicoMB.preValidacaoLaudoTecnico()}"
+									execute="comentario pareceranaliseaquisicao"/>
+					</h:commandButton>	        
+					<h:commandButton value="Fechar" onclick="#{rich:component('validacaolaudotecnico')}.hide(); return false;"/>       
+				</h:panelGroup>
+		</rich:popupPanel>		
+		
+	<rich:popupPanel id="popupconfirmaanalise" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{validacaoLaudoTecnicoMB.exibeconfirmavalidacaolaudotecnico}" showWhenRendered="#{validacaoLaudoTecnicoMB.exibeconfirmavalidacaolaudotecnico}">
+
+		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Confirma a validação ?</h:panelGroup>	
+			<h:commandButton value="Sim">
+				<f:ajax 
+					render="@form :demandaform" 
+					execute="@form" 
+					listener="#{validacaoLaudoTecnicoMB.efetuarLaudoTecnico()}"
+					immediate="true"/>
+			</h:commandButton>
+			<h:commandButton value="Não">
+				<f:ajax 
+					render="@form" 
+					listener="#{validacaoLaudoTecnicoMB.fechaTelaConfirmacaoValidacaoLaudoTecnico()}"
+					immediate="true"/>
+			</h:commandButton>
+			 	
+		</h:panelGroup>	
+
+	</rich:popupPanel>		
+		
+	</h:form>
+</html>

@@ -1,0 +1,47 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+	<rich:popupPanel id="popuppessoasfunc" domElementAttachment="form" modal="true" width="500" height="350" zindex="2" show="#{buscarPessoasMB.exibepopupfunc}" showWhenRendered="#{buscarPessoasMB.exibepopupfunc}">
+		<f:facet name="header">
+			<h:outputText value="Funcionalidades" />
+		</f:facet>
+		<f:facet name="controls">
+	        <h:outputLink value="#" onclick="#{rich:component('popuppessoasfunc')}.hide(); return false;">
+	        	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+	    	</h:outputLink>
+        </f:facet>
+		<h:outputText value="#{buscarPessoasMB.pessoa.cnmnome}"/>
+		<br/>
+		<br/>
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Módulo:</h:panelGroup>	
+			<h:selectOneMenu id="buscamodulofunc" value="#{buscarPessoasMB.modulofunc}" styleClass="select-form">
+				<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+				<f:selectItems value="#{modulosMB.recuperar()}" var="modulo" itemLabel="#{modulo.cnmmodulo}"/>
+				<a4j:ajax 
+					listener="#{buscarPessoasMB.filtrarmodulofunc()}" 
+					render="@form" 
+					execute="@form"/>
+				<f:converter converterId="moduloConv"/>
+			</h:selectOneMenu>
+		</h:panelGroup>
+		
+		<rich:tree id="treefunc" value="#{buscarPessoasMB.nosfunc}" var="no" toggleType="client" rendered="#{buscarPessoasMB.exibetreefunc}">  
+			<rich:treeNode id="functreenodepessoa">  
+				<h:selectBooleanCheckbox value="#{no.funcionalidade.checked}" onclick="checaRecursivo(this.checked,'#{no.funcionalidade.idfuncionalidade}|#{no.funcionalidade.funcionalidadepai.idfuncionalidade}');"/>
+				<h:outputText value="#{no.funcionalidade.cnmfuncionalidade}"/>  
+			</rich:treeNode>
+		</rich:tree>
+		<h:panelGroup layout="block" class="clear"/>
+		<h:commandButton value="Alterar">
+			<f:ajax execute="@form" listener="#{buscarPessoasMB.alterarfunc()}"/>
+		</h:commandButton>	
+	</rich:popupPanel>
+</html>

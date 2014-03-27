@@ -1,0 +1,31 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+	<rich:popupPanel id="popupeditartipousuario" domElementAttachment="form" modal="true" width="600" height="520" zindex="2" show="#{buscarTiposUsuarioMB.exibepopupeditar}" showWhenRendered="#{buscarTiposUsuarioMB.exibepopupeditar}">
+		<f:facet name="header">
+			<h:outputText value="Edição de Tipo de Usuário" />
+		</f:facet>
+		<f:facet name="controls">
+	        <h:outputLink value="#" onclick="#{rich:component('popupeditartipousuario')}.hide(); return false;">
+	        	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+	    	</h:outputLink>
+        </f:facet>
+        
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Tipo do Usuário:</h:panelGroup>	
+			<h:inputText id="cnmtipousuarioedit" styleClass="input-form" value="#{buscarTiposUsuarioMB.tipousuario.cnmtipousuario}"/>
+		</h:panelGroup>					
+					    
+		<h:panelGroup layout="block" class="clear"/>
+		<h:commandButton value="Alterar">
+			<f:ajax render="@form" execute="@form" listener="#{buscarTiposUsuarioMB.alterar()}"/>
+		</h:commandButton>	
+	</rich:popupPanel>
+</html>

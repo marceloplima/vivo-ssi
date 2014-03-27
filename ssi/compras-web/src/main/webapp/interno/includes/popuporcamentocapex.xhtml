@@ -1,0 +1,129 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formorcamentcapex" method="post">
+ 	
+	<!-- ############## POPUP DE ORÇAMENTO ################ -->
+
+	<rich:popupPanel id="panelorcamentocapex" domElementAttachment="form" modal="true" width="600" height="320" zindex="2" show="#{demandasMB.mostraOrcamentoCapex}" showWhenRendered="#{demandasMB.mostraOrcamentoCapex}">
+			<f:facet name="header">
+	            <h:outputText value="Orçamento Capex" />
+	        </f:facet>
+	       	
+			<h:panelGroup layout="block" class="clear"/>
+			    	     		     						
+				<ui:include src="autoredatacorrente.xhtml"/>
+				
+				<h:panelGroup layout="block" class="clear"/>
+						
+				<h:panelGroup layout="block" class="area-input-25" id="panelvalor1">
+					<h:outputText value="#{demandasMB.ano1}" class="label-campo"/>	
+					<h:inputText styleClass="input-form" onkeypress="javascript: mascara(this, moeda_mask);" id="idvalorano1" value="#{demandasMB.orcamentoCapex.nnrano1}"  maxlength="20">
+						<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+						<h:message for="idvalorano1"/>
+					</h:inputText>
+				</h:panelGroup>			
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:outputText value="#{demandasMB.ano2}" class="label-campo"/>	
+					<h:inputText styleClass="input-form" onkeypress="javascript: mascara(this, moeda_mask);" id="idvalorano2" value="#{demandasMB.orcamentoCapex.nnrano2}" maxlength="20">
+						<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+						<h:message for="idvalorano2"/>
+					</h:inputText>
+				</h:panelGroup>			
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:outputText value="#{demandasMB.ano3}" class="label-campo"/>	
+					<h:inputText styleClass="input-form" onkeypress="javascript: mascara(this, moeda_mask);" id="idvalorano3" value="#{demandasMB.orcamentoCapex.nnrano3}" maxlength="20">
+						<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+						<h:message for="idvalorano3"/>
+					</h:inputText>
+				</h:panelGroup>			
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:outputText value="#{demandasMB.ano4}" class="label-campo"/>
+					<h:inputText styleClass="input-form" onkeypress="javascript: mascara(this, moeda_mask);" id="idvalorano4" value="#{demandasMB.orcamentoCapex.nnrano4}" maxlength="20">
+						<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+						<h:message for="idvalorano4"/>
+					</h:inputText>	
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="area-input-25">
+					<h:outputText value="Demais Anos" class="label-campo"/>
+					<h:inputText styleClass="input-form" onkeypress="javascript: mascara(this, moeda_mask);" id="iddemaisanos" value="#{demandasMB.orcamentoCapex.nnrdemaisanos}" maxlength="20">
+						<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+						<h:message for="iddemaisanos"/>
+					</h:inputText>	
+				</h:panelGroup>							
+							
+				<h:panelGroup layout="block" class="clear"/>
+							
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">RC:</h:panelGroup>	
+					<h:inputText styleClass="input-form" id="idrc" value="#{demandasMB.orcamentoCapex.cnmrc}" rendered="#{demandasMB.podeEditarRC}" maxlength="10"/>
+					<h:message for="idrc"/>
+				</h:panelGroup>
+				<br/>
+				<h:panelGroup layout="block" class="clear"/><br/>
+				
+				<h:panelGroup layout="block" styleClass="alinhaBotao">
+						<h:commandButton value="Salvar">
+							<f:ajax 
+								render="@form 
+								:demandaform:idorcamentos 
+								:demandaform:idtotaldacompra 
+								:demandaform:idPanelDadosBasicos 
+								:demandaform:idorcamento 
+								:demandaform:idorcamentocapex 
+								:demandaform:tiposcondicionamento 
+								:demandaform:propriedade" 
+								event="click"
+								listener="#{demandasMB.salvarOrcamentoCapex()}"
+								execute="@form"
+							/>
+					</h:commandButton>
+					
+					<h:commandButton value="Fechar">						
+						<f:ajax render="@form" 
+								event="click"
+								listener="#{demandasMB.hideOrcamentoCapex()}"
+								immediate="true"
+							/>
+													
+					</h:commandButton>
+						        
+				</h:panelGroup>					
+				       	
+	</rich:popupPanel>
+		
+		<!-- ############## POPUP DE EXCLUSÃO DE ORÇAMENTO ################ -->
+		
+		<rich:popupPanel id="popupconfirmaexcluirorcamentocapex" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{demandasMB.mostraConfirmacaoExclusaoOrcamentoCapex}" showWhenRendered="#{demandasMB.mostraConfirmacaoExclusaoOrcamentoCapex}">
+	
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma a exclusão ?</h:panelGroup>	
+				<h:commandButton value="Sim">
+					<f:ajax 
+						render="@form :demandaform:idorcamentos" 
+						execute="@form" 
+						listener="#{demandasMB.excluirOrcamento()}"
+						immediate="true"/>
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render="@form popupconfirmaexcluirorcamentocapex" 
+						execute="@form" 
+						listener="#{demandasMB.cancelarExcluirOrcamento()}"
+						immediate="true"/>
+				</h:commandButton>
+				 	
+			</h:panelGroup>	
+	
+		</rich:popupPanel>
+		
+		
+	</h:form>
+</html>

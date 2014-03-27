@@ -1,0 +1,98 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+			
+     <h:form>
+     
+    <h:commandButton value="Responder Questionamento">
+        <rich:componentControl target="respQuestionamento" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Validação 2 Nível">
+        <rich:componentControl target="valnivel" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Análise de Nível Técnico Nível 1">
+        <rich:componentControl target="analnivel" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Análise da Minuta">
+        <rich:componentControl target="analminuta" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Alterar Requisição de Compra">
+        <rich:componentControl target="altrequiscompra" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Abertura de Requisição de Compra">
+        <rich:componentControl target="aberturarequiscompra" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Acionar Criação de RC">
+        <rich:componentControl target="acionarcriacaorc" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Registrar Envio ao Mercado">
+        <rich:componentControl target="regenviomercado" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Revisar Análise de Requisição">
+        <rich:componentControl target="revisanalaquis" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Solicitar Revisão a Aquisição">
+        <rich:componentControl target="solicrevaquis" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Indicar Novo Comprador">
+        <rich:componentControl target="indicnovocomprador" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Análise Gerente de Compras">
+        <rich:componentControl target="analgercompras" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Validação Técnica">
+        <rich:componentControl target="valtec" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Aprovação de Análise de Aquisição">
+        <rich:componentControl target="aprovanalaquis" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Incluir Anexo">
+        <rich:componentControl target="incanexo" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Alterar Analista">
+        <rich:componentControl target="alteraanalista" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Indicar Analista Responsável">
+        <rich:componentControl target="indicanalresp" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Cancelar SSI">
+        <rich:componentControl target="cancelssi" operation="show" />
+    </h:commandButton>
+
+    <h:commandButton value="Leilão">
+        <rich:componentControl target="leilao" operation="show" />
+    </h:commandButton>
+    
+    <h:commandButton value="Incluir UF">
+        <rich:componentControl target="incluirUF" operation="show"/>
+    </h:commandButton>
+    
+	</h:form>
+	
+  	</ui:define>
+</ui:composition>

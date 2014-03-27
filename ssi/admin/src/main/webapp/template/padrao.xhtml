@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+      
+  <h:head>
+  	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" />
+    <meta http-equiv="Pragma" content="No-cache"/>
+	<meta http-equiv="Cache-Control" content="no-store,No-cache,must-revalidate,post-check=0,pre-check=0,max-age=0"/>
+	<meta http-equiv="Expires" content="-1"/>
+	<title><h:outputText value=""/></title>
+	
+	<h:outputScript library="js" name="geral.js" />
+	
+    <ui:include src="includes/css.xhtml"/> <!-- INCLUSÃO DE CSS PARA TODO SISTEMA E TRATAMENTO PARA DIFERENÇA ENTRE BROWSERS  -->
+
+
+  </h:head>
+  <body>
+	
+		<div class="pagina">
+		
+			<div id="header" class="topo">	
+				<ui:include src="includes/topo.xhtml"/>
+			</div>
+			
+			<div class="menu">	
+				<ui:include src="includes/menu.xhtml"/>
+			</div>
+			
+			
+			<div id="mainContent" class="conteudo" style="z-index:1;height:100%;overflow:auto;overflow-x:hidden;">
+				<div class="miolo">
+					<ui:insert name="conteudosistema"/>
+				</div>
+			</div>
+			
+			<div id="footer" class="rodape">	
+				<ui:include src="includes/rodape.xhtml"/>
+			</div>
+			
+					<!-- ############################## INÍCIO - MENSAGENS ############################## -->
+					    <a4j:status id="statusTeste" onstart="#{rich:component('splash')}.show()" onstop="#{rich:component('splash')}.hide()" />
+					    <rich:popupPanel id="splash" autosized="true" width="200" height="80" moveable="false" resizeable="false" zindex="99999">
+							<f:facet name="header"><h:outputText value="Carregando" /></f:facet>
+					   		<img src="#{request.contextPath}/imagens/ajax-loader.gif"/>
+					    </rich:popupPanel>
+					   
+					    <a4j:outputPanel id="panelexibesucesso" >
+					    	<h:panelGroup id="pgexibesucesso" rendered="#{indexMB.panelexibesucesso}" class="sucesso">
+					    		<div class="sucesso-simbolo"></div>
+								<div class="sucesso-texto"><h:outputText  value="#{indexMB.msgpanel}" /></div>
+								<div class="fechar">
+									<h:form>
+										<h:commandButton image="${pageContext.request.contextPath}/imagens/action_fechar.png" rendered="#{indexMB.panelexibesucesso}" >
+											<f:ajax event="click"
+													  render=":panelexibesucesso"
+													  listener="#{indexMB.desabilitaSucesso()}" />
+										</h:commandButton>
+									</h:form>
+								</div>
+							</h:panelGroup>
+						</a4j:outputPanel>
+						
+						<a4j:outputPanel id="panelexibealerta">
+					    	<h:panelGroup id="pgexibealerta" rendered="#{indexMB.panelexibealerta}" class="alerta">
+					    		<div class="alerta-simbolo"></div>
+								<div class="alerta-texto"><h:outputText  value="#{indexMB.msgpanel}" /></div>
+								<div class="fechar">
+									<h:form>
+										<h:commandButton image="${pageContext.request.contextPath}/imagens/action_fechar.png" rendered="#{indexMB.panelexibealerta}" >
+											<f:ajax event="click"
+													  render=":panelexibealerta"
+													  listener="#{indexMB.desabilitaAlerta()}" />
+										</h:commandButton>
+									</h:form>
+								</div>
+							</h:panelGroup>
+						</a4j:outputPanel> 
+						
+						<a4j:outputPanel id="panelexibeerro">
+					    	<h:panelGroup layout="block" id="pgexibeerro" rendered="#{indexMB.panelexibeerro}" class="erro">
+					    		<div class="erro-simbolo"></div>
+					    		<div class="erro-texto">
+									<rich:list value="#{indexMB.msgspanel}" id="msgserro" var="erro" rendered="#{indexMB.panelexibeerro}" styleClass="lista">
+										<h:outputText value="#{erro}" />
+									</rich:list>
+								</div>
+								<div class="fechar">
+									<h:form>
+										<h:commandButton image="${pageContext.request.contextPath}/imagens/action_fechar.png" rendered="#{indexMB.panelexibeerro}" >
+											<f:ajax event="click"
+													  render=":panelexibeerro"
+													  listener="#{indexMB.desabilitaErro()}" />
+										</h:commandButton>
+									</h:form>
+								</div>
+						 </h:panelGroup>
+						</a4j:outputPanel>  	
+
+					<!-- ############################## FIM - MENSAGENS ############################## -->			
+			
+		</div>
+
+        <!-- ############################## INÍCIO - AJAX-LOADER ############################## -->
+        
+		<div align="center" style="position:fixed; top:1em; right:1em; z-index: 8888;">
+			<div align="left" id="ajaxloader" style="display: none; background-color: #FFFFCC; padding: 5px; margin: 5px; z-index: 9999;">
+				<h:outputText value="Carregando..." styleClass="texto2"/>
+			</div>
+		</div>
+        
+        <!-- ############################## FIM - AJAX-LOADER ############################## -->        
+	
+		
+
+	<div id="divPush"></div>
+
+	<script>
+/*
+		jsf.ajax.addOnEvent(function(data) {
+	        var ajaxstatus = data.status; // Can be "begin", "complete" and "success"
+	        var ajaxloader = document.getElementById("ajaxloader");
+	
+	        switch (ajaxstatus) {
+	            case "begin": // This is called right before ajax request is been sent.
+	                ajaxloader.style.display = 'block';
+	                break;
+	
+	            case "complete": // This is called right after ajax response is received.
+	                ajaxloader.style.display = 'none';
+	                break;
+	
+	            case "success": // This is called when ajax response is successfully processed.
+	                // NOOP.
+	                break;
+	        }
+	    });
+*/
+		function handleDisableButton(data) {
+		    if (data.source.type != "submit") {
+		        return;
+		    }
+
+		    switch (data.status) {
+		        case "begin":
+		            data.source.disabled = true;
+		            break;
+		        case "complete":
+		            data.source.disabled = false;
+		            break;
+		    }    
+		}
+
+		jsf.ajax.addOnEvent(handleDisableButton);
+	    
+		$(document).ready(function(){
+			var janela = $(window).height();
+			$('.conteudo').css('height',janela-210+'px');
+
+			$('.ico-pesquisa-tab span').append('<img src="#{request.contextPath}/imagens/busca_azul.png"/>'); //Para inserir uma imagem de lupa no tab pesquisa.
+			
+			$('span').removeClass('rf-trn-ico');
+
+		});
+	</script>
+			
+  </body>
+</html>

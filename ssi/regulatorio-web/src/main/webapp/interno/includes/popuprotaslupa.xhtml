@@ -1,0 +1,116 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formrotaslupa" method="post">
+ 	
+	<!-- ############## POPUP DE ROTA ################ -->
+
+		<rich:popupPanel id="panelrotaslupa" domElementAttachment="form" modal="true" width="900" height="600" zindex="2" show="#{rotasMB.exibepopuprotaslupa}" showWhenRendered="#{rotasMB.exibepopuprotaslupa}">
+				<f:facet name="header">
+		            <h:outputText value="Detalhes da Rota" />
+		        </f:facet>
+		       	
+				<h:panelGroup layout="block" class="clear"/>
+				    	     		     						
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+						<h:outputText value="#{rotasMB.rota.autor.cnmnome}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="area-input-50">		
+						<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>
+						<h:outputText value="#{rotasMB.rota.datacadastro.time}" id="datacadastrorota" styleClass="label-campo destaque">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+						</h:outputText>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>
+					<rich:collapsiblePanel header="Informações Gerais" switchType="client" id="idinfogeral">
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Rota - nome da rota como aparece no bilhete:</h:panelGroup>
+							<h:outputText styleClass="label-campo destaque" value="#{rotasMB.rota.cnmrota}"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Descrição - descreva a função da rota:</h:panelGroup>
+							<h:outputText styleClass="label-campo destaque" value="#{rotasMB.rota.cnmdescricao}"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Sentido da Rota</h:panelGroup>
+			                <h:outputText value="#{rotasMB.rota.cnmsentidorota}" styleClass="label-campo destaque"/>					
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup  class="label-campo">Tipo da Rota</h:panelGroup>
+			                <h:outputText value="#{rotasMB.rota.cnmtiporota}" styleClass="label-campo destaque"/>					
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="clear"/>
+					</rich:collapsiblePanel>
+					<rich:collapsiblePanel header="Origem" switchType="client" id="idrotaorigem">
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">UF:</h:panelGroup>
+							<h:outputText value="#{rotasMB.rota.uforigem.cnmuf}" styleClass="label-campo destaque"/>
+		   				</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Central:</h:panelGroup>
+							<h:outputText value="#{rotasMB.rota.centralorigem.cnmcentral}" styleClass="label-campo destaque"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="clear"/>
+						<h:panelGroup layout="block" class="area-input-100">
+							<h:panelGroup  class="label-campo">OPC:</h:panelGroup>
+							<h:outputText styleClass="label-campo destaque" value="#{rotasMB.rota.centralorigem.cnmopc}"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-100">
+							<h:panelGroup  class="label-campo">CCC:</h:panelGroup>
+							<h:outputText styleClass="label-campo destaque" value="#{rotasMB.rota.centralorigem.cnmcodigoccc}"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-100">
+							<h:panelGroup  class="label-campo">Área Ponta B:</h:panelGroup>
+							<h:outputText styleClass="label-campo destaque" value="#{rotasMB.rota.centralorigem.cnmareaponta}"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="clear"/>
+					</rich:collapsiblePanel>
+					
+					<rich:collapsiblePanel header="Destino" switchType="client" id="idrotadestino">
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">UF:</h:panelGroup>
+							<h:outputText value="#{rotasMB.rota.ufdestino.cnmuf}" styleClass="label-campo destaque"/>
+		   				</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Central:</h:panelGroup>
+							<h:outputText value="#{rotasMB.rota.centraldestino.cnmcentral}" styleClass="label-campo destaque"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="clear"/>
+						<h:panelGroup layout="block" class="area-input-100">
+							<h:panelGroup  class="label-campo">DPC:</h:panelGroup>
+							<h:outputText styleClass="label-campo destaque" value="#{rotasMB.rota.centraldestino.cnmopc}"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-100">
+							<h:panelGroup  class="label-campo">CCC:</h:panelGroup>
+							<h:outputText styleClass="label-campo destaque" value="#{rotasMB.rota.centraldestino.cnmcodigoccc}"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-100">
+							<h:panelGroup  class="label-campo">Área Ponta B:</h:panelGroup>
+							<h:outputText styleClass="label-campo destaque" value="#{rotasMB.rota.centraldestino.cnmareaponta}"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="clear"/>
+					</rich:collapsiblePanel>
+					<h:panelGroup layout="block" class="clear"/><br/>
+					
+					<h:panelGroup layout="block" styleClass="alinhaBotao">
+						<h:commandButton value="Fechar">						
+							<f:ajax render="@form" 
+									event="click"
+									listener="#{rotasMB.desabilitarPopupLupa()}"
+									immediate="true"
+								/>				
+						</h:commandButton>
+					</h:panelGroup>					
+					       	
+		</rich:popupPanel>
+	</h:form>
+</html>

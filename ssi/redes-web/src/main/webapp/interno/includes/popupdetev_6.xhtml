@@ -1,0 +1,42 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+	<rich:popupPanel id="popupdetev_6" domElementAttachment="form" modal="true" width="500" height="230" zindex="2" show="#{eventosMB.exibepopupdetev_6}" showWhenRendered="#{eventosMB.exibepopupdetev_6}">
+		<f:facet name="header">
+			<h:outputText value="Detalhes" />
+		</f:facet>
+		<f:facet name="controls">
+	        <h:outputLink value="#" onclick="#{rich:component('popupdetev_6')}.hide(); return false;">
+	        	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+	    	</h:outputLink>
+        </f:facet>
+        <h:panelGroup layout="block" class="area-input-100" id="pgcorrecao">
+			<h:panelGroup  class="label-campo">Correção:</h:panelGroup>
+			<h:outputText value="#{eventosMB.evento.erc.cnmcorrecao}" styleClass="label-campo destaque"/>
+		</h:panelGroup>
+		
+		<h:panelGroup layout="block" class="clear"/>
+		
+		<h:panelGroup layout="block" class="area-input-100" id="pgresptestes">
+			<h:panelGroup  class="label-campo">Responsável Pelos Testes:</h:panelGroup>
+			<h:outputText value="#{eventosMB.evento.erc.cnmresponsaveltestes}" styleClass="label-campo destaque"/>
+		</h:panelGroup>
+		
+		<h:panelGroup layout="block" class="clear"/>
+		
+		<h:panelGroup layout="block" class="area-input-100" id="pgdtconclusao">
+			<h:panelGroup  class="label-campo">Data de Conclusão:</h:panelGroup>
+			<h:outputText value="#{eventosMB.evento.erc.dataconclusao.time}" id="dataconclusao" styleClass="label-campo destaque">
+				<f:convertDateTime pattern="dd/MM/yyyy"/>
+			</h:outputText>
+		</h:panelGroup>
+		
+	</rich:popupPanel>
+</html>

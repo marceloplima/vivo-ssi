@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>druid-parent</artifactId>
+		<groupId>br.com.druid</groupId>
+		<version>4</version>
+	</parent>
+
+	<groupId>com.ssi</groupId>
+	<artifactId>ssi-pom</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+
+	<name>Projeto base para o SSI - VIVO</name>
+	<description>Projeto Base do SSI - VIVO</description>
+
+	<scm>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.version>${version}</project.version>
+		<log4j-version>1.2.16</log4j-version>
+		<javaee-api-version>6.0</javaee-api-version>
+		<javaee-web-api-version>6.0</javaee-web-api-version>
+		<commons-lang-version>2.6</commons-lang-version>
+		<richfaces-version>4.2.2.Final</richfaces-version>
+		<jsf-version>2.1.7</jsf-version>
+		<cdi-api-version>1.0-SP4</cdi-api-version>
+		<hibernate-version>4.2.7.SP1</hibernate-version>
+		<bean-validation-version>1.0.0.GA</bean-validation-version>
+		<druid-components-version>1.2.7</druid-components-version>
+	</properties>
+
+	<modules>
+		<module>kernel</module>
+		<module>ssi-ear</module>
+		<module>regulatorio-common</module>
+		<module>regulatorio-web</module>
+		<module>regulatorio-service</module>
+		<module>admin</module>
+		<module>compras-web</module>
+		<module>compras-service</module>
+		<module>compras-common</module>
+		<module>redes-common</module>
+		<module>redes-web</module>
+		<module>redes-service</module>
+		<module>ssi-integration-tests</module>
+	</modules>
+
+	<repositories>
+		<repository>
+			<id>Nexus Druid</id>
+			<url>http://107.170.5.59</url>
+		</repository>
+	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-api</artifactId>
+				<version>${jsf-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.sun.faces</groupId>
+				<artifactId>jsf-impl</artifactId>
+				<version>${jsf-version}</version>
+			</dependency>
+
+
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-api</artifactId>
+				<version>${javaee-api-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-web-api</artifactId>
+				<version>${javaee-web-api-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>commons-lang</groupId>
+				<artifactId>commons-lang</artifactId>
+				<version>${commons-lang-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.enterprise</groupId>
+				<artifactId>cdi-api</artifactId>
+				<version>${cdi-api-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- Dependencias de terceiros -->
+
+			<!-- Hibernate -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${hibernate-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- -->
+
+			<!-- Bean validation -->
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>${bean-validation-version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- -->
+
+			<!-- Rich Faces -->
+			<dependency>
+				<groupId>org.richfaces.ui</groupId>
+				<artifactId>richfaces-components-api</artifactId>
+				<version>${richfaces-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.richfaces.ui</groupId>
+				<artifactId>richfaces-components-ui</artifactId>
+				<version>${richfaces-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.richfaces.core</groupId>
+				<artifactId>richfaces-core-api</artifactId>
+				<version>${richfaces-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.richfaces.core</groupId>
+				<artifactId>richfaces-core-impl</artifactId>
+				<version>${richfaces-version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- -->
+
+			<!-- Druid Components -->
+			<dependency>
+				<groupId>br.com.druid.components</groupId>
+				<artifactId>druid-core</artifactId>
+				<version>${druid-components-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>br.com.druid.components</groupId>
+				<artifactId>druid-crud-base</artifactId>
+				<version>${druid-components-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>br.com.druid.components</groupId>
+				<artifactId>druid-crud-faces</artifactId>
+				<version>${druid-components-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>br.com.druid.components</groupId>
+				<artifactId>druid-faces</artifactId>
+				<version>${druid-components-version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>br.com.druid.components</groupId>
+				<artifactId>druid-auth</artifactId>
+				<version>${druid-components-version}</version>
+			</dependency>
+
+			<!-- -->
+
+			<!-- Dependencias de modulos -->
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>admin</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>compras-common</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>compras-service</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>compras-web</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>kernel</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>redes-common</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>com.microsoft.sqlserver</groupId>
+				<artifactId>sqljdbc4</artifactId>
+				<version>3.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>redes-service</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>redes-web</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>regulatorio-common</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>regulatorio-service</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>regulatorio-web</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>redes-common</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- -->
+
+			<!-- Test dependencies -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit-version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-all</artifactId>
+				<version>1.8.4</version>
+				<scope>test</scope>
+			</dependency>
+			<!-- -->
+
+			<!-- JDBC da Microsoft -->
+			<dependency>
+				<groupId>com.microsoft.sqlserver</groupId>
+				<artifactId>sqljdbc4</artifactId>
+				<version>4.0</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+</project>

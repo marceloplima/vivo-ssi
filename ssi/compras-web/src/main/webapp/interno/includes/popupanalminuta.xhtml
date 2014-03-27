@@ -1,0 +1,81 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formanalminuta">
+		<rich:popupPanel id="popupanalminuta" domElementAttachment="form" modal="true" width="500" height="340" zindex="2" show="#{analiseMinutaMB.exibepopup}" showWhenRendered="#{analiseMinutaMB.exibepopup}">
+			<f:facet name="header">
+				<h:outputText value="Análise da Minuta" />
+			</f:facet>
+			<f:facet name="controls">
+		        <h:outputLink value="#" onclick="#{rich:component('popupanalminuta')}.hide(); return false;">
+		        	<img src="#{request.contextPath}/imagens/action_fechar.png" title="fechar"/>
+		    	</h:outputLink>
+	        </f:facet>
+	        
+	        <ui:include src="autoredatacorrente.xhtml"/>
+			<h:panelGroup layout="block" class="clear"/>
+	        
+	        <h:panelGroup layout="block" class="area-input-25">
+				<h:panelGroup  class="label-campo">Parecer:</h:panelGroup>
+					<h:selectOneMenu id="pareceram" 
+						value="#{analiseMinutaMB.evento.egenerico.parecer}"
+						styleClass="select-form" required="true" requiredMessage="Parecer é obrigatório.">
+						<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+						<f:selectItems value="#{analiseMinutaMB.recuperarPareceres()}" var="parecer" itemLabel="#{parecer.cnmparecer}"/>
+						<f:converter converterId="parecerConv"/>
+						<h:message for="pareceram" />
+					</h:selectOneMenu>
+				</h:panelGroup>
+	        <h:panelGroup layout="block" class="clear"/>
+	        <h:panelGroup layout="block" class="area-input-100" id="idcomentarioanaliseaquisicaopanel">
+				<h:panelGroup  class="label-campo">Comentários:</h:panelGroup>	
+					<h:inputTextarea styleClass="textarea-form-2-linhas" id="idcomentarioam" value="#{analiseMinutaMB.evento.cnmcomentario}" maxlength="255"
+						required="true" requiredMessage="Comentário é obrigatório.">
+						<h:message for="idcomentarioam" />
+					</h:inputTextarea>
+				</h:panelGroup> 
+																
+				<h:panelGroup layout="block" class="clear"/>
+					     
+				<h:panelGroup layout="block" styleClass="alinhaBotao">
+					<h:commandButton value="Efetuar Análise de Minuta">
+						<f:ajax render="@form" 
+								event="click"
+								listener="#{analiseMinutaMB.preGravar()}"
+								execute="pareceram idcomentarioam"/>
+					</h:commandButton>	        
+					<h:commandButton value="Fechar">
+						<f:ajax render="@form" 
+								event="click"
+								listener="#{analiseMinutaMB.desabilitaModal()}"/>
+					</h:commandButton>	        
+				</h:panelGroup>
+		</rich:popupPanel>
+		
+		<rich:popupPanel id="popupconfirmaanaliseminuta" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{analiseMinutaMB.exibeconfirmacao}" showWhenRendered="#{analiseMinutaMB.exibeconfirmacao}">
+	
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma a Análise da Minuta?</h:panelGroup>	
+				<h:commandButton value="Sim">
+					<f:ajax 
+						render="@form :panelexibesucesso :demandaform" 
+						execute="pareceram idcomentarioam" 
+						listener="#{analiseMinutaMB.gravar()}"/>
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax render="@form" 
+					event="click"
+					listener="#{analiseMinutaMB.desabilitaConfirmacao()}"/>
+				</h:commandButton>	
+			</h:panelGroup>	
+	
+		</rich:popupPanel>
+	</h:form>
+</html>

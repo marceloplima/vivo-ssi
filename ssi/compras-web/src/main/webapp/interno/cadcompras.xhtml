@@ -1,0 +1,1589 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich"
+ 	xmlns:hh="http://balusc.net/jsf/html">
+
+	<ui:define name="conteudosistema">
+	
+     <h:form id="demandaform" method="post" enctype="multipart/form-data">
+        
+        <h:panelGroup layout="block" styleClass="alinhaBotao">
+       
+        	<h:panelGroup layout="block" style="z-index:1" styleClass="item-acoes">
+	            <h:panelGroup styleClass="acoes">	            
+	            	<rich:dropDownMenu>
+		                <f:facet name="label">
+		                    <h:panelGroup>
+		                        <h:outputText value="Ações" />
+		                    </h:panelGroup>
+		                </f:facet>	            	
+
+	            		<rich:menuItem rendered="#{permissoesMB.verificarConcluir()}" 
+	            			label="Concluir SSI" 
+	            			actionListener="#{concluirMB.preConcluir()}" 
+	            			render=":panelexibesucesso popupconfirmaconcluirssi @form :panelexibeerro" 
+	            			mode = "ajax"
+	            			/>
+	            			
+	            		<rich:menuItem rendered="#{permissoesMB.verificarPermissoesSalvar()}"
+	            			mode="ajax"
+	            			label="Salvar" 
+	            			action="#{demandasMB.salvarGenerico()}" 
+	            			render=":panelexibesucesso :panelexibeerro @form :demandaform:acompanhamento :demandaform:idlogsdemanda" 
+	            			execute="@form"
+	            			/>
+
+	            		<rich:menuItem rendered="#{permissoesMB.verificarPermissoesEmissor()}"
+	            			mode="ajax"
+	            			label="Salvar como Rascunho" 
+	            			action="#{demandasMB.salvarComoRascunho()}" 
+	            			render=":panelexibesucesso :panelexibeerro @form :demandaform:acompanhamento :demandaform:idlogsdemanda" 
+	            			execute="@form"
+	            			/>
+	            			
+	            		<rich:menuItem rendered="#{permissoesMB.verificarAnaliseAquisicao()}"
+	            			label="Análise Preliminar de Aquisição" 
+	            			mode="ajax" 
+	            			actionListener="#{analiseAquisicaoMB.habilitaAnaliseAquisicao()}" 
+	            			render=":formanaliseaquisicao:popupanaliseaquisicao"/>
+	            			
+	            		<rich:menuItem rendered="#{permissoesMB.verificarIndicaNovoAnalista()}" 
+	            			label="Indica Novo Analista de Aquisição" 
+	            			mode="ajax" 
+	            			actionListener="#{analistasAqMB.habilitaModal()}" 
+	            			render=":formnovoanalaq:popupindicaanalistaaquisicao"/>
+	            		
+	            		<rich:menuItem rendered="#{permissoesMB.verificarEncaminhar()}" 
+	            			label="Encaminhar" 
+	            			mode="ajax" 
+	            			actionListener="#{demandasMB.preEncaminhar()}" 
+	            			render=":formencaminhar:popupconfirmaencaminhar :panelexibeerro @form :demandaform:acompanhamento :demandaform:idlogsdemanda" 
+	            			execute="@form"
+	            			/>
+	            		
+	            		<rich:menuItem rendered="#{permissoesMB.verificarValidacaoTecnica()}"
+	            			label="Parecer" 
+	            			mode="ajax" 
+	            			actionListener="#{validacaoTecnicaMB.habilitaModal()}" 
+	            			render=":formvaltec:popupvalidacaotecnica"/>
+	            		
+	            		<rich:menuItem rendered="#{permissoesMB.verificarIndicarAnalistaDeContrato()}" 
+	            			label="#{demandasMB.labelMenuIndicacaoAlteracaoAnalistaContrato}" 
+	            			action="#{demandasMB.mostarTelaIndicaAnalistaDeContrato()}" 
+	            			mode="ajax" 
+	            			render="indicacaoanalistacontrato"/>
+	            			
+	            		<rich:menuItem  rendered="#{permissoesMB.verificarAnalisPeloGerenteDeCompra()}"
+	            			label="Análise Pelo Gerente de Compras" 
+	            			action="#{analisePeloGerenteDeCompraMB.mostraTelaAnaliseGerenteDeCompras()}" 
+	            			mode="ajax" 
+	            			render="analgercompras"/>
+	            			
+	            		<rich:menuItem rendered="#{permissoesMB.verificarSolicitacaoRevisaoAquisicao()}" 
+	            			label="Solicita Revisão à Aquisição" 
+	            			action="#{solicitaRevisaoAquisicaoMB.mostraTelaSolicitaRevisaoAquisicao()}" 
+	            			mode="ajax" 
+	            			render="solicitarevisaoaquisicao"/>
+	            			
+	            		<rich:menuItem label="Indica Novo Comprador"
+	            			rendered="#{permissoesMB.verificarIndicaNovoComprador()}" 
+	            			action="#{indicaNovoCompradorMB.mostraTelaIndicaNovoComprador()}" 
+	            			mode="ajax" 
+	            			render="indicacaonovocomprador" 
+	            			actionListener="#{indicaNovoCompradorMB.recebeLp}">
+	            				<f:attribute name="lpcorrente" value="#{demandasMB.demandas.lp}" />	            				
+	            		</rich:menuItem>
+	            		
+	            		<rich:menuItem rendered="#{permissoesMB.verificarRevisaoAnalistaAquisicao()}" 
+	            			label="Revisão Analista de Aquisição" 
+	            			action="#{revisaoPeloAnalistaAquisicaoMB.mostraTelaRevisao()}" 
+	            			mode="ajax" 
+	            			render="popuprevisaopeloanalista"/>
+	            			
+	            		<rich:menuItem rendered="#{permissoesMB.verificarEnvioAoMercado()}" 
+	            			label="Envio ao Mercado" 
+	            			action="#{envioAoMercadoMB.mostraTelaEnvioAoMercado()}" 
+	            			mode="ajax" 
+	            			render=":formenvioaomercado:popupenvioaomercado"/>
+	            			
+	            		<rich:menuItem rendered="#{permissoesMB.verificarAcionaCriarRC()}" 
+	            			label="Aciona Criação de RC" 
+	            			action="#{acionaRcMB.habilitaModal()}" 
+	            			mode="ajax" 
+	            			render=":formacionarc:popupacionarc"/>
+	            			
+	            		<rich:menuItem rendered="#{permissoesMB.verificarAnaliseMinuta()}" 
+	            			label="Análise da Minuta" 
+	            			action="#{analiseMinutaMB.habilitaModal()}" 
+	            			mode="ajax"
+	            			render=":formanalminuta:popupanalminuta"/>
+	            		
+	            		<rich:menuItem rendered="#{permissoesMB.verificarValidacaoLaudoTecnico()}" 
+	            			label="Validação de Laudo Técnico" 
+	            			action="#{validacaoLaudoTecnicoMB.mostraTelaValidacaoLaudoTecnico()}" 
+	            			mode="ajax" 
+	            			render=":formvalidacaolaudotecnico:validacaolaudotecnico"/>
+	            				            		
+	            		
+	            		<rich:menuItem  rendered="#{permissoesMB.verificarValidacaoSegundoNivel()}"
+	            			label="Validação de Segundo Nível" 
+	            			action="#{validacaoSegundoNivelMB.mostraTelaValidacaoSegundoNivel()}" 
+	            			mode="ajax" 
+	            			render=":formvalidacaosegundonivel:validacaosegundonivel"/>
+	            		
+	            		<rich:menuItem label="Cancelar" 
+	            			rendered="#{permissoesMB.verificarCancelarSSI()}" 
+	            			action="#{demandasMB.mostraTelaCancelar()}"  
+	            			mode="ajax" 
+	            			render=":formcancelademanda:cancelssi"/>
+	            			
+	            	</rich:dropDownMenu>
+
+				</h:panelGroup>
+			</h:panelGroup>
+
+  <!-- ######################### FIM - SINALIZAÇÃO DE SUCESSO ########################### -->  
+        	
+		</h:panelGroup>
+		<h:panelGroup layout="block" class="clear"/>
+		    
+     	<rich:tabPanel id="tabpanelcadcompra">
+     	
+			<rich:tab id="tab1" header="Dados de Abertura">
+			
+				<rich:collapsiblePanel header="Dados Básicos" switchType="client" id="idPanelDadosBasicos">
+				
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Solicitante:</h:panelGroup>	
+						<h:outputText value="#{demandasMB.demandas.autor.cnmnome}" id="autordemanda" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="area-input-25" id="status">
+						<h:panelGroup  class="label-campo">Status:</h:panelGroup>
+						<h:outputText value="#{demandasMB.demandas.status.cnmstatus}" styleClass="label-campo destaque"/>
+					</h:panelGroup>	
+					
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Analista de contratos responsável:</h:panelGroup>	
+						<h:outputText styleClass="label-campo destaque" value="#{demandasMB.demandas.analistaDeContratoResponsavel.cnmnome}" id="analistadecontratosresponsavel"/>
+					</h:panelGroup>
+				
+					<h:panelGroup layout="block" class="area-input-25" id="numerodademanda">
+						<h:panelGroup  class="label-campo">Número SSI:</h:panelGroup>	
+						<h:outputText value="#{demandasMB.demandas.cnmnumero}" id="numerodemanda" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					
+					
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Analista de aquisição responsável:</h:panelGroup>	
+						<h:outputText styleClass="label-campo destaque" value="#{demandasMB.demandas.analistaDeAquisicaoResponsavel.cnmnome}" id="analistadeaquisicaoresponsavel"/>
+					</h:panelGroup>	
+				
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>
+						<h:outputText value="#{demandasMB.demandas.datacadastro.time}" id="datacadastrodemanda" styleClass="label-campo destaque">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+						</h:outputText>
+					</h:panelGroup>
+					
+				    <h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+
+					<h:panelGroup layout="block" class="area-input-75">
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Data inicial da contratação:</h:panelGroup>	
+							<rich:calendar
+								rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+								styleClass="calendar-form" 
+								id="datainiciocontratacaodemanda" 
+								value="#{demandasMB.demandas.datainiciocontratacao}" 
+								datePattern="dd/MM/yyyy"
+								locale="pt_BR"
+								converter="dateToCalendarConverter"
+								enableManualInput="true"
+								oninputkeypress="javascript: mascara(this, data_mask);"
+								maxlength="10"/>
+								
+							<h:outputText value="#{demandasMB.demandas.datainiciocontratacao.time}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque">
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>							
+																			
+						</h:panelGroup>	
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Data final da contratação:</h:panelGroup>	
+			                <rich:calendar
+			                rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+			                styleClass="calendar-form" 
+			                id="datafinalcontratacaodemanda" 
+			                value="#{demandasMB.demandas.datafimcontratacao}" 
+			                datePattern="dd/MM/yyyy"
+							locale="pt_BR"
+			                converter="dateToCalendarConverter"
+			                enableManualInput="true"
+							oninputkeypress="javascript: mascara(this, data_mask);"
+							maxlength="10"/>
+			                
+			                <h:outputText value="#{demandasMB.demandas.datafimcontratacao.time}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque">
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>							
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Telefone do solicitante:</h:panelGroup>	
+							<h:inputText
+								rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+								value="#{demandasMB.demandas.cnmtelefonesolicitante}" 
+								id="telefonesolicitantedemanda" 
+								styleClass="input-form"
+								onkeypress="javascript: mascara(this, tel_mask);" maxlength="15"/>
+								
+			                <h:outputText value="#{demandasMB.demandas.cnmtelefonesolicitante}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>													
+						</h:panelGroup>
+						
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">SSI contração anterior:</h:panelGroup>	
+							<h:inputText styleClass="input-form" id="contratacaoanteriordemanda" value="#{demandasMB.demandas.cnmssicontratacaoanterior}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" maxlength="11"/>
+							<h:outputText  value="#{demandasMB.demandas.cnmssicontratacaoanterior}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+						</h:panelGroup>					
+						<h:panelGroup layout="block" class="clear"/>
+									
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup class="label-campo">Responsável técnico:</h:panelGroup>
+							<rich:autocomplete styleClass="autocomplete-form" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" id="responsavetecnico" value="#{demandasMB.responsaveltecnicostr}" mode="ajax" minChars="2" autocompleteMethod="#{participantesMB.autocompletarRespTecnico}"/>
+							<h:outputText value="#{demandasMB.demandas.responsaveltecnico.cnmnome}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+						</h:panelGroup>
+
+					    <h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Telefone do responsável técnico:</h:panelGroup>	
+							<h:inputText id="telefoneresponsaveltecnicodemanda" value="#{demandasMB.demandas.cnmtelefoneresponsaveltecnico}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="input-form" onkeypress="javascript: mascara(this, tel_mask);"  maxlength="15"/>
+							<h:outputText value="#{demandasMB.demandas.cnmtelefoneresponsaveltecnico}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+						</h:panelGroup>
+					
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup layout="block" class="area-input-100 label-check">
+							<h:panelGroup  class="label-campo">Tipo:</h:panelGroup>	                        
+	                       	<rich:dataTable id="tipoforn" value="#{demandasMB.capexOpex}" var="capexopex" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+								<rich:column style="text-align:left;">
+									<h:selectBooleanCheckbox id="checkboxcapexopex" value="#{capexopex.checked}">
+										<f:ajax event="click" 
+										render="
+											:demandaform:iddadosnecessarios 
+											:demandaform:idmegaprojeto 
+											:demandaform:idacaoinversora 
+											:demandaform:idorcamento
+											:demandaform:idacaoinversora" 
+										execute="@form"/>	
+									</h:selectBooleanCheckbox>
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="#{capexopex.cnmcapexopex}"/>
+								</rich:column>
+							</rich:dataTable>
+							
+							<rich:dataTable id="tipofornnaoeditavel" value="#{demandasMB.capexOpex}" var="capexopex" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+								<rich:column style="text-align:left;">
+									<h:selectBooleanCheckbox id="checkboxcapexopex" value="#{capexopex.checked}" disabled="true"/>										
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="#{capexopex.cnmcapexopex}"/>
+								</rich:column>
+							</rich:dataTable>								                						
+							                        
+						</h:panelGroup>
+					</h:panelGroup>
+				    <h:panelGroup layout="block" class="clear"/>				    
+				    				
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Título da compra:</h:panelGroup>	
+						<h:inputTextarea styleClass="textarea-form-2-linhas" id="cnmtitulocompra" value="#{demandasMB.demandas.cnmtitulocompra}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" maxlength="200"/>
+						<h:outputText value="#{demandasMB.demandas.cnmtitulocompra}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Resumo do escopo/justificativa:</h:panelGroup>	
+						<h:inputTextarea styleClass="textarea-form-2-linhas" id="resumodoescopodemanda" value="#{demandasMB.demandas.cnmresumodoescopo}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" maxlength="255"/>
+						<h:outputText value="#{demandasMB.demandas.cnmresumodoescopo}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+
+					<h:panelGroup layout="block" class="area-input-25" id="idtotaldacompra">
+						<h:panelGroup  class="label-campo">Total da compra:</h:panelGroup>	
+						<h:outputText class="label-campo destaque" value="#{demandasMB.totalDaCompra}">
+							<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+						</h:outputText>
+					</h:panelGroup>
+
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Prioridade:</h:panelGroup>
+						
+						<h:selectOneRadio id="propriedade" 
+							value="#{demandasMB.demandas.prioridade}"
+							rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+							styleClass="select-form">
+							
+   							<f:selectItems 
+   								value="#{prioridadesMB.prioridades}" 
+   								var="p"
+   								itemLabel="#{p.cnmprioridade}" 
+   								itemValue="#{p}" />
+   								
+   								<f:converter converterId="prioridadeConverter"/>
+   								
+   						</h:selectOneRadio>
+   						
+   						<h:outputText value="#{demandasMB.demandas.prioridade.cnmprioridade}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+								                    		                    		                						
+					</h:panelGroup>
+
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">LP:</h:panelGroup>	
+						<h:selectOneMenu 
+							id="lps" 
+							value="#{demandasMB.demandas.lp}"
+							rendered="false" 
+							styleClass="select-form">
+							
+							<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+   							<f:selectItems 
+   								value="#{lpsMB.lps}" 
+   								var="lp"
+   								itemLabel="#{lp.cnmlp}" 
+   								itemValue="#{lp}" />
+
+						<f:converter converterId="lpConverter"/>
+						<a4j:ajax event="valueChange" execute="@this" immediate="true"/>
+
+				        </h:selectOneMenu>
+				        
+				        <h:outputText value="#{demandasMB.demandas.lp.cnmlp}" rendered="true" styleClass="label-campo destaque"/>
+				        					
+					</h:panelGroup>		
+					
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup class="label-campo">Comprador:</h:panelGroup>	
+						<h:outputText value="#{demandasMB.demandas.pessoacomprador.cnmnome}" id="comprador" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+		
+				    <h:panelGroup layout="block" class="clear"/>				    
+				    <h:panelGroup layout="block" class="linha"/>
+									
+				</rich:collapsiblePanel>
+			
+				<rich:collapsiblePanel header="Dados Necessários" switchType="client" id="iddadosnecessarios">
+
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Objeto da compra condicionada:</h:panelGroup>	
+		                <h:selectOneRadio styleClass="label-radio" value="#{demandasMB.demandas.boolobjetodacompracondicionada}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+		                    <f:selectItem itemLabel="Sim" itemValue="true"/>
+		                    <f:selectItem itemLabel="Não" itemValue="false"/>
+		                </h:selectOneRadio>
+		                <h:outputText value="Sim" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.objetodacompracondicionada==true}" styleClass="label-campo destaque"/>
+		                <h:outputText value="Não" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.objetodacompracondicionada==false}" styleClass="label-campo destaque"/>						
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Tipo de Condicionamento:</h:panelGroup>
+						<h:selectOneRadio styleClass="label-radio" 
+							id="tiposcondicionamento" 
+							value="#{demandasMB.demandas.tipoCondicionamento}"
+							rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">								
+   							<f:selectItems 
+   								value="#{demandasMB.tiposCondicionamentos}" 
+   								var="tipocondicionamento"
+   								itemLabel="#{tipocondicionamento.cnmtipocondicionamento}" 
+   								itemValue="#{tipocondicionamento}" />
+
+							<f:converter converterId="tipoCondicionamentoConverter"/>
+				        </h:selectOneRadio>							
+			        	<h:outputText value="#{demandasMB.demandas.tipoCondicionamento.cnmtipocondicionamento}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Anexar Documentos:</h:panelGroup>
+						<h:commandButton image="${pageContext.request.contextPath}/imagens/anexar_cit.png" value="Anexar Ata da CIT" rendered="#{demandasMB.demandas.iddemanda>=1}" >
+							<a4j:ajax event="click"
+									  render=":formupload:popupupload"
+									  listener="#{uploadBean.habilitaUpload('4')}" />
+						</h:commandButton>
+						<h:commandButton image="${pageContext.request.contextPath}/imagens/anexar_cdt.png" value="Anexar Ata da CDT" rendered="#{demandasMB.demandas.iddemanda>=1}" >
+							<a4j:ajax event="click"
+									  render=":formupload:popupupload"
+									  listener="#{uploadBean.habilitaUpload('5')}" />
+						</h:commandButton>
+					</h:panelGroup>
+					
+					<h:panelGroup layout="block" class="area-input-50" id="idmegaprojeto" rendered="#{demandasMB.capex}">
+						<h:panelGroup  class="label-campo">Mega projeto:</h:panelGroup>	
+						<h:inputText styleClass="input-form" id="megaprojetodemanda" value="#{demandasMB.demandas.cnmmegaprojeto}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" maxlength="50"/>
+						<h:outputText value="#{demandasMB.demandas.cnmmegaprojeto}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+										
+					<h:panelGroup layout="block" class="area-input-25" id="idacaoinversora" rendered="#{demandasMB.capex}">
+						<h:panelGroup  class="label-campo">Ação inversora:</h:panelGroup>	
+						<h:inputText styleClass="input-form" id="acaoinversorademanda" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" value="#{demandasMB.demandas.cnmacaoinversora}" maxlength="50"/>
+						<h:outputText value="#{demandasMB.demandas.cnmacaoinversora}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">Data de aprovação da CIT e/ou CDT:</h:panelGroup>	
+						<rich:calendar
+						rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+						styleClass="calendar-form" 
+						id="datadeaprovacaodaciteoucdtdemanda" 
+						value="#{demandasMB.demandas.dataaprovacaocitcdt}"
+						datePattern="dd/MM/yyyy"
+						locale="pt_BR"
+						converter="dateToCalendarConverter"
+						enableManualInput="true"
+						oninputkeypress="javascript: mascara(this, data_mask);"
+						maxlength="10"/>
+						<h:outputText value="#{demandasMB.demandas.dataaprovacaocitcdt.time}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque">
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</h:outputText>							
+					</h:panelGroup>					
+					<h:panelGroup layout="block" class="clear"/>
+					
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup class="label-campo">Fornecedor:</h:panelGroup>
+						<rich:autocomplete styleClass="autocomplete-form" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" id="fornecedor" value="#{demandasMB.fornecedorstr}" mode="ajax" minChars="2" autocompleteMethod="#{fornecedoresMB.autocompletarForn}"/>
+						<h:outputText value="#{demandasMB.demandas.fornecedor.cnmfornecedor}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+					</h:panelGroup>
+														
+					
+					<a4j:outputPanel id="idqtdcontratosaseremaditivadospanel">
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">Aditivo de contrato:</h:panelGroup>	
+			                <h:selectOneRadio id="aditivodecontrato" styleClass="label-radio" 
+			                	value="#{demandasMB.demandas.booladitivodecontrato}" 
+			                	rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+			                	
+			                    <f:selectItem itemLabel="Sim" itemValue="true"/>
+			                    <f:selectItem itemLabel="Não" itemValue="false"/>
+			                    	<f:ajax event="click" 
+			                    			render="idqtdcontratosaseremaditivadospanel"
+			                    			execute="aditivodecontrato"
+			                    			immediate="true"/>				                    
+			                </h:selectOneRadio>
+							<h:outputText value="Sim" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.booladitivodecontrato==true}" styleClass="label-campo destaque"/>
+			                <h:outputText value="Não" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda() and demandasMB.demandas.booladitivodecontrato==false}" styleClass="label-campo destaque"/>
+						</h:panelGroup>
+						<h:panelGroup id="idqtdcontratosaseremaditivadosdisabled" layout="block" class="area-input-25" rendered="#{!demandasMB.demandas.booladitivodecontrato}">
+							<h:outputText value=""/>
+						</h:panelGroup>	
+						<h:panelGroup id="idqtdcontratosaseremaditivados" layout="block" class="area-input-25" showWhenRendered="#{demandasMB.demandas.booladitivodecontrato}" rendered="#{demandasMB.demandas.booladitivodecontrato}">
+							<h:panelGroup  class="label-campo">Qtd contratos a serem aditivados:</h:panelGroup>	
+							<h:inputText styleClass="input-form" id="qtdcontratosaseremaditivadosdemanda" value="#{demandasMB.demandas.nnrcontratosaseremaditivados}" onkeypress="javascript: mascara(this, num_mask);" maxlength="2" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+							<h:outputText value="#{demandasMB.demandas.nnrcontratosaseremaditivados}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}" styleClass="label-campo destaque"/>
+						</h:panelGroup>
+						
+						<h:panelGroup layout="block" class="clear"/>						
+					
+						<h:panelGroup layout="block" class="area-form-25">
+							<h:panelGroup id="idtiposaditivos" layout="block" class="area-input-100 label-check"  showWhenRendered="#{demandasMB.demandas.booladitivodecontrato}" rendered="#{demandasMB.demandas.booladitivodecontrato}">
+								<h:panelGroup  class="label-campo">Tipo de aditivo:</h:panelGroup>
+															
+								<rich:dataTable id="tipoaditivo" value="#{demandasMB.tiposAditivos}" var="tipoad" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+									<rich:column style="text-align:left;">
+										<h:selectBooleanCheckbox id="checkboxtipoaditivo" value="#{tipoad.checked}"/>
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<h:outputText value="#{tipoad.cnmtipoaditivo}"/>
+									</rich:column>
+								</rich:dataTable>
+	
+								<rich:dataTable id="tipoaditivonaoeditavel" value="#{demandasMB.tiposAditivos}" var="tipoad" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+									<rich:column style="text-align:left;">
+										<h:selectBooleanCheckbox id="checkboxtipoaditivo" value="#{tipoad.checked}" disabled="true"/>
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<h:outputText value="#{tipoad.cnmtipoaditivo}"/>
+									</rich:column>
+								</rich:dataTable>
+							</h:panelGroup>
+							<h:panelGroup id="idtiposaditivosdisabled" layout="block" class="area-input-100 label-check"  rendered="#{!demandasMB.demandas.booladitivodecontrato}">
+								<h:outputText value="" />
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-form-75">
+							<h:panelGroup id="idnumerocontratosapdisabled" layout="block" class="area-input-30"  rendered="#{!demandasMB.demandas.booladitivodecontrato}">
+								<h:outputText value=""/>
+							</h:panelGroup>	
+							<h:panelGroup id="idnumerocontratosap" layout="block" class="area-input-30"  showWhenRendered="#{demandasMB.demandas.booladitivodecontrato}" rendered="#{demandasMB.demandas.booladitivodecontrato}">
+								<h:panelGroup  class="label-campo">Número de contrato SAP:</h:panelGroup>	
+								<h:inputTextarea styleClass="textarea-form-2-linhas" id="numerodecontratosapdemanda" value="#{demandasMB.demandas.cnmnumerodecontratosap}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+								<h:inputTextarea readonly="true" styleClass="textarea-form-2-linhas" id="numerodecontratosapdemandareadonly" value="#{demandasMB.demandas.cnmnumerodecontratosap}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+							</h:panelGroup>	
+						    <h:panelGroup layout="block" class="area-input-30">
+								<h:panelGroup  class="label-campo">Racional de Orçamento (PxQ):</h:panelGroup>	
+								<h:inputTextarea styleClass="textarea-form-2-linhas" id="racionaldeorcamentopxqdemanda" value="#{demandasMB.demandas.cnmrelacionamentodeorcamentopxq}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+								<h:inputTextarea readonly="true" styleClass="textarea-form-2-linhas" id="racionaldeorcamentopxqdemandareadonly" value="#{demandasMB.demandas.cnmrelacionamentodeorcamentopxq}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+							</h:panelGroup>					
+						    <h:panelGroup layout="block" class="area-input-30">
+								<h:panelGroup  class="label-campo">Forma de Pagamento:</h:panelGroup>	
+								<h:inputTextarea styleClass="textarea-form-2-linhas" id="formadepagamentodemanda" value="#{demandasMB.demandas.cnmformadepagamento}" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+								<h:inputTextarea readonly="true" styleClass="textarea-form-2-linhas" id="formadepagamentodemandareadonly" value="#{demandasMB.demandas.cnmformadepagamento}" rendered="#{not permissoesMB.editaCamposDadosDeAberturaDemanda()}"/>
+							</h:panelGroup>					
+						</h:panelGroup>
+					</a4j:outputPanel>
+					
+					
+				    <h:panelGroup layout="block" class="clear"/>
+				</rich:collapsiblePanel>
+			
+				<rich:collapsiblePanel header="Orçamento" switchType="client" id="idorcamento">
+
+					<h:panelGroup id="idorcamentoopex" rendered="#{demandasMB.opex}">
+
+						<h:panelGroup layout="block" class="area-input-25">
+							<h:panelGroup  class="label-campo">UF:</h:panelGroup>					        
+							<h:selectOneMenu 
+								id="ufs" 
+								value="#{demandasMB.ufSelecionada}"
+								rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}" 
+								styleClass="select-form"
+								valueChangeListener="#{demandasMB.setaUf}"
+								>
+													
+								<f:selectItem itemLabel="Informe" noSelectionOption="true" />
+	   							<f:selectItems 
+	   								value="#{ufsMB.ufs}" 
+	   								var="uf"
+	   								itemLabel="#{uf.cnmuf}" 
+	   								itemValue="#{uf}"
+	   								 />
+								
+								<a4j:ajax event="valueChange" execute="@this" immediate="true"/>
+								<f:converter converterId="ufConverter"/>
+								<h:message for="ufs"/>
+								
+							</h:selectOneMenu>				        
+					        					
+						</h:panelGroup>	
+						
+						<h:panelGroup layout="block" class="area-input-50">
+							<h:panelGroup layout="block" class="label-campo"></h:panelGroup>
+							<h:commandButton value="Incluir Orçamento" rendered="#{permissoesMB.editaCamposDadosDeAberturaDemanda()}">
+								<f:ajax 
+									render=":formorcamentoopex:panelorcamentodemanda ufs" 
+									event="click"
+									listener="#{demandasMB.preIncluirOrcamento()}"
+									immediate="true"
+									execute="@form"/>								
+							</h:commandButton>
+													
+							<h:commandButton value="Importar da Planilha" rendered="false"/>
+						</h:panelGroup>
+						
+						<h:panelGroup layout="block" class="clear"/>							
+	
+					<!-- ####### PANELGROUP DE OPEX ############ -->
+						
+						<h:panelGroup layout="block" class="area-input-100">
+							<h:panelGroup layout="block" class="label-campo">OPEX</h:panelGroup>
+					        <rich:dataTable rows="20" rowClasses="odd-row, even-row" value="#{demandasMB.orcamentosOpex}" var="orcamento" id="idorcamentos">
+					            <rich:column>
+					                <f:facet name="header">
+					                    <h:outputText value="UF" />
+					                </f:facet>
+					                <h:outputText value="#{orcamento.ufs.cnmuf}" />
+					            </rich:column>
+					            <rich:column>
+					                <f:facet name="header">
+					                	<h:outputText value="#{demandasMB.ano1}" />					                    
+					                </f:facet>
+					                <h:outputText value="#{orcamento.nnrano1}">
+					                	<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+					                </h:outputText>
+					            </rich:column>
+					            <rich:column>
+					                <f:facet name="header">
+					                    <h:outputText value="#{demandasMB.ano2}" />
+					                </f:facet>
+					                <h:outputText value="#{orcamento.nnrano2}">
+					                	<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+					                </h:outputText>
+					            </rich:column>
+					            <rich:column>
+					                <f:facet name="header">
+					                    <h:outputText value="#{demandasMB.ano3}" />
+					                </f:facet>
+					                <h:outputText value="#{orcamento.nnrano3}">
+					                	<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+					                </h:outputText>
+					            </rich:column>
+					            <rich:column>
+					                <f:facet name="header">
+					                    <h:outputText value="#{demandasMB.ano4}" />
+					                </f:facet>
+					                <h:outputText value="#{orcamento.nnrano4}">
+					                	<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+					                </h:outputText>
+					            </rich:column>
+					            <rich:column>
+					                <f:facet name="header">
+					                    <h:outputText value="Demais Anos" />
+					                </f:facet>
+					                <h:outputText value="#{orcamento.nnrdemaisanos}">
+					                	<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+					                </h:outputText>
+					            </rich:column>					            
+					            <rich:column>
+					                <f:facet name="header">
+					                    <h:outputText value="C.Contábil" />
+					                </f:facet>
+					                <h:outputText value="#{orcamento.cnmcontabil}" />
+					            </rich:column>
+					            <rich:column>
+					                <f:facet name="header">
+					                    <h:outputText value="C.Custo" />
+					                </f:facet>
+					                <h:outputText value="#{orcamento.cnmcusto}" />
+					            </rich:column>
+					            <rich:column>
+					                <f:facet name="header">
+					                    <h:outputText value="RC" />
+					                </f:facet>
+					                <h:outputText value="#{orcamento.cnmrc}" />
+					            </rich:column>
+					            <rich:column>
+					                <f:facet name="header">
+					                    <h:outputText value="Ações" />
+					                </f:facet>
+					                					                
+	       							<a4j:commandButton rendered="#{permissoesMB.verificarPermissoesSalvarOrcamento()}"
+	       							  image="${pageContext.request.contextPath}/imagens/alterar_ok.png" id="ideditarorcamento" value="Alterar Valores"
+	                                  action="#{demandasMB.alterarOrcamento(orcamento)}"
+	                                  immediate="true"
+	                                  render=":formorcamentoopex:panelorcamentodemanda"
+	                                  execute="@form"/>
+	                                  	                                  
+	       							<a4j:commandButton rendered="#{permissoesMB.verificarPermissoesSalvarOrcamento()}"
+	       							  image="${pageContext.request.contextPath}/imagens/remover_ok.png" id="idexcluirorcamento" value="Excluir Orçamento"
+	                                  action="#{demandasMB.preExcluirOrcamento(orcamento)}"
+	                                  render=":formorcamentoopex:popupconfirmaexcluirorcamento"
+	                                  immediate="true"
+	                                  execute="@form"
+	                                  />
+	                                  
+									<a4j:commandButton image="${pageContext.request.contextPath}/imagens/comprar_ok.png" id="idregistrarc" value="Registra RC" rendered="#{empty orcamento.cnmrc and permissoesMB.verificarAcionaCriarRC()}"
+	                                  action="#{aberturaRcMB.habilitaModal(orcamento)}"
+	                                  render=":formabrerc:popupabrerc"
+	                                  immediate="true"
+	                                  />
+	                                  
+	                                  <a4j:commandButton image="${pageContext.request.contextPath}/imagens/alterar_ok.png" id="idalterarc" value="Altera RC" rendered="#{not empty orcamento.cnmrc and permissoesMB.verificarAcionaCriarRC()}"
+	                                  	action="#{aberturaRcMB.habilitaModal(orcamento)}"
+	                                  	render=":formabrerc:popupabrerc"
+	                                  	immediate="true"
+	                                  />
+					                				                
+					            </rich:column>
+					        </rich:dataTable>						
+										
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="clear"/>							
+				</h:panelGroup>
+				
+				<h:panelGroup id="idorcamentocapex" rendered="#{demandasMB.capex}">
+				
+					<!-- ####### PANELGROUP DE CAPEX ############ -->
+					
+					<h:panelGroup layout="block" class="area-input-100">
+						<h:panelGroup layout="block" class="label-campo">CAPEX</h:panelGroup>
+												
+				        <rich:dataTable rows="20" rowClasses="odd-row, even-row" value="#{demandasMB.orcamentoCapex}" var="orcamentocapex" id="idorcamentoscapex">
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="#{demandasMB.ano1}" />
+				                </f:facet>
+				                <h:outputText value="#{orcamentocapex.nnrano1}">
+				                	<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+				                </h:outputText>
+				            </rich:column>
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="#{demandasMB.ano2}" />
+				                </f:facet>
+				                <h:outputText value="#{orcamentocapex.nnrano2}">
+				                	<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+				                </h:outputText>
+				            </rich:column>
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="#{demandasMB.ano3}" />
+				                </f:facet>
+				                <h:outputText value="#{orcamentocapex.nnrano3}">
+				                	<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+				                </h:outputText>
+				            </rich:column>
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="#{demandasMB.ano4}" />
+				                </f:facet>
+				                <h:outputText value="#{orcamentocapex.nnrano4}">
+				                	<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+				                </h:outputText>
+				            </rich:column>
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Demais Anos" />
+				                </f:facet>
+				                <h:outputText value="#{orcamentocapex.nnrdemaisanos}">
+				                	<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+				                </h:outputText>
+				            </rich:column>				            				            
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="RC" />
+				                </f:facet>
+				                <h:outputText value="#{orcamentocapex.cnmrc}"/>
+				            </rich:column>
+				            
+				            <rich:column>
+				            
+				            	<f:facet name="header">
+				                    <h:outputText value="Ações" />
+				                </f:facet>
+
+								<h:commandButton rendered="#{permissoesMB.verificarPermissoesSalvarOrcamento()}" image="${pageContext.request.contextPath}/imagens/alterar_ok.png" value="Alterar Valores" id="ideditarorcamentocapex">
+									<f:ajax  
+									event="click"
+									immediate="true"
+									execute="@form"
+									render=":formorcamentcapex:panelorcamentocapex"
+									listener="#{demandasMB.showOrcamentoCapex()}"/>								
+								</h:commandButton>
+									                             				                             
+                            	<a4j:commandButton image="${pageContext.request.contextPath}/imagens/comprar_ok.png" id="idregistrarc" value="Registra RC" 
+                            		rendered="#{empty demandasMB.orcamentoCapex.cnmrc and permissoesMB.verificarAcionaCriarRC()}"
+                                 	action="#{aberturaRcMB.habilitaModal(demandasMB.orcamentoCapex)}"
+                                 	render=":formabrerc:popupabrerc"
+                                 	immediate="true"
+                                 />
+                                 
+                                 <a4j:commandButton image="${pageContext.request.contextPath}/imagens/altera_rc.png" id="idalterarc" value="Altera RC" 
+                                 	rendered="#{not empty demandasMB.orcamentoCapex.cnmrc and permissoesMB.verificarAcionaCriarRC()}"
+                                 	action="#{aberturaRcMB.habilitaModal(demandasMB.orcamentoCapex)}"
+                                 	render=":formabrerc:popupabrerc"
+                                 	immediate="true"
+                                 />
+	                             
+														
+							</rich:column>
+
+				        </rich:dataTable>						
+									
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>
+				</h:panelGroup>
+					
+				</rich:collapsiblePanel>
+			
+				<rich:collapsiblePanel header="Cronograma" switchType="client" id="cronograma">
+
+					<h:panelGroup layout="block" class="area-input-100">
+						<h:panelGroup layout="block" class="label-campo"></h:panelGroup>
+				        <rich:dataTable rows="20" rowClasses="odd-row, even-row" value="#{demandasMB.cronogramas}" var="cronograma" id="idcronograma">
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Atividade" />
+				                </f:facet>
+				                <h:outputText value="#{cronograma.atividade.cnmatividade}" />
+				            </rich:column>
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Previsão Original" />
+				                </f:facet>
+				                <h:outputText value="#{cronograma.dataprevisaooriginal}">
+				                	<f:converter converterId="calendarToStringConverter"/>
+				                </h:outputText>
+				            </rich:column>
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Previsão Atual" />
+				                </f:facet>
+				                <h:outputText value="#{cronograma.dataprevisaoatual}">
+				                	<f:converter converterId="calendarToStringConverter"/>
+				                </h:outputText>
+				            </rich:column>
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Realização" />
+				                </f:facet>
+				                <h:outputText value="#{cronograma.datarealizacao}">
+				                	<f:converter converterId="calendarToStringConverter"/>
+				                </h:outputText>
+				            </rich:column>
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Responsável" />
+				                </f:facet>
+				                <h:outputText value="#{cronograma.responsavel.cnmnome}" />
+				            </rich:column>
+				            
+				            <rich:column>
+				            
+								<h:commandButton rendered="#{(cronograma.datarealizacao eq null) and permissoesMB.verificarAlterarCronograma()}" 
+									image="${pageContext.request.contextPath}/imagens/alterar_ok.png" 
+									value="Alterar Valores" id="ideditarcronograma">
+										<f:ajax  
+											event="click"
+											render=":formalteracronograma:popupalteracronograma"
+											listener="#{cronogramaMB.alteraCronograma(cronograma)}"/>								
+								</h:commandButton>				            
+				            
+				            </rich:column>				            												            
+				        </rich:dataTable>						
+									
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>
+									
+				</rich:collapsiblePanel>
+			
+			</rich:tab>
+			<rich:tab id="tabanexos" header="Anexos">
+
+				<h:panelGroup layout="block" class="area-input-15" style="text-align:left;">
+					<h:panelGroup styleClass="acoes-tab-interna">
+						<rich:dropDownMenu style="z-index:5;">
+			                <f:facet name="label">
+			                    <h:panelGroup>
+			                        <h:outputText value="Anexar Arquivo" />
+			                    </h:panelGroup>
+			                </f:facet>	            	
+	
+		            		<rich:menuItem rendered="#{permissoesMB.verificarUploadMinuta()}" 
+		            			label="Minuta Jurídica"
+		            			mode="ajax"
+		            			actionListener="#{uploadBean.habilitaUpload('1')}" 
+		            			render=":formupload:popupupload"
+		            		/>
+		            		
+		            		<rich:menuItem rendered="#{permissoesMB.verificarUploadProposta()}" 
+		            			label="Proposta de Fornecedor"
+		            			mode="ajax" 
+		            			actionListener="#{uploadBean.habilitaUpload('3')}" 
+		            			render=":formupload:popupupload"
+		            		/>
+		            			
+		            		<rich:menuItem rendered="#{permissoesMB.verificarUploadEmissor()}" 
+		            			label="Laudo Técnico"
+		            			mode="ajax" 
+		            			actionListener="#{uploadBean.habilitaUpload('7')}" 
+		            			render=":formupload:popupupload"
+		            		/>
+		            		
+		            		<rich:menuItem rendered="#{permissoesMB.verificarUploadEmissor()}" 
+		            			label="Documentação de Adjudicação"
+		            			mode="ajax"
+		            			actionListener="#{uploadBean.habilitaUpload('8')}" 
+		            			render=":formupload:popupupload"
+		            		/>
+		            		
+		            		<rich:menuItem rendered="#{permissoesMB.verificarUploadEmissor()}" 
+		            			label="Especificação Técnica"
+		            			mode="ajax" 
+		            			actionListener="#{uploadBean.habilitaUpload('6')}" 
+		            			render=":formupload:popupupload"
+		            		/>
+		            		
+		            		<rich:menuItem rendered="#{permissoesMB.verificarUploadEmissor()}" 
+		            			label="Demais Anexos"
+		            			mode="ajax" 
+		            			actionListener="#{uploadBean.habilitaUpload('10')}" 
+		            			render=":formupload:popupupload"
+		            		/>
+		            		
+		            	</rich:dropDownMenu>
+	            	</h:panelGroup>
+				
+				</h:panelGroup>
+			
+				<h:panelGroup layout="block" class="area-input-100">
+					<h:panelGroup  class="label-campo"></h:panelGroup>	
+			        <rich:dataTable keepSaved="true" id="dtresanexos" value="#{anexosMB.dataModel}" var="anexo">
+			            <f:facet name="header">
+							<rich:columnGroup>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Arquivo" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Data" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Tipo" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Versão" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Ações" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{anexo.cnmcaminhoanexo}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{anexo.datacadastro.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{anexo.tipoanexo.cnmtipoanexo}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{anexo.cnmversao}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:commandButton image="${pageContext.request.contextPath}/imagens/download_ok.png" id="buttondownload" value="Download" action="#{downloadFileMB.downloadFile(anexo)}" immediate="true"/>
+							<h:graphicImage value="${pageContext.request.contextPath}/imagens/remover_nao.png" rendered="#{!permissoesMB.verificarPodeRemoverAnexo(anexo)}" id="buttonremovernao"/>
+							<h:commandButton image="${pageContext.request.contextPath}/imagens/remover_ok.png" rendered="#{permissoesMB.verificarPodeRemoverAnexo(anexo)}" id="buttonremover" value="Remover">
+								<f:ajax 
+									listener="#{anexosMB.preRemover(anexo)}" 
+									render="@form"
+									immediate="true"/>
+							</h:commandButton>
+						</rich:column>
+						<f:facet name="footer">
+			            	<rich:dataScroller id="scrollermodfuncbottom"/>
+			            </f:facet>
+			        </rich:dataTable>						
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="clear"/>
+								
+			</rich:tab>
+			<rich:tab id="tab2" header="Propostas">
+				<h:panelGroup layout="block" class="alinhaBotao">
+						<h:commandButton rendered="#{permissoesMB.verificarRegistrarProposta()}" value="Registrar Proposta">
+							<f:ajax render=":formproposta:popupproposta" 
+									event="click"
+									listener="#{propostasMB.habilitaModal(null)}"
+									immediate="true"/>
+						</h:commandButton>
+						<h:commandButton rendered="#{permissoesMB.verificarEncaminharProposta()}" value="Encaminhar Propostas">
+							<f:ajax render=":formproposta:popupencaminharproposta :formproposta:popupalertaproposta" 
+									event="click"
+									listener="#{propostasMB.habilitaEncaminhamento()}"
+									execute="@this"/>
+						</h:commandButton>
+						<h:commandButton value="Aprovar" rendered="#{permissoesMB.verificarAnaliseProposta()}">
+							<f:ajax render=":formproposta:popupanalisetecnica :formproposta:popupalertaproposta" 
+									event="click"
+									listener="#{propostasMB.habilitaAnaliseTecnica('Aprovar','33')}"
+									execute="@this"/>
+						</h:commandButton>
+						<h:commandButton value="Reprovar" rendered="#{permissoesMB.verificarAnaliseProposta()}">
+							<f:ajax render=":formproposta:popupanalisetecnica :formproposta:popupalertaproposta" 
+									event="click"
+									listener="#{propostasMB.habilitaAnaliseTecnica('Reprovar','34')}"
+									execute="@this"/>
+						</h:commandButton>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" class="area-input-100">
+				
+					<rich:dataTable keepSaved="true" rows="4" id="dtresprop" value="#{propostasMB.dataModel}" var="proposta">
+			            <f:facet name="header">
+							<rich:columnGroup>
+								<rich:column style="text-align:left">
+									<h:outputText value=""/>
+								</rich:column>
+								<rich:column style="text-align:left">
+									<h:outputText value="Registro"/>
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Fornecedor" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Situação" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Autor" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Data e Hora" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Ações" />
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:column style="text-align:left;">
+							<h:selectBooleanCheckbox id="checkboxprop" value="#{proposta.checked}">
+								<a4j:ajax listener="#{propostasMB.selecionarCheckbox(proposta)}"/>
+							</h:selectBooleanCheckbox>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{proposta.idproposta}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{proposta.fornecedorprop.cnmfornecedor}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{proposta.status.cnmstatus}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{proposta.autor.cnmnome}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{proposta.datacadastro.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:graphicImage value="${pageContext.request.contextPath}/imagens/alterar_nao.png" id="buttonaltpropnao" rendered="#{!permissoesMB.verificarAlterarProposta()}"/>
+							<h:commandButton image="${pageContext.request.contextPath}/imagens/alterar_ok.png" id="buttonaltprop" value="Alterar" rendered="#{permissoesMB.verificarAlterarProposta()}">
+								<f:ajax
+									event="click"
+									listener="#{propostasMB.habilitaModal(proposta)}" 
+									render=":formproposta:popupproposta"
+									immediate="true"/>
+							</h:commandButton>
+						</rich:column>
+						<f:facet name="footer">
+			            	<rich:dataScroller id="scrollermodfuncbottom"/>
+			            </f:facet>
+			        </rich:dataTable>						
+								
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="clear"/>
+
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">Declinaram:</h:panelGroup>	
+					<h:inputTextarea styleClass="textarea-form-2-linhas" value="#{propostasMB.demanda.cnmdeclinaram}"/>
+				</h:panelGroup>
+
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">Não Cotaram:</h:panelGroup>	
+					<h:inputTextarea styleClass="textarea-form-2-linhas" value="#{propostasMB.demanda.cnmnaocotaram}"/>
+				</h:panelGroup>				
+				
+				<h:panelGroup layout="block" class="clear"/>
+			
+			</rich:tab>
+			<rich:tab id="tabevquest" header="Eventos/Questionamentos">
+					<rich:collapsiblePanel header="Eventos" switchType="client">
+						<a4j:region>
+							<h:panelGroup layout="block" class="area-input-100">
+								<rich:dataTable keepSaved="true" rows="3" id="dtreseventos" value="#{eventosMB.dataModel}" var="evento">
+									<f:facet name="header">
+										<rich:columnGroup>
+											<rich:column style="text-align:left;">
+												 <h:outputText value="Data" />
+											</rich:column>
+											<rich:column style="text-align:left;">
+												<h:outputText value="Evento" />
+											</rich:column>
+											<rich:column style="text-align:left;">
+												<h:outputText value="Autor" />
+											</rich:column>
+										</rich:columnGroup>
+									</f:facet>
+									<rich:column style="text-align:left;">
+										<h:outputText value="#{evento.datacadastro.time}">
+											<f:convertDateTime pattern="dd/MM/yyyy"/>
+										</h:outputText>
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<h:outputText value="#{evento.status.cnmstatus}"/>
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<h:outputText value="#{evento.autor.cnmnome}"/>
+									</rich:column>
+									<rich:column style="text-align:left;">
+										<a4j:commandButton image="${pageContext.request.contextPath}/imagens/busca_azul.png" id="abrirdetev" value="Detalhes"
+			                                               render="popupdetev_9 popupdetev_10 popupdetev_11 popupdetev_12 popupdetev_13 popupdetev_14 popupdetev_15 popupdetev_16 popupdetev_25 popupdetev_00"
+			                                               action="#{eventosMB.abrirPopups(evento)}"/>
+									</rich:column>
+									<f:facet name="footer">
+						            	<rich:dataScroller id="scrollermodfuncbottom"/>
+						            </f:facet>
+						        </rich:dataTable>						
+							</h:panelGroup>
+							<h:panelGroup layout="block" class="clear"/>
+						</a4j:region>			
+					</rich:collapsiblePanel>
+				
+				<rich:collapsiblePanel header="Questionamento Técnico" switchType="client" id="questionamentotecnico" rendered="#{permissoesMB.verificarQuestionamentoTecnicoAba()}">
+								
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Assunto:</h:panelGroup>	
+						<h:inputText styleClass="input-form" value="#{questionamentoTecnicoMB.assunto}" id="assuntoquestionamento" rendered="#{demandasMB.demandas.cnmassuntoquestionamento eq null}"/>
+						<h:outputText styleClass="input-form" value="#{demandasMB.demandas.cnmassuntoquestionamento}" id="assuntoquestionamentodisab" rendered="#{demandasMB.demandas.cnmassuntoquestionamento ne null}"/>
+						<h:message for="assuntoquestionamento"/>
+					</h:panelGroup>						
+				
+					<h:panelGroup layout="block" class="area-input-100">
+						<h:panelGroup  class="label-campo">Questionamento:</h:panelGroup>	
+						<h:inputTextarea styleClass="textarea-form-2-linhas" value="#{questionamentoTecnicoMB.questionamento}" id="questionamento" rendered="#{demandasMB.demandas.cnmquestionamento eq null}"/>
+						<h:outputText styleClass="input-form" value="#{demandasMB.demandas.cnmquestionamento}" id="questionamentodisab" rendered="#{demandasMB.demandas.cnmquestionamento ne null}"/>						
+						<h:message for="questionamento"/>
+					</h:panelGroup>
+																
+					<h:panelGroup layout="block" class="clear"/>
+					
+					<h:panelGroup layout="block" class="alinhaBotao">
+							<h:commandButton value="Anexar" rendered="#{demandasMB.demandas.iddemanda>=1 and demandasMB.demandas.cnmassuntoquestionamento eq null}">
+								<a4j:ajax event="click"
+									render=":formupload:popupupload"
+									listener="#{uploadBean.habilitaUpload('9')}" />
+							</h:commandButton>
+							<h:commandButton value="Enviar" rendered="#{demandasMB.demandas.cnmassuntoquestionamento eq null}">
+								<f:ajax 
+									render="popupconfirmainclusaoquestionamento questionamentotecnico assuntoquestionamento questionamento tab4" 
+									event="click"
+									listener="#{questionamentoTecnicoMB.preIncluirQuestionamentoTecnico()}"
+									execute="assuntoquestionamento questionamento"/>	
+							</h:commandButton>
+							<h:commandButton value="Responder">
+								<f:ajax 
+									render=":formrespostaquestionamento:respostaquestionamentopanel" 
+									event="click"
+									listener="#{questionamentoTecnicoMB.preIncluirRespostaQuestionamentoTecnico(null)}"/>							
+							</h:commandButton>				
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>
+					
+					<h:panelGroup layout="block" class="area-input-100" id="respostasquestionamentospanel">
+				        <rich:dataTable rows="20" rowClasses="odd-row, even-row" value="#{questionamentoTecnicoMB.respostasQuestionamentos}" var="resp" >
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Data" />
+				                </f:facet>
+				                <h:outputText value="#{resp.datacadastro.time}" >
+				                	<f:convertDateTime pattern="dd/MM/yyyy"/>
+				                </h:outputText>
+				            </rich:column>
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Autor" />
+				                </f:facet>
+				                <h:outputText value="#{resp.autorresposta.cnmnome}" />
+				            </rich:column>
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Comentário" />
+				                </f:facet>
+				                <h:outputText value="#{resp.cnmcomentario}" />
+				            </rich:column>				            
+				        </rich:dataTable>						
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>					
+				</rich:collapsiblePanel>
+			</rich:tab>
+			<rich:tab id="tab3" header="Mesas de Compras">
+				<h:panelGroup layout="block" class="alinhaBotao">
+						<h:commandButton image="${pageContext.request.contextPath}/imagens/agenda.png" value="Agendamento de Mesa de Compra"  rendered="#{permissoesMB.verificarMesaDeCompra()}">
+								<f:ajax 
+								render=":formagendamento:agendamento" 
+								event="click"
+								listener="#{agendamentosMB.cadastrarAlterar(null)}"/>
+						</h:commandButton>	
+				</h:panelGroup>
+							
+				<h:panelGroup layout="block" class="area-input-100">
+																	        
+			        <rich:dataTable rows="20" rowClasses="odd-row, even-row" value="#{agendamentosMB.agendamentos}" var="agendamento" id="idagendamentos">
+			        			        				        	
+			            <rich:column>
+			                <f:facet name="header">
+			                    <h:outputText value="Data" />
+			                </f:facet>
+			                <h:outputText value="#{agendamento.datacadastro.time}">
+			                	<f:convertDateTime pattern="dd/MM/yyyy"/>
+			                </h:outputText>
+			            </rich:column>
+			            <rich:column>
+			                <f:facet name="header">
+			                    <h:outputText value="Status" />
+			                </f:facet>
+			                <h:outputText value="#{agendamento.status.cnmstatus}"/>
+			            </rich:column>			            
+			            <rich:column>
+			                <f:facet name="header">
+			                    <h:outputText value="Número ACM" />
+			                </f:facet>
+			                <h:outputText value="#{agendamento.cnmnumeroacm}" />
+			            </rich:column>
+			            <rich:column>
+			                <f:facet name="header">
+			                    <h:outputText value="Objeto" />
+			                </f:facet>
+			                <h:outputText value="#{agendamento.cnmobjeto}" />
+			            </rich:column>
+			            <rich:column>
+			                <f:facet name="header">
+			                    <h:outputText value="Mesa Realizada" />
+			                </f:facet>
+			                <h:outputText value="#{agendamento.boolmesarealizada}">
+			                	<f:converter converterId="ativosConv"/>
+			                </h:outputText>
+			            </rich:column>
+			            <rich:column>
+			                <f:facet name="header">
+			                    <h:outputText value="Adjucação" />
+			                </f:facet>
+			                <h:outputText value="#{agendamento.boolhouveadjudicacao}">
+			                	<f:converter converterId="ativosConv"/>
+			                </h:outputText>
+			            </rich:column>
+			            <rich:column>
+			                <f:facet name="header">
+			                    <h:outputText value="Fornecedores Adjucados" />
+			                </f:facet>
+			                <h:outputText value="#{agendamento.agendamentosfornecedores eq null ? 0 : agendamento.agendamentosfornecedores.size()}" />
+			            </rich:column>
+			            <rich:column>
+			                <f:facet name="header">
+			                    <h:outputText value="Ações" />
+			                </f:facet>
+		                          <h:commandButton image="${pageContext.request.contextPath}/imagens/alterar_ok.png" value="Alterar agendamento" rendered="#{((agendamento.status.idstatus eq agendamentosMB.idStatusAgendado) or (agendamento.status.idstatus eq agendamentosMB.idStatusNovo)) and permissoesMB.verificarMesaDeCompra()}">
+									<f:ajax 
+									render=":formagendamento:agendamento" 
+									event="click"
+									listener="#{agendamentosMB.cadastrarAlterar(agendamento)}"/>
+								  </h:commandButton>
+		                          <h:commandButton image="${pageContext.request.contextPath}/imagens/busca_azul.png" value="Consultar" rendered="#{(agendamento.status.idstatus eq agendamentosMB.idStatusConcluido) or (agendamento.status.idstatus eq agendamentosMB.idStatusNaoAdjudicado)}">
+									<f:ajax 
+									render=":formagendamento:agendamento" 
+									event="click"
+									listener="#{agendamentosMB.consultaAgendamento(agendamento)}"/>	
+								  </h:commandButton>								
+						
+	                                  
+			            </rich:column>			            
+			        </rich:dataTable>						
+								
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="clear"/>			
+			</rich:tab>
+			<rich:tab id="tableilao" header="Leilão">
+				<a4j:region>
+				
+					<h:panelGroup layout="block" class="area-input-100">
+				
+					<rich:dataTable keepSaved="true" rows="2" id="dtleilao" value="#{leiloesMB.recuperar()}" var="leilao">
+			            <f:facet name="header">
+							<rich:columnGroup>
+								<rich:column style="text-align:left">
+									<h:outputText value="Registro"/>
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Data Leilão" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Situação" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Autor" />
+								</rich:column>
+								<rich:column style="text-align:left;">
+									<h:outputText value="Data Cadastro" />
+								</rich:column>
+								<rich:column style="text-align:left">
+									<h:outputText value="Ações"/>
+								</rich:column>
+							</rich:columnGroup>
+						</f:facet>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{leilao.idleilao}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{leilao.dataleilao.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{leilao.status.cnmstatus}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{leilao.autor.cnmnome}"/>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<h:outputText value="#{leilao.datacadastro.time}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+							</h:outputText>
+						</rich:column>
+						<rich:column style="text-align:left;">
+							<a4j:commandButton image="${pageContext.request.contextPath}/imagens/busca_azul.png"
+											   id="buttondetleilao" 
+											   value="Detalhes" 
+											   rendered="true"
+											   action="#{leiloesMB.habilitaDetalhes(leilao)}"
+											   render=":formleilao:popupdetleilao"/>
+											   
+							<a4j:commandButton id="buttoncompleilao"
+											   image="${pageContext.request.contextPath}/imagens/alterar_ok.png"
+											   value="Completar" 
+											   rendered="#{permissoesMB.verificarCompletarLeilao(leilao)}"
+											   action="#{leiloesMB.habilitaCompletar(leilao)}"
+											   render=":formleilao:popupcompletaleilao"/>
+						</rich:column>
+						
+						<f:facet name="footer">
+			            	<rich:dataScroller id="scrollermodfuncbottom"/>
+			            </f:facet>
+			        </rich:dataTable>						
+								
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="clear"/>
+				
+				<rich:collapsiblePanel header="Registrar Leilão" switchType="client" id="idcolpanelregleilao">
+						<ui:include src="includes/autoredatacorrente.xhtml"/>
+						<h:panelGroup layout="block" class="clear"/>
+					
+						<h:panelGroup layout="block" class="area-input-25" id="pgmodalidadeleilao">
+							<h:panelGroup  class="label-campo">Modalidade:</h:panelGroup>
+							<h:selectOneRadio id="modalidadeleilao" 
+									value="#{leiloesMB.leilao.modalidade}" 
+									styleClass="select-form">
+									
+		   							<f:selectItems 
+		   								value="#{leiloesMB.recuperarModalidades()}" 
+		   								var="m"
+		   								itemLabel="#{m.cnmmodalidade}"/>
+	
+		   								<f:converter converterId="modalidadeConv"/>
+		   								
+		   					</h:selectOneRadio>
+						</h:panelGroup>
+						
+						<h:panelGroup layout="block" class="area-input-25" id="pgdataleilao">
+							<h:panelGroup  class="label-campo">Data do Leilão:</h:panelGroup>
+							<rich:calendar 
+								value="#{leiloesMB.leilao.dataleilao}" 
+								id="dataleilao"
+			                    popup="true"
+			                    styleClass="calendar-form"
+			                    datePattern="dd/MM/yyyy"
+								locale="pt_BR"
+								enableManualInput="true"
+								oninputkeypress="javascript: mascara(this, data_mask);"
+								maxlength="10">
+			                    <f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+			                    
+			                </rich:calendar>
+						</h:panelGroup>
+					
+						<h:panelGroup layout="block" class="area-input-25" id="pghoraleilao">
+							<h:panelGroup  class="label-campo">Hora do Leilão:</h:panelGroup>
+							<h:panelGroup layout="block" style="width:42%; float:left; margin-right:7%;">
+								<rich:inputNumberSpinner id="horaleilao" value="#{leiloesMB.leilao.horaleilao}" minValue="0" maxValue="23" styleClass="input-form"/>
+							</h:panelGroup>
+							<h:panelGroup layout="block" style="width:42%; float:left; margin-right:4%;">
+								 <rich:inputNumberSpinner id="minutoleilao" value="#{leiloesMB.leilao.minutoleilao}" minValue="0" maxValue="59" styleClass="input-form"/>
+							</h:panelGroup>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-25" id="pgtipoleilao">
+							<h:panelGroup  class="label-campo">Tipo:</h:panelGroup>
+							<h:selectOneRadio id="tipoleilao" 
+									value="#{leiloesMB.leilao.tipoleilao}" 
+									styleClass="select-form">
+									
+		   							<f:selectItems
+		   								value="#{leiloesMB.recuperarTiposLeilao()}" 
+		   								var="t"
+		   								itemLabel="#{t.cnmtipoleilao}"/>
+		   								<f:converter converterId="tipoleilaoConv"/>
+		   					</h:selectOneRadio>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="clear"/>
+											
+						<h:panelGroup layout="block" class="area-input-25" id="pgfatorinicial">
+							<h:panelGroup  class="label-campo">Valor do Fator Inicial:</h:panelGroup>	
+							<h:inputText maxlength="18" size="18" onkeypress="javascript: mascara(this, moeda_mask);" value="#{leiloesMB.leilao.fatorinicial}" id="fatorinicial" styleClass="input-form">
+								<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+							</h:inputText>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="area-input-25" id="pgvalorini">
+							<h:panelGroup class="label-campo">Valor Inicial:</h:panelGroup>	
+							<h:inputText maxlength="18" size="18" onkeypress="javascript: mascara(this, moeda_mask);" value="#{leiloesMB.leilao.valorinicial}" id="valorinicial" styleClass="input-form">
+								<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+							</h:inputText>
+						</h:panelGroup>						
+						<h:panelGroup layout="block" class="area-input-25" id="pgsalvaguarda">
+							<h:panelGroup  class="label-campo">Salvaguarda:</h:panelGroup>	
+							<h:inputText maxlength="18" size="18" onkeypress="javascript: mascara(this, moeda_mask);" value="#{leiloesMB.leilao.salvaguarda}" id="salvaguarda" styleClass="input-form">
+								<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+							</h:inputText>
+						</h:panelGroup>
+						
+						<h:panelGroup layout="block" class="area-input-25" id="pgdeac">
+							<h:panelGroup  class="label-campo">Decréscimo/Acréscimo:</h:panelGroup>	
+							<h:inputText maxlength="18" size="18" onkeypress="javascript: mascara(this, moeda_mask);" value="#{leiloesMB.leilao.decresacresc}" id="decresacres" styleClass="input-form">
+								<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+							</h:inputText>
+						</h:panelGroup>
+						
+						<h:panelGroup layout="block" class="area-input-25" id="pglancevenc">
+							<h:panelGroup  class="label-campo">Lance Vencedor:</h:panelGroup>	
+							<h:inputText maxlength="18" size="18" onkeypress="javascript: mascara(this, moeda_mask);" value="#{leiloesMB.leilao.lancevencedor}" id="lancevenc" styleClass="input-form">
+								<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+							</h:inputText>
+						</h:panelGroup>					
+						<h:panelGroup layout="block" class="area-input-25" id="pgpropvenc">
+							<h:panelGroup  class="label-campo">Vencedores:</h:panelGroup>
+							<h:selectManyListbox id="vencpart" value="#{leiloesMB.leilao.propvenc}" size="4" styleClass="textarea-form-2-linhas">
+				    			<f:selectItems value="#{leiloesMB.recuperarPropostasAprovadas()}" var="obj" itemLabel="#{obj.fornecedorprop.cnmfornecedor}"/>		   								   																   								   			   								   							 
+								<f:converter converterId="propostaConv"/>
+			    			</h:selectManyListbox>
+						</h:panelGroup>
+						
+						<h:panelGroup layout="block" class="area-input-25" id="pgproppart">
+							<h:panelGroup  class="label-campo">Participantes:</h:panelGroup>
+							<h:selectManyListbox id="proppart" value="#{leiloesMB.leilao.proppart}" size="4" styleClass="textarea-form-2-linhas">
+				    			<f:selectItems value="#{leiloesMB.recuperarPropostasAprovadas()}" var="obj" itemLabel="#{obj.fornecedorprop.cnmfornecedor}"/>		   								   																   								   			   								   							 
+								<f:converter converterId="propostaConv"/>
+			    			</h:selectManyListbox>
+						</h:panelGroup>
+						
+						<h:panelGroup layout="block" class="clear"/>
+					
+						<h:panelGroup layout="block" class="area-input-100" id="pgcomentarioleilao">
+							<h:panelGroup  class="label-campo">Comentários:</h:panelGroup>	
+							<h:inputTextarea styleClass="input-form-textarea" id="idcomentarioleilao" value="#{leiloesMB.leilao.comentario}" maxlength="255"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" styleClass="alinhaBotao">
+							<a4j:commandButton value="Registrar" action="#{leiloesMB.preRegistrar()}" render=":formleilao:popupconfirmaregistraleilao :panelexibesucesso :panelexibealerta :panelexibeerro"/>
+						</h:panelGroup>
+						<h:panelGroup layout="block" class="clear"/>
+						
+					</rich:collapsiblePanel>
+				</a4j:region>
+			</rich:tab>
+			<rich:tab id="acompanhamento" header="Acompanhamento">
+			
+				<h:panelGroup layout="block" class="area-input-50">
+					<h:panelGroup  class="label-campo">Onde está:</h:panelGroup>	
+					<h:outputText styleClass="label-form destaque" value="#{demandasMB.comQuemEsta}" />
+				</h:panelGroup>
+				<h:panelGroup layout="block" class="clear"/>
+				
+				<h:panelGroup layout="block" class="area-input-100">
+					<h:panelGroup  class="label-campo">Por onde passou:</h:panelGroup>	
+						<rich:dataTable rows="20" rowClasses="odd-row, even-row" value="#{demandasMB.logsDemanda}" var="log" id="idlogsdemanda">
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Data" />
+				                </f:facet>
+				                <h:outputText value="#{log.datacadastro}" converter="dateToCalendarConverter" />
+				            </rich:column>
+				            <rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Autor" />
+				                </f:facet>
+				                <h:outputText value="#{log.autor.cnmnome}" />
+				            </rich:column>
+				           	<rich:column>
+				                <f:facet name="header">
+				                    <h:outputText value="Descrição" />
+				                </f:facet>
+				                <h:outputText value="#{log.cnmdescricao}" />
+				            </rich:column>			            
+						</rich:dataTable>
+				</h:panelGroup>	
+				<h:panelGroup layout="block" class="clear"/>							
+			
+			</rich:tab>
+			
+		</rich:tabPanel>
+		
+		<rich:popupPanel id="popupconfirmaapagaranexo" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{anexosMB.exibeconfirmacaoapagar}" showWhenRendered="#{anexosMB.exibeconfirmacaoapagar}">
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma remoção do anexo ?</h:panelGroup>	
+				<h:commandButton value="Sim">
+					<f:ajax 
+						render="@form :demandaform"
+						listener="#{anexosMB.removerAnexo()}"
+						immediate="true"/>
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render="@form" 
+						listener="#{anexosMB.fecharPopupConfirmacaoRemoverAnexo()}"
+						immediate="true"/>
+				</h:commandButton>
+				 	
+			</h:panelGroup>	
+		</rich:popupPanel>
+
+		<rich:popupPanel id="popupconfirmaconcluirssi" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{concluirMB.mostrarConfirmaConcluirSSI}" showWhenRendered="#{concluirMB.mostrarConfirmaConcluirSSI}">
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma conclusão da SSI ?</h:panelGroup>	
+				<h:commandButton value="Sim">
+					<f:ajax 
+						render="@form :demandaform"
+						listener="#{concluirMB.concluirSSI()}"
+						immediate="true"/>
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render="@form" 
+						listener="#{concluirMB.fecharTelaConcluirSSI()}"
+						immediate="true"/>
+				</h:commandButton>
+				 	
+			</h:panelGroup>	
+		</rich:popupPanel>
+
+		<rich:popupPanel id="popupconfirmainclusaoquestionamento" domElementAttachment="form" modal="true" width="300" height="100" zindex="1" show="#{questionamentoTecnicoMB.mostraTelaConfirmacaoQuestionamentoTecnico}" showWhenRendered="#{questionamentoTecnicoMB.mostraTelaConfirmacaoQuestionamentoTecnico}">
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma a inclusão do questionamento técnico ?</h:panelGroup>	
+				<h:commandButton value="Sim">
+					<f:ajax 
+						render="@form :demandaform"
+						listener="#{questionamentoTecnicoMB.criarQuestionamentoTecnico()}"
+						immediate="true"/>
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render="@form" 
+						listener="#{questionamentoTecnicoMB.fecharTelaConfirmacaoQuestionario()}"
+						immediate="true"/>
+				</h:commandButton>
+				 	
+			</h:panelGroup>	
+		</rich:popupPanel>
+		
+		<ui:include src="includes/popupdetev_9.xhtml"/>
+		<ui:include src="includes/popupdetev_10.xhtml"/>
+		<ui:include src="includes/popupdetev_11.xhtml"/>
+		<ui:include src="includes/popupdetev_12.xhtml"/>
+		<ui:include src="includes/popupdetev_13.xhtml"/>
+		<ui:include src="includes/popupdetev_14.xhtml"/>
+		<ui:include src="includes/popupdetev_15.xhtml"/>
+		<ui:include src="includes/popupdetev_16.xhtml"/>
+		<ui:include src="includes/popupdetev_25.xhtml"/>
+		<ui:include src="includes/popupdetev_00.xhtml"/>
+	</h:form>
+	<ui:include src="includes/popupanaliseaquisicao.xhtml"/>
+	<ui:include src="includes/popupabrerc.xhtml"/>
+	<ui:include src="includes/popupvalidacaotecnica.xhtml"/>
+	<ui:include src="includes/popupindicaanalistaaquisicao.xhtml"/>
+	<ui:include src="includes/upload.xhtml"/>
+	<ui:include src="includes/popupanalisepelogerentedecompra.xhtml"/>
+	<ui:include src="includes/popupindicanovocomprador.xhtml"/>
+	<ui:include src="includes/popupsolicitarevisaoaquisicao.xhtml"/>
+	<ui:include src="includes/popuprevisaopeloanalistaaquisicao.xhtml"/>
+	<ui:include src="includes/popupenvioaomercado.xhtml"/>
+	<ui:include src="includes/popupacionarc.xhtml"/>
+	<ui:include src="includes/popupproposta.xhtml"/>
+	<ui:include src="includes/popuporcamentoopex.xhtml"/>
+	<ui:include src="includes/popuporcamentocapex.xhtml"/>
+	<ui:include src="includes/popupcancelamentodemanda.xhtml"/>
+	<ui:include src="includes/popupencaminhar.xhtml"/>
+	<ui:include src="includes/popupindicaanalistacontrato.xhtml"/>
+	<ui:include src="includes/popupanalminuta.xhtml"/>
+	<ui:include src="includes/popupvalidacaolaudotecnico.xhtml"/>
+	<ui:include src="includes/popupvalidacaosegundonivel.xhtml"/>
+	<ui:include src="includes/popupagendamento.xhtml"/>
+	<ui:include src="includes/popupleilao.xhtml"/>
+	<ui:include src="includes/popuprespostaquestionamentotecnico.xhtml"/>
+	<ui:include src="includes/popupalteracronograma.xhtml"/>
+	
+  	</ui:define>
+</ui:composition>

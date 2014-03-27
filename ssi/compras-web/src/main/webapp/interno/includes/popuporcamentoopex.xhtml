@@ -1,0 +1,188 @@
+<html
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+ 	
+ 	<h:form id="formorcamentoopex" method="post">
+ 	
+	<!-- ############## POPUP DE ORÇAMENTO ################ -->
+
+	<rich:popupPanel id="panelorcamentodemanda" domElementAttachment="form" modal="true" width="600" height="600" zindex="2" show="#{demandasMB.mostraOrcamento}" showWhenRendered="#{demandasMB.mostraOrcamento}">
+			<f:facet name="header">
+	            <h:outputText value="Orçamento" />
+	        </f:facet>
+	       	
+			<h:panelGroup layout="block" class="clear"/>
+			    
+	     	<rich:tabPanel id="incluirUFDialog">
+	     	
+				<rich:tab id="orcamentodadosbasicos" header="Dados Básicos">
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+						<h:outputText id="idautorcamento" value="#{demandasMB.orcamentoSelecionado.autor.cnmnome}" class="label-campo"/>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+						<h:outputText id="iddatahoracriacaoorcamento" value="#{demandasMB.dataHoraCriacaoOrcamento}" class="label-campo"/>
+					</h:panelGroup>			
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Alterado por:</h:panelGroup>	
+						<h:outputText id="idautorultimaalteracaoorcamento" value="#{demandasMB.autorUltimaAlteracaoOrcamento()}" class="label-campo"/>
+					</h:panelGroup>			
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">Alterado em:</h:panelGroup>	
+						<h:outputText id="iddataultimaalteracaoorcamento" value="#{demandasMB.dataUltimaAlteracaoOrcamento()}" class="label-campo"/>
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="clear"/>
+								
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:panelGroup  class="label-campo">UF:</h:panelGroup>	
+						<h:outputText value="#{demandasMB.orcamentoSelecionado.ufs.cnmuf}" class="label-campo"/>
+					</h:panelGroup>	
+					<h:panelGroup layout="block" class="clear"/>
+							
+					<h:panelGroup layout="block" class="area-input-25" id="panelvalor1">
+						<h:outputText value="#{demandasMB.ano1}" class="label-campo"/>	
+						<h:inputText styleClass="input-form" onkeypress="javascript: mascara(this, moeda_mask);" id="idvalorano1" value="#{demandasMB.orcamentoSelecionado.nnrano1}" maxlength="20">
+							<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+							<h:message for="idvalorano1"/>
+						</h:inputText>
+					</h:panelGroup>			
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:outputText value="#{demandasMB.ano2}" class="label-campo"/>	
+						<h:inputText styleClass="input-form" onkeypress="javascript: mascara(this, moeda_mask);" id="idvalorano2" value="#{demandasMB.orcamentoSelecionado.nnrano2}" maxlength="20">
+							<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+							<h:message for="idvalorano2"/>
+						</h:inputText>
+					</h:panelGroup>			
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:outputText value="#{demandasMB.ano3}" class="label-campo"/>	
+						<h:inputText styleClass="input-form" onkeypress="javascript: mascara(this, moeda_mask);" id="idvalorano3" value="#{demandasMB.orcamentoSelecionado.nnrano3}" maxlength="20">
+							<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+							<h:message for="idvalorano3"/>
+						</h:inputText>
+					</h:panelGroup>			
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:outputText value="#{demandasMB.ano4}" class="label-campo"/>
+						<h:inputText styleClass="input-form" onkeypress="javascript: mascara(this, moeda_mask);" id="idvalorano4" value="#{demandasMB.orcamentoSelecionado.nnrano4}" maxlength="20">
+							<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+							<h:message for="idvalorano4"/>
+						</h:inputText>	
+					</h:panelGroup>
+					<h:panelGroup layout="block" class="area-input-25">
+						<h:outputText value="Demais Anos" class="label-campo"/>
+						<h:inputText styleClass="input-form" onkeypress="javascript: mascara(this, moeda_mask);" id="iddemaisanos" value="#{demandasMB.orcamentoSelecionado.nnrdemaisanos}" maxlength="20">
+							<f:convertNumber pattern="#,##0.00" minFractionDigits="2" locale="pt_BR"/>
+							<h:message for="iddemaisanos"/>
+						</h:inputText>	
+					</h:panelGroup>							
+								
+					<h:panelGroup layout="block" class="clear"/>
+					
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">C. Contábil:</h:panelGroup>	
+						<h:inputText styleClass="input-form" id="idcustocontabil" value="#{demandasMB.orcamentoSelecionado.cnmcontabil}" maxlength="10"/>
+						<h:message for="idcustocontabil"/>
+					</h:panelGroup>			
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">C. Custo:</h:panelGroup>	
+						<h:inputText styleClass="input-form" id="idcusto" value="#{demandasMB.orcamentoSelecionado.cnmcusto}" maxlength="10" />
+						<h:message for="idcusto"/>
+					</h:panelGroup>			
+					<h:panelGroup layout="block" class="area-input-50">
+						<h:panelGroup  class="label-campo">RC:</h:panelGroup>	
+						<h:inputText styleClass="input-form" id="idrc" value="#{demandasMB.orcamentoSelecionado.cnmrc}" rendered="#{demandasMB.podeEditarRC}" maxlength="10"/>
+						<h:message for="idrc"/>
+					</h:panelGroup>
+					<br/>
+					<h:panelGroup layout="block" class="clear"/><br/>
+					
+					<h:panelGroup layout="block" styleClass="alinhaBotao">
+ 						<h:commandButton value="Salvar">
+								<f:ajax 
+									render="@form 
+									:demandaform:idorcamentos 
+									:demandaform:idtotaldacompra 
+									:demandaform:idorcamento 
+									:demandaform:idorcamentoopex 
+									:demandaform:tiposcondicionamento 
+									:demandaform:propriedade" 
+									event="click"
+									listener="#{demandasMB.salvarOrcamento()}"
+									execute="@form"
+								/>
+						</h:commandButton>
+						
+						<h:commandButton value="Fechar">						
+							<f:ajax render="@form" 
+									event="click"
+									listener="#{demandasMB.hideOrcamento()}"
+									immediate="true"
+								/>
+														
+						</h:commandButton>
+							        
+					</h:panelGroup>					
+				</rich:tab>
+				
+				<rich:tab id="orcamentolog" header="Log">
+					<rich:dataTable rows="20" rowClasses="odd-row, even-row" value="#{demandasMB.logsOrcamento}" var="log" id="idlogsorcamento">
+			            <rich:column>
+			                <f:facet name="header">
+			                    <h:outputText value="Data" />
+			                </f:facet>
+			                <h:outputText value="#{log.datacadastro}" converter="dateToCalendarConverter" />
+			            </rich:column>
+			            <rich:column>
+			                <f:facet name="header">
+			                    <h:outputText value="Autor" />
+			                </f:facet>
+			                <h:outputText value="#{log.autor.cnmnome}" />
+			            </rich:column>
+			           	<rich:column>
+			                <f:facet name="header">
+			                    <h:outputText value="Descrição" />
+			                </f:facet>
+			                <h:outputText value="#{log.cnmdescricao}" />
+			            </rich:column>			            
+					</rich:dataTable>
+				
+				</rich:tab>				
+				
+			</rich:tabPanel>					       	
+	       	
+	</rich:popupPanel>
+		
+		<!-- ############## POPUP DE EXCLUSÃO DE ORÇAMENTO ################ -->
+		
+		<rich:popupPanel id="popupconfirmaexcluirorcamento" domElementAttachment="form" modal="true" width="300" height="100" zindex="2" show="#{demandasMB.mostraConfirmacaoExclusaoOrcamento}" showWhenRendered="#{demandasMB.mostraConfirmacaoExclusaoOrcamento}">
+	
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Confirma a exclusão ?</h:panelGroup>	
+				<h:commandButton value="Sim">
+					<f:ajax 
+						render="@form :demandaform:idorcamentos" 
+						execute="@form" 
+						listener="#{demandasMB.excluirOrcamento()}"
+						immediate="true"/>
+				</h:commandButton>
+				<h:commandButton value="Não">
+					<f:ajax 
+						render="@form popupconfirmaexcluirorcamento" 
+						execute="@form" 
+						listener="#{demandasMB.cancelarExcluirOrcamento()}"
+						immediate="true"/>
+				</h:commandButton>
+				 	
+			</h:panelGroup>	
+	
+		</rich:popupPanel>
+		
+		
+	</h:form>
+</html>

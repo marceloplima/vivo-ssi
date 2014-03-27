@@ -1,0 +1,159 @@
+<ui:composition template="../template/padrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:h="http://java.sun.com/jsf/html"
+  	xmlns:f="http://java.sun.com/jsf/core"
+  	xmlns:ui="http://java.sun.com/jsf/facelets"
+  	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  	xsi:schemaLocation="http://www.w3.org/1999/xhtml http://www.w3.org/2002/08/xhtml/xhtml1-transitional.xsd"
+ 	xmlns:a4j="http://richfaces.org/a4j"
+ 	xmlns:rich="http://richfaces.org/rich">
+
+	<ui:define name="conteudosistema">
+			
+     <h:form>
+  		
+		<h:panelGroup layout="block" class="area-input-50">
+			<h:panelGroup  class="label-campo">Autor:</h:panelGroup>	
+			<h:inputText styleClass="input-form"/>
+		</h:panelGroup>	    		
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Data e Hora:</h:panelGroup>	
+			<h:inputText styleClass="input-form"/>
+		</h:panelGroup>
+		<h:panelGroup layout="block" class="area-input-25">
+			<h:panelGroup  class="label-campo">Papel:</h:panelGroup>	
+			<h:selectOneMenu styleClass="select-form">
+				<f:selectItem itemLabel="Opção 1"/>
+				<f:selectItem itemLabel="Opção 2"/>
+				<f:selectItem itemLabel="Opção 3"/>
+				<f:selectItem itemLabel="Opção 4"/>
+	        </h:selectOneMenu>					
+		</h:panelGroup>			
+		<h:panelGroup layout="block" class="clear"/><br/>
+			
+		<rich:collapsiblePanel header="Emissor" switchType="client">
+		
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Grupo:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>			
+
+
+		    <h:panelGroup layout="block" class="clear"/>				    
+							
+		</rich:collapsiblePanel>
+	
+		<rich:collapsiblePanel header="Gerente de Aquisição e Analista de Aquisição" switchType="client">
+
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Nome:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+					
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">UF's:</h:panelGroup>	
+	            <rich:pickList id="copia" listWidth="165px" listHeight="100px" orderable="true" addAllText="⇒" addText="→" downBottomText="⇓" downText="↓" removeAllText="⇐" removeText="←" upText="↑" upTopText="⇑">
+	                <f:selectItems value="item1" var="capital" itemValue="item1"
+	                    itemLabel="item1" />
+	            </rich:pickList>
+	        </h:panelGroup>
+		    <h:panelGroup layout="block" class="clear"/>
+		
+		</rich:collapsiblePanel>
+	
+		<rich:collapsiblePanel header="Gerente de Compras" switchType="client">
+
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Nome:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="area-input-100 label-check">
+				<h:panelGroup  class="label-campo">LP:</h:panelGroup>	
+                      <h:selectBooleanCheckbox title="LP1">LP1 - Infraestrutura de Redes:</h:selectBooleanCheckbox>
+                      <h:selectBooleanCheckbox title="LP2">LP2 - Serviços:</h:selectBooleanCheckbox>
+                      <h:selectBooleanCheckbox title="LP3">LP3 - Produtos do Mercado:</h:selectBooleanCheckbox>
+                      <h:selectBooleanCheckbox title="LP2">LP4 - Sistemas de Informação:</h:selectBooleanCheckbox>
+			</h:panelGroup>
+
+
+			<h:panelGroup layout="block" class="clear"/>							
+			
+		</rich:collapsiblePanel>
+	
+		<rich:collapsiblePanel header="Gerente de Orçamento ou Analista de Orçamento" switchType="client">
+
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Nome:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>
+		    <h:panelGroup layout="block" class="area-input-10 label-check">
+				<h:panelGroup  class="label-campo">Tipo:</h:panelGroup>	
+                      <h:selectBooleanCheckbox title="Capex">Capex:</h:selectBooleanCheckbox>
+                      <h:selectBooleanCheckbox title="Opex">Opex:</h:selectBooleanCheckbox>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+							
+		</rich:collapsiblePanel>
+	
+		<rich:collapsiblePanel header="Diretor" switchType="client">
+			<h:panelGroup layout="block" class="area-input-50">
+				<h:panelGroup  class="label-campo">Nome:</h:panelGroup>	
+				<h:selectOneMenu styleClass="select-form">
+					<f:selectItem itemLabel="Opção 1"/>
+					<f:selectItem itemLabel="Opção 2"/>
+					<f:selectItem itemLabel="Opção 3"/>
+					<f:selectItem itemLabel="Opção 4"/>
+		        </h:selectOneMenu>					
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+							
+		</rich:collapsiblePanel>
+	
+		<rich:collapsiblePanel header="Comprador" switchType="client">
+			<h:panelGroup layout="block" class="area-input-30">
+				<h:panelGroup  class="label-campo">Nome:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>	
+			<h:panelGroup layout="block" class="area-input-30">
+				<h:panelGroup  class="label-campo">e-Mail:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>	
+			<h:panelGroup layout="block" class="area-input-30">
+				<h:panelGroup  class="label-campo">Localização:</h:panelGroup>	
+				<h:inputText styleClass="input-form"/>
+			</h:panelGroup>	
+			<h:panelGroup layout="block" class="area-input-100 label-check">
+				<h:panelGroup  class="label-campo">LP:</h:panelGroup>	
+                      <h:selectBooleanCheckbox title="LP1">LP1 - Infraestrutura de Redes:</h:selectBooleanCheckbox>
+                      <h:selectBooleanCheckbox title="LP2">LP2 - Serviços:</h:selectBooleanCheckbox>
+                      <h:selectBooleanCheckbox title="LP3">LP3 - Produtos do Mercado:</h:selectBooleanCheckbox>
+                      <h:selectBooleanCheckbox title="LP2">LP4 - Sistemas de Informação:</h:selectBooleanCheckbox>
+			</h:panelGroup>
+			<h:panelGroup layout="block" class="clear"/>
+							
+		</rich:collapsiblePanel>
+
+	</h:form>
+  	</ui:define>
+</ui:composition>
